@@ -1,0 +1,14 @@
+<div>
+    {% set fullWidthModules = ['Banner'] %}
+    {% for module in modules %}
+        {% if module.type in fullWidthModules %}
+            <div class="w-full {{ module.type|lower }}-module">
+                {{ renderModule(module, module.key) }}
+            </div>
+        {% else %}
+            <div class="max-w-7xl w-full mx-auto px-4 md:px-6 2xl:px-0 mb-12">
+                {{ renderModule(module, module.key) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
