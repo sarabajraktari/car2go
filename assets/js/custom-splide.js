@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
         perPage: 5,
         perMove: 1,
         autoplay: true,
+        interval: 2000,
+        speed: 1000,
         breakpoints: {
             1024: {
                 perPage: 3,
