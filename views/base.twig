@@ -1,12 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-        {% include 'includes/header.twig' %}
-    <body class="bg-gray-200 text-red-500">
-        <main>
-            {% block content %}
-                <p>No Content</p>
-            {% endblock %}
-        </main>
-        {% include 'includes/footer.twig' %}
-    </body>
+<head>
+    {% include 'includes/header.twig' %}
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Lightbox2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+</head>
+<body class="bg-white text-red-500">
+    <main>
+        {% block content %}
+           
+        {% endblock %}
+    </main>
+    {% include 'includes/footer.twig' %}
+    <!-- Lightbox2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <!-- Custom JS for initialization -->
+    <script>
+        $(document).ready(function() {
+            // Initialize Lightbox2
+            lightbox.option({
+                'resizeDuration': 200,
+                'wrapAround': true
+            });
+        });
+    </script>
+</body>
 </html>

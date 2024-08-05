@@ -1,0 +1,17 @@
+<div class="bg-gray-800 text-white py-12 mt-8 w-full text-center">
+    <div class="px-4 container mx-auto">
+        <h1 class="text-4xl font-bold">GALLERY</h1>
+    </div>
+</div>
+
+<div class="bg-white py-6 m-12">
+    <div class="gallery grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
+        {% for galleryItem in data.gallery %}
+            <div class="gallery-item p-2 h-68 overflow-hidden">
+                <a href="{{ galleryItem.images.url }}" data-lightbox="gallery" data-title="{{ galleryItem.images.alt }}">
+                    <img class="w-full h-full object-cover rounded-lg" src="{{ galleryItem.images.url }}" alt="{{ galleryItem.images.alt }}">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

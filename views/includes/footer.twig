@@ -1,5 +1,8 @@
-<footer class="bg-gray-50">
-    <p>&copy; {{ "now"|date("Y") }} {{ bloginfo('name') }}</p>
+<footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4 flex flex-col justify-center items-center h-full">
+        <div class="text-center">
+            <p class="text-lg font-semibold">&copy; {{ "now"|date("Y") }} {{ bloginfo('name') }}</p>
+        </div>
+    </div>
     {{ wp_footer() }}
-
 </footer>
