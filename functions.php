@@ -11,6 +11,12 @@ function enqueue_theme_assets() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
+function awesome_theme_setup() {
+    add_theme_support('menus');
+    register_nav_menu('primary','car2go');
+}
+add_action('after_setup_theme', 'awesome_theme_setup');
+
 // Remove the editor from the 'post' post type
 function remove_editor_from_post() {
     remove_post_type_support('post', 'editor');
@@ -40,3 +46,60 @@ add_filter('acf/settings/load_json', function($paths) {
     $paths[] = get_template_directory() . '/acf-json';
     return $paths;
 });
+
+function create_authors_post_type() {
+    $labels = array(
+        'name'               => 'Authors',
+        'singular_name'      => 'Author',
+        'menu_name'          => 'Authors',
+        'name_admin_bar'     => 'Author',
+        'add_new'            => 'Add New',
+        'add_new_item'       => 'Add New Author',
+        'new_item'           => 'New Author',
+        'edit_item'          => 'Edit Author',
+        'view_item'          => 'View Author',
+        'all_items'          => 'All Authors',
+        'search_items'       => 'Search Authors',
+        'parent_item_colon'  => 'Parent Authors:',
+        'not_found'          => 'No authors found.',
+        'not_found_in_trash' => 'No authors found in Trash.',
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'author' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array( 'title', 'editor', 'thumbnail' ),
+    );
+
+    register_post_type( 'author', $args );
+}
+add_action( 'init', 'create_authors_post_type' );
+
+function get_authors() {
+    $authors = get_posts(array(
+        'post_type' => 'author',
+        'posts_per_page' => -1,
+    ));
+
+    $authors_data = [];
+
+    foreach ($authors as $author) {
+        $authors_data[] = [
+            'name' => get_field('author_name', $author->ID),
+            'description' => get_field('author_description', $author->ID),
+            'location' => get_field('author_location', $author->ID),
+            'image' => get_field('author_image', $author->ID),
+        ];
+    }
+
+    return $authors_data;
+}

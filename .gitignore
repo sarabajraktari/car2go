@@ -6,3 +6,8 @@ node_modules
 composer.lock
 yarn.lock
 .env
+/plugins*
+composer.json
+webpack.mix.js
+mix-manifest.json
+package-lock.json
