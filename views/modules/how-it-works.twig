@@ -1,0 +1,100 @@
+<div class="how-it-works-module bg-white py-12">
+    <div class="module-header text-center mb-8">
+        <h2 class="module-title text-3xl font-bold text-gray-800">{{ data.title|raw }}</h2>
+        <div class="module-description mt-4 text-gray-600">{{ data.description|raw }}</div>
+        <div class="flex justify-center mt-2">
+            <span class="block h-1 w-20 bg-orange-500"></span>
+        </div>
+    </div>
+    <div class="module-steps max-w-4xl mx-auto space-y-8 p-8 rounded-lg text-white">
+        {% for step in data.steps %}
+            <div class="step flex items-start space-x-4">
+                {% if step.image %}
+                <div class="step-icon">
+                    <img src="{{ step.image.url }}" alt="{{ step.image.alt }}" class="step-image w-24 h-24 object-cover rounded-lg">
+                </div>    
+                {% endif %}
+                <div class="step-content">
+                    <h3 class="step-title text-xl font-semibold" >{{ step.title }}</h3>
+                    <div class="step-description mt-2">{{ step.description|raw }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<style>
+.how-it-works-module {
+    background-color: #000; /* black */
+    padding: 3rem 0;
+    text-align: center;
+    color: #fff; /* white */
+}
+
+.module-header {
+    margin-bottom: 2rem;
+}
+
+.module-title {
+    font-size: 2.700rem; /* 3xl */
+    font-weight: bold;
+    color: #fff; /* white */
+}
+
+.module-description {
+    margin-top: 1rem;
+    color: #fff; /* light gray */
+}
+
+.module-steps {
+    display: flex;
+    justify-content: space-around;
+    max-width: 64rem; /* 4xl */
+    margin: 0 auto;
+    padding: 2rem 0; /* p-8 */
+    text-align: center;
+}
+
+.step {
+    flex: 1;
+   /*   max-width: 20rem;Adjust the max-width to fit your design */
+    margin: 0 1rem;
+    padding: 1rem;
+    /*border: 1px solid #374151;  gray-700 */
+    /* border-radius: 0.5rem; rounded-lg */
+    background-color: black; /* gray-800 */
+    color: #fff; /* white */
+    justify-content: center;
+}
+
+.step-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.step-icon img {
+    width: 4rem; /* Adjust the icon size as needed */
+    height: 4rem;
+    border-radius: 50%;
+    background-color: #fff; /* white */
+    border: 3px solid #d1d5db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.step-title {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    color: #fff; /* white */
+}
+
+.step-description {
+    margin-top: 0.5rem; /* mt-2 */
+    color: #d1d5db; /* light gray */
+}
+</style>
