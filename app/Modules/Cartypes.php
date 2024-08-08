@@ -11,8 +11,7 @@ class CarTypes implements ModuleInterface {
         // Fetch data from ACF fields
         $flexibleContent = get_field('modules_list')[$key];
         return [
-            'title' => $flexibleContent['title'],
-            'description' => $flexibleContent['description'],
+            'title_and_description' => $flexibleContent['title_and_description'],
             'cartypes_list' => $flexibleContent['cartypes_list'],
             'see_all_cars_link' => $flexibleContent['see_all_cars_link'],
         ];
