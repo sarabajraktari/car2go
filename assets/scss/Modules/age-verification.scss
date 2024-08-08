@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,600,900');
+/*----------------------------------------------   
+-Defualt to border-box
+-----------------------------------------------  */
+*, *:before, *:after {
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box; 
+  box-sizing: border-box; 
+}
+html, body{
+  font-family: Raleway, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+a.btn{
+  background-color: #54A984;
+  color: #fff;
+  text-decoration: none;
+  display:inline-block;
+  letter-spacing: 0.1em;
+  padding: 0.5em 0em;
+  
+  &.btn-beta{
+    background-color: #e36e3a;
+  }
+}
+.decor-line {
+  position: relative;
+  top: 0.7em;
+  border-top: 1px solid #ccc;
+  text-align:center;
+  max-width: 40%;
+  margin: 0.5em auto;
+  display: block;
+  padding: 0.1em 1em;
+  color: #ccc;
+  
+  span{
+    background: #fff;
+    color: #ccc;
+    position: relative;
+    top: -.7em;
+    padding: 0.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 900;
+  }
+}
+.overlay-verify{
+  background: #000;
+  position:fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.modal-background {
+    background-color: rgba(0, 0, 0, 0.6); /* Black background with 60% transparency */
+    opacity: 0;
+    transition: opacity 0.5s ease; /* Smooth transition for fading in and out */
+}
+.modal-visible {
+    opacity: 1;
+}
+.modal-hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease; /* Smooth transition for fading in and out */
+}
+
+.box{
+  background: #fff;
+  z-index: 9;
+  width: 70%;
+  height: 40%;
+  display: table;
+  
+  .box-left, .box-right{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    padding: 5%;
+    
+    @media (min-width: 74em){
+      display: table-cell;
+      vertical-align: middle;
+      width: 50%;
+      top: 5%;
+    }
+    
+    p{
+      position: relative;
+      z-index: 3;
+    }
+  }
+  .box-left{
+    background:url(https://s3-alpha-sig.figma.com/img/e753/44da/47991533f0824424360d1a5cf9b3a37f?Expires=1724025600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=dSoNJQ55gTRViaasi-pcdCa3faBFRa7cjytUiXmqjp2dL15JOxkLT0Wz1G88Uyxdt6nzd946kqjNJwqk97-AlPRLUD2PSV31W4ARPBR9GhtvA6PPR3lKk1ximC~aIFEJiWgVYAJh6cKYlu1eejOQAMKkBrwMEOEG~NDk9OoSpruUqGeX6DEv9ELrqpiKlhCQQGT0kFj29U9NMLmGptpdkXSshpR7au6P6uaz5tw5lEiJ~yYhy5GLeTSYKTT-rGX6LZ-pc6R5rRtTypZosg8viK4PACnFQfbcmEzziHiWrgCxxljvRNfqvyw5QuHpj-1yDtwWysjLk5r2X0z9TdMFtA__) 50% 50%;
+    background-size: cover;
+    color: #fff;
+    
+    img{
+      position: relative;
+      z-index: 0;
+      width: 9em;
+    }
+    
+    &:after{
+      content: '';
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0,0,0,0.8);
+    }
+  }
+  
+  .box-right{
+    text-align: center;
+    
+    h3 {
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 1em;
+      margin: 0 auto;
+    }
+    p{
+      color: #aaa;
+    }
+    small{
+      color: #ccc;
+    }
+    .btn{
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      padding: 0.9em 1em 0.7em;
+      margin: 1em auto;
+      display: block;
+    }
+  }
+}
