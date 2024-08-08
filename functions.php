@@ -11,6 +11,19 @@ function enqueue_theme_assets() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
+function enqueue_splide_assets() {
+    // Enqueue Splide CSS
+    wp_enqueue_style('splide-css', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/css/splide.min.css');
+    
+    // Enqueue Splide JS
+    wp_enqueue_script('splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/js/splide.min.js', array(), '3.6.9', true);
+    
+    // Enqueue your custom JS to initialize Splide
+    wp_enqueue_script('custom-splide-js', get_template_directory_uri() . '/assets/js/custom-splide.js', array('splide-js'), '1.0.0', true);
+}
+add_action('wp_enqueue_scripts', 'enqueue_splide_assets');
+
+
 // Remove the editor from the 'post' post type
 function remove_editor_from_post() {
     remove_post_type_support('post', 'editor');
