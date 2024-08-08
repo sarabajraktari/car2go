@@ -9,4 +9,4 @@ $context = [
     // Add other context variables as needed
 ];
 
-Setup::renderPage('templates/authors.twig', $context);
+Setup::renderPage('templates/page.twig', $context);
