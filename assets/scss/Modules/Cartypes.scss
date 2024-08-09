@@ -26,7 +26,7 @@
 }
 
 .splide {
-    @apply mx-auto px-2.5;
+    @apply max-h-[200px] mx-auto px-2.5;
 
     @screen sm {
         @apply px-5;
