@@ -1,4 +1,32 @@
-<div class="w-full bg-white">
-    <p>{{ data.banner_text }}</p>
-    <p>{{ data.banner_description }}</p>
+git merge origin/kushtrim/bannerModule
+<div class="car-rental-banner bg-[#0F0F0F] text-white w-full max-w-screen-xl mx-auto mb-8 md:mb-12 lg:mb-16">
+    <div class="flex flex-col md:flex-row items-center p-4 mb-4">
+        <div class="w-full md:w-1/2 space-y-4 md:space-y-6 mb-8 md:mb-0">
+            <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold text-center md:text-left ml-1 animate-slide-in animation-delay-300">
+                {{ data.title }} 
+            </h1>
+            <p class="text-sm md:text-base text-center md:text-left px-2 animate-slide-in animation-delay-400 font-figtree">
+                {{ data.banner_description }} 
+        </p>
+
+<div class="flex justify-center md:justify-start items-center animate-slide-in animation-delay-500 pt-2">
+    <div class="w-[37rem] h-[35px] border-t border-gray-500 py-7 ml-2 flex items-center justify-center md:justify-start">
+        <a href="{{ data.link }}" class="flex items-center text-white hover:text-white transition duration-300 rounded-full py-1 text-center">
+            <span class="inline-flex items-center justify-center w-6 h-6 bg-white rounded-full mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="h-4 w-4 text-black">
+                    <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+                </svg>
+            </span>
+            <span>Contact us</span>
+        </a>
+    </div>
+</div>
+
+
+
+        </div>
+        <div class="w-full lg:w-1/2 mt-8 lg:mt-0 flex justify-center lg:justify-end overflow-hidden relative block lg:block">
+            <img src="{{ data.image }}" alt="Banner Image" class="w-full h-auto object-cover animate-slide-in animation-delay-600 md:mr-[-50px]">  
+        </div>
+    </div>
 </div>
