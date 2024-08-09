@@ -16,16 +16,12 @@ html, body{
 }
 
 a.btn{
-  background-color: #54A984;
   color: #fff;
   text-decoration: none;
   display:inline-block;
   letter-spacing: 0.1em;
   padding: 0.5em 0em;
-  
-  &.btn-beta{
-    background-color: #e36e3a;
-  }
+
 }
 .decor-line {
   position: relative;
@@ -39,7 +35,7 @@ a.btn{
   color: #ccc;
   
   span{
-    background: #fff;
+    background: black;
     color: #ccc;
     position: relative;
     top: -.7em;
@@ -76,7 +72,7 @@ a.btn{
   background: #fff;
   z-index: 9;
   width: 70%;
-  height: 40%;
+  height: 60%;
   display: table;
   
   .box-left, .box-right{
@@ -109,6 +105,7 @@ a.btn{
     }
     
     &:after{
+      border-radius:16px;
       content: '';
       position: absolute;
       z-index: 0;
@@ -124,7 +121,6 @@ a.btn{
     text-align: center;
     
     h3 {
-      color: #555;
       text-transform: uppercase;
       letter-spacing: 0.07em;
       border-bottom: 1px solid #eee;
