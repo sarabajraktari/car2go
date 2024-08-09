@@ -1,11 +1,8 @@
 <div>
+    {% set fullWidthModules = ['Banner'] %}
     {% for module in modules %}
-        {% if module.type == 'Banner' %}
-            <div class="w-full bg-banner-class {{ module.type|lower }}-module">
-                {{ renderModule(module, module.key) }}
-            </div>
-        {% elseif module.type == 'Gallery' %}
-            <div class=" {{ module.type|lower }}-module">
+        {% if module.type in fullWidthModules %}
+            <div class="w-full {{ module.type|lower }}-module">
                 {{ renderModule(module, module.key) }}
             </div>
         {% else %}
