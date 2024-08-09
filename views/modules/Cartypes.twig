@@ -1,0 +1,30 @@
+<section id="cartypes" class="bg-white p-4 md:p-8 lg:p-16">
+    <div id="title_and_description" class="mb-4">{{ data.title_and_description | raw }}</div>
+
+    {% if data.cartypes_list %}
+        <div class="splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    {% for cartype in data.cartypes_list %}
+                        <li class="splide__slide">
+                            <div class="cartype-item-box">
+                                <img src="{{ cartype.image.url }}" alt="{{ cartype.car_type_name }}">
+                                <h2>{{ cartype.car_type_name }}</h2>
+                                <p>{{ cartype.car_type_items }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+ <div class="see-more-button-container">
+        <a href="{{ data.see_all_cars_link.url }}" class="flex items-center px-6 py-3 bg-black text-white rounded-full text-lg hover:bg-gray-800">
+            View All Cars
+            <svg class="ml-2 mt-1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+</section>

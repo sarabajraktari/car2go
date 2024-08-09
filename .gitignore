@@ -6,3 +6,5 @@ node_modules
 composer.lock
 yarn.lock
 .env
+mix-manifest.json
+package-lock.json
