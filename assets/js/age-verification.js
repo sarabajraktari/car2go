@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Redirect to Google when the user clicks the exit button
   exitBtn.onclick = function() {
-      //window.location.href = "";
-      window.history.back();
+      window.location.href = "https://www.google.com";
+      //window.history.back();
       sessionStorage.setItem('modalSeen', '');
   };
 
