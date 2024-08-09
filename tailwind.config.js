@@ -8,7 +8,14 @@ module.exports = {
     'text-red-200'
   ],
   theme: {
-    extend: {},
+    extend: {
+		fontSize: {
+        '10px': '10px',
+      },
+		screens: {
+        'exsm': '200px',
+      },
+	},
   },
   plugins: [],
 }
