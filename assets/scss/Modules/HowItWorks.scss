@@ -1,0 +1,81 @@
+#how-it-works-module {
+    @apply bg-black; 
+    @apply py-12;
+    @apply text-center;
+    @apply text-white; 
+}
+.module-header {
+    @apply mb-8;
+
+    h2{
+    @apply text-[2.7rem]; 
+    @apply font-bold;
+    @apply text-white; 
+    }
+
+    p{
+     @apply mt-6;
+    @apply text-white; 
+    @apply text-[20px];
+    @apply font-[350]; 
+    }
+}
+.module-steps {
+    @apply flex;
+    @apply justify-around;
+    @apply max-w-4xl; 
+    @apply mx-auto;
+    @apply py-8;
+    @apply text-center;
+}
+.step {
+    @apply flex-1;
+    @apply mx-4;
+    @apply p-4;
+    @apply bg-black; 
+    @apply text-white; 
+    @apply justify-center;
+}
+.step-icon {
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply mb-4;
+}
+.step-icon img {
+    @apply w-16; 
+    @apply h-16; 
+    @apply rounded-full;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply p-1.5;
+} 
+.step-title {
+    @apply text-xl;
+    @apply font-semibold;
+    @apply text-white;
+}
+.step-description {
+    @apply mt-2;
+    @apply text-gray-300; 
+}
+@media (max-width: 768px) {
+    .module-steps {
+        @apply flex flex-col;
+        @apply items-center;
+    }
+    .step {
+        @apply max-w-[70%];
+    }
+    .step-icon img{
+        @apply w-[10rem]; 
+        @apply h-[10rem]; 
+    }
+    .step-title{
+        @apply text-2xl;
+    }
+    .step-description{
+        @apply text-xl;
+    }
+}
