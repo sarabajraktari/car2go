@@ -12,10 +12,16 @@ class Setup {
         self::addToTwig();
 
         $modules = [];
-        $flexible_content = get_field('modules_list');
+        $flexibleContent = new FlexibleContent();
+        $modules_list = $flexibleContent->getModules();
+        $footer_section = $flexibleContent->getFooterSection();
 
-        if ($flexible_content) {
-            foreach ($flexible_content as $key => $layout) {
+        // Combine both modules_list and footer_section into a single array
+        $combinedContent = array_merge($modules_list, $footer_section);
+   
+
+        if ($combinedContent) {
+            foreach ($combinedContent as $key => $layout) {
                 $moduleType = ucfirst($layout['acf_fc_layout']);
                 $moduleClass = 'Internship\\Modules\\' . $moduleType;
                 if (class_exists($moduleClass) && in_array(ModuleInterface::class, class_implements($moduleClass))) {
@@ -32,7 +38,8 @@ class Setup {
         }
 
         echo self::$twig->render('page.twig', [
-            'modules' => $modules
+            'modules' => $modules,
+            'footer_section' => $footer_section // Pass footer_section to the Twig template
         ]);
     }
 
