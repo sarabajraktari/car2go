@@ -14,7 +14,7 @@
                 {% for i, item in data.faq %}
                 <div class="transition-all duration-200 bg-white border border-gray-200 shadow-lg cursor-pointer rounded-sm" x-data="{ open: false }">
                     <button type="button" id="question{{ i+1 }}" class="flex items-center justify-between w-full hover:bg-gray-50 px-4 py-5 sm:p-6" data-state="closed" @click="open = ! open">
-                        <span class="flex text-lg font-semibold text-black">{{ item.faq_title }}</span>
+                        <span class="flex text-lg font-semibold text-black">{{ item.question }}</span>
                         <svg id="arrow{{ i+1 }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             :class="{ 'transform rotate-180': open }" class="w-6 h-6 text-gray-400 transition-transform duration-300">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -23,7 +23,7 @@
                     <div id="answer{{ i+1 }}" class="px-4 pb-5 sm:px-6 sm:pb-6 text-black overflow-hidden" x-show="open"
                          x-transition:enter.duration.500ms x-transition:leave.duration.400ms style="display: none;">
                         <hr class="border-gray-300">
-                        <p class="my-2">{{ item.faq_description|raw }}</p>
+                        <p class="my-2">{{ item.answer|raw }}</p>
                     </div>
                 </div>
                 {% endfor %}
