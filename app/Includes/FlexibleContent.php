@@ -14,16 +14,5 @@ class FlexibleContent {
             return []; 
         }
     }
-    
-    public function getFooterSection(): array
-    {
-        $footer_section = get_field('footer_section', 'option');
-        
-        if ($footer_section) {
-            return $footer_section;
-        } else {
-            error_log('Flexible content "footer_section" is not available or empty.');
-            return [];
-        }
-    }
+
 }
