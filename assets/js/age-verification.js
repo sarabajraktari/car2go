@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", function() {
               modal.classList.add("modal-visible");
           }, 10); // Adding a slight delay to trigger the transition
       }, 300);
+  }else{
+    // Check if modalSeen has already been set to true, if modaSeen set to true before this will hide the #verify div
+    modal.style.display = "none";
   }
 
   // Function to hide the modal and store the user's choice
