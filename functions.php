@@ -72,7 +72,7 @@ function create_authors_post_type() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'author' ),
+        'rewrite'            => array('slug' => 'author'),
         'capability_type'    => 'post',
         'has_archive'        => true,
         'hierarchical'       => false,
@@ -84,22 +84,3 @@ function create_authors_post_type() {
 }
 add_action( 'init', 'create_authors_post_type' );
 
-function get_authors() {
-    $authors = get_posts(array(
-        'post_type' => 'author',
-        'posts_per_page' => -1,
-    ));
-
-    $authors_data = [];
-
-    foreach ($authors as $author) {
-        $authors_data[] = [
-            'name' => get_field('author_name', $author->ID),
-            'description' => get_field('author_description', $author->ID),
-            'location' => get_field('author_location', $author->ID),
-            'image' => get_field('author_image', $author->ID),
-        ];
-    }
-
-    return $authors_data;
-}
