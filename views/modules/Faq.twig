@@ -13,7 +13,7 @@
             {% if data.faq is iterable %}
                 {% for i, item in data.faq %}
                 <div class="transition-all duration-200 bg-white border border-gray-200 shadow-lg cursor-pointer rounded-sm" x-data="{ open: false }">
-                    <button type="button" id="question{{ i+1 }}" class="flex items-center justify-between w-full hover:bg-gray-50 px-4 py-5 sm:p-6" data-state="closed" @click="open = ! open">
+                    <button type="button" id="question{{ i+1 }}" class="flex items-center justify-between w-full px-4 py-5 sm:p-6" data-state="closed" @click="open = ! open">
                         <span class="flex text-lg font-semibold text-black">{{ item.question }}</span>
                         <svg id="arrow{{ i+1 }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             :class="{ 'transform rotate-180': open }" class="w-6 h-6 text-gray-400 transition-transform duration-300">
