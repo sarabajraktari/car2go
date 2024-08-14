@@ -3,6 +3,7 @@
 namespace Internship\Includes;
 
 use Internship\Interfaces\ModuleInterface;
+use Internship\Menus\Header;
 
 class Setup {
     public static $loader;
@@ -31,8 +32,11 @@ class Setup {
             }
         }
 
+        $headerData = Header::getData(); 
+
         echo self::$twig->render('page.twig', [
-            'modules' => $modules
+            'modules' => $modules,
+            'header' => $headerData,
         ]);
     }
 
