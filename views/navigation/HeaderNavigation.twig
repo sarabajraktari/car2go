@@ -30,7 +30,7 @@
     </div>
 
     <div id="mobile-menu" class="hidden mt-2 bg-black rounded-lg shadow-lg">
-        <ul>
+    <ul class="flex flex-col items-center"> <!-- Pages ne qender ose jo ?!-->
             {% for page in data.header_pages %}
                 <li>
                     <a href="{{ page.page_url.url }}" class="block py-2 text-white hover:text-gray-300 transition duration-200">
