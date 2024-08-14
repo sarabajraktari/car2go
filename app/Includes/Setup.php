@@ -3,6 +3,7 @@
 namespace Internship\Includes;
 
 use Internship\Interfaces\ModuleInterface;
+use Internship\Menus\Footer;
 
 class Setup {
     public static $loader;
@@ -31,8 +32,10 @@ class Setup {
             }
         }
 
+        $footerData = Footer::getData();
         echo self::$twig->render('page.twig', [
-            'modules' => $modules
+            'modules' => $modules,
+            'footer' => $footerData
         ]);
     }
 
