@@ -1,0 +1,99 @@
+#add-numbers-module {
+    @apply relative bg-[#0F0F0F] text-white py-10;
+}
+
+.car-photo {
+    @apply absolute top-0 left-0 py-20;
+    img {
+        @apply h-28 w-auto;
+    }
+}
+
+.lines-photo {
+    @apply absolute top-5 right-0;
+    img {
+        @apply h-24 w-auto;
+    }
+}
+
+.numbers-module-header {
+    @apply text-center mb-16;
+    h2 {
+        @apply text-4xl font-bold;
+    }
+    p {
+        @apply text-[22px] font-[350];
+    }
+}
+
+.module-numbers {
+    @apply flex justify-center space-x-3 px-3;
+}
+
+.number {
+    @apply bg-white text-black rounded-lg p-6 flex items-center space-x-3 w-64 transition duration-[800ms];
+}
+.number:hover{
+    @apply transform translate-y-[-10px];
+}
+
+.number-icon {
+    @apply bg-black p-3 rounded-md;
+}
+
+/* Hover Effect */
+.number:hover .number-icon {
+    @apply bg-blue-900;
+}
+
+.number-icon img {
+    @apply h-6 w-6;
+}
+
+.number-title {
+    @apply text-xl font-bold;
+}
+
+.number-description {
+    @apply text-xs;
+}
+
+@media (max-width: 768px) {
+    .car-photo, .lines-photo {
+        @apply hidden;
+    }
+
+    .numbers-module-header h2 {
+        @apply text-4xl font-bold text-center;
+    }
+
+    .numbers-module-header p {
+        @apply text-[20px] text-center;
+    }
+
+    .module-numbers {
+        @apply flex flex-col items-center space-y-4 px-4;
+    }
+
+    .number {
+        @apply w-full p-6 flex items-center bg-white rounded-lg shadow-md;
+    }
+
+    .number-icon {
+        @apply p-3 flex justify-center items-center bg-black rounded-md h-16 w-16;
+    }
+
+    .number-icon img {
+        @apply h-6 w-6;
+    }
+
+    .number-title {
+        @apply text-lg font-semibold ml-4;
+    }
+
+    .number-description {
+        @apply text-xs ml-4 text-gray-600;
+    }
+}
+
+
