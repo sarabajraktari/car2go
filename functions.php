@@ -10,6 +10,13 @@ function enqueue_theme_assets() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
+
+
+function enqueue_custom_scripts() {
+    // Enqueue your custom JavaScript file
+    wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/header-mobile-menu.js', array(), null, true);
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
 // Remove the editor from the 'post' post type
 function remove_editor_from_post() {
     remove_post_type_support('post', 'editor');
