@@ -4,6 +4,7 @@ namespace Internship\Includes;
 
 use Internship\Interfaces\ModuleInterface;
 use Internship\Menus\Header;
+use Internship\Menus\Footer;
 
 class Setup {
     public static $loader;
@@ -32,11 +33,12 @@ class Setup {
             }
         }
 
-        $headerData = Header::getData(); 
-
+      $headerData = Header::getData(); 
+      $footerData = Footer::getData();
         echo self::$twig->render('page.twig', [
             'modules' => $modules,
             'header' => $headerData,
+            'footer' => $footerData
         ]);
     }
 

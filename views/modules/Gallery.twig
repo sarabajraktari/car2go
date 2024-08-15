@@ -1,0 +1,41 @@
+<div class="bg-[#F5F5F5] py-6 w-full mx-auto">
+    <div class="gallery grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+        {% for galleryItem in data.gallery %}
+            <div class="gallery-item p-2 overflow-hidden relative h-64">
+                <a href="#" class="open-lightbox" data-index="{{ loop.index0 }}">
+                    <img class="w-full h-full object-cover rounded-lg" 
+                         src="{{ galleryItem.images.url }}" 
+                         alt="{{ galleryItem.images.alt }}" 
+                    >
+                </a>
+                <p class="text-center mt-2 text-gray-700">{{ galleryItem.images.caption }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Lightbox structure -->
+<div id="lightbox" class="lightbox hidden">
+    <button id="lightbox-close" class="lightbox-close">&times;</button>
+    
+    <!-- Custom SVG icon for previous button -->
+    <button id="lightbox-prev" class="lightbox-nav lightbox-prev" aria-label="Previous image">
+        <svg width="60" height="60" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+            <polyline points="30 36 15 18 30 0"></polyline>
+        </svg>
+    </button>
+    
+    <img id="lightbox-image" class="lightbox-image" src="" alt="">
+    
+    <!-- Custom SVG icon for next button -->
+    <button id="lightbox-next" class="lightbox-nav lightbox-next" aria-label="Next image">
+        <svg width="60" height="60" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+            <polyline points="15 36 30 18 15 0"></polyline>
+        </svg>
+    </button>
+</div>
+
+
+<script id="gallery-data" type="application/json">
+{{ data.gallery | json_encode | raw }}
+</script>

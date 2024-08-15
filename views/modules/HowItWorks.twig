@@ -1,0 +1,20 @@
+<section id="how-it-works-module">
+    <div class="module-header ">
+        <div class="module-title">{{ data.title_and_description|raw }}</div>
+    </div>
+    <div class="module-steps">
+        {% for step in data.steps %}
+            <div class="step">
+                {% if step.step_image %}
+                    <div class="step-icon">
+                        <img class="w-[5rem] h-[5rem] object-cover rounded-full flex justify-center items-center" src="{{ step.step_image.url }}" alt="{{ step.step_image.alt }}" title="{{ step.step_image.title }}">
+                    </div>
+                {% endif %}
+                    <div class="step-content">
+                        <h3 class="step-title">{{ step.step_title }}</h3>
+                        <p class="step-description">{{ step.step_description|raw }}</p>
+                    </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>

@@ -11,12 +11,25 @@ function enqueue_theme_assets() {
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
 
-
 function enqueue_custom_scripts() {
     // Enqueue your custom JavaScript file
     wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/header-mobile-menu.js', array(), null, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
+
+function enqueue_splide_assets() {
+    // Enqueue Splide CSS
+    wp_enqueue_style('splide-css', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/css/splide.min.css');
+    
+    // Enqueue Splide JS
+    wp_enqueue_script('splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/js/splide.min.js', array(), '3.6.9', true);
+    
+    // Enqueue your custom JS to initialize Splide
+    wp_enqueue_script('custom-splide-js', get_template_directory_uri() . '/assets/js/custom-splide.js', array('splide-js'), '1.0.0', true);
+}
+add_action('wp_enqueue_scripts', 'enqueue_splide_assets');
+
+
 // Remove the editor from the 'post' post type
 function remove_editor_from_post() {
     remove_post_type_support('post', 'editor');
@@ -81,3 +94,14 @@ add_filter('timber/context', function($context) {
     ];
     return $context;
 });
+if (function_exists('acf_add_options_page')) {
+    acf_add_options_page(array(
+        'page_title' => 'Footer Settings',
+        'menu_title' => 'Footer Settings',
+        'menu_slug' => 'footer-settings',
+        'capability' => 'edit_posts',
+        'redirect' => false,
+        'position' => 10,  
+        'icon_url' => 'dashicons-admin-customizer',
+    ));
+}
