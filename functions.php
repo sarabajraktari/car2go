@@ -4,12 +4,18 @@ require_once 'vendor/autoload.php';
 
 //! Register SCSS and JS scripts.
 function enqueue_theme_assets() {
-    
     wp_enqueue_style('front_style', get_stylesheet_directory_uri() . '/assets/dist/css/front.css', [], wp_get_theme(get_template())->Version);
     wp_enqueue_script('front_script', get_stylesheet_directory_uri() . '/assets/dist/js/front.js', [], wp_get_theme(get_template())->Version, true);
     wp_enqueue_script('front_admin_script', get_stylesheet_directory_uri() . '/assets/dist/js/admin/app.js', [], wp_get_theme(get_template())->Version, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
+
+
+function enqueue_custom_scripts() {
+    // Enqueue your custom JavaScript file
+    wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/header-mobile-menu.js', array(), null, true);
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
 
 function enqueue_splide_assets() {
     // Enqueue Splide CSS
@@ -54,6 +60,40 @@ add_filter('acf/settings/load_json', function($paths) {
     return $paths;
 });
 
+// Register navigation menus
+add_action('after_setup_theme', function () {
+    register_nav_menus([
+        'header-menu' => __('Header Menu', 'my-theme'),
+    ]);
+});
+
+// Add menu to Timber context
+add_filter('timber/context', function ($context) {
+    $context['menu'] = [
+        'items' => Timber::get_menu('header-menu')->items,
+    ];
+    return $context;
+});
+
+if (function_exists('acf_add_options_page')) {
+    acf_add_options_page(array(
+        'page_title' => 'Header Settings',
+        'menu_title' => 'Header Settings',
+        'menu_slug' => 'header-settings',
+        'capability' => 'edit_posts',
+        'redirect' => false
+    ));
+}
+
+add_filter('timber/context', function($context) {
+    $context['header'] = [
+        'menu_items' => Timber::get_menu('header-menu')->items,
+        'site_name' => get_bloginfo('name'),
+        'home_url' => home_url(),
+        'logo' => get_field('header_logo', 'option'),
+    ];
+    return $context;
+});
 if (function_exists('acf_add_options_page')) {
     acf_add_options_page(array(
         'page_title' => 'Footer Settings',
