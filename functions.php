@@ -60,6 +60,12 @@ add_filter('acf/settings/load_json', function($paths) {
     return $paths;
 });
 
+
+add_filter('timber/context', function($context) {
+    $context['home_url'] = home_url();
+});
+
+
 // Register navigation menus
 add_action('after_setup_theme', function () {
     register_nav_menus([
@@ -105,3 +111,4 @@ if (function_exists('acf_add_options_page')) {
         'icon_url' => 'dashicons-admin-customizer',
     ));
 }
+
