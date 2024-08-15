@@ -81,10 +81,6 @@ class Setup {
             return is_front_page();
         }));
 
-        self::$twig->addFunction(new \Twig\TwigFunction('get_link', function () {
-            return get_page_link();
-        }));
-
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {
             $moduleClass = 'Internship\\Modules\\' . $module['type'];
             $moduleClass::render($key, $module['data']);
