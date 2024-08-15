@@ -31,3 +31,16 @@ menuItems.forEach((item) => {
     icon.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
   });
 });
+
+window.addEventListener("resize", () => {
+  const mobileMenu = document.getElementById("mobile-menu");
+  if (window.innerWidth >= 768) {
+    mobileMenu.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+
+    const icon = document
+      .getElementById("mobile-menu-button")
+      .querySelector("path");
+    icon.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+  }
+});

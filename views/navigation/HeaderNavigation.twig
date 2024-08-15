@@ -2,9 +2,9 @@
     <div class="container mx-auto max-w-screen-xl flex items-center justify-between">
         <div class="flex-shrink-0">
             {% if data.header_logo %}
-                <img src="{{ data.header_logo.url }}" alt="{{ data.header_logo.alt | default('Logo') }}" class="h-8 md:h-16">
+                <img src="{{ data.header_logo.url }}" alt="{{ data.header_logo.alt | default('Logo') }}" class="h-8 md:h-16 w-auto">
             {% else %}
-                <img src="/path/to/default-logo.png" alt="Default Logo" class="h-8 md:h-16">
+                <img src="/path/to/default-logo.png" alt="Default Logo" class="h-8 md:h-16 w-auto"> 
             {% endif %}
         </div>
 
@@ -30,7 +30,7 @@
     </div>
 
     <div id="mobile-menu" class="hidden mt-2 bg-black rounded-lg shadow-lg">
-    <ul class="flex flex-col items-center"> <!-- Pages ne qender ose jo ?!-->
+        <ul class="flex flex-col items-center">
             {% for page in data.header_pages %}
                 <li>
                     <a href="{{ page.page_url.url }}" class="block py-2 text-white hover:text-gray-300 transition duration-200">
