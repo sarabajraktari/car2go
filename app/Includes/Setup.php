@@ -83,6 +83,10 @@ class Setup {
             return ob_get_clean();
         }));
 
+        self::$twig->addFunction(new \Twig\TwigFunction('is_front_page', function () {
+            return is_front_page();
+        }));
+
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {
             $moduleClass = 'Internship\\Modules\\' . $module['type'];
             $moduleClass::render($key, $module['data']);
