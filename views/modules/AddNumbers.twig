@@ -1,0 +1,26 @@
+<section id="add-numbers-module">
+    <div class="car-photo">
+        <img src="{{data.image_background1.url}}" alt="{{ data.image_background1.alt }}" title="{{ data.image_background1.title }}"> 
+    </div>
+    <div class="lines-photo">
+        <img src="{{data.image_background2.url}}" alt="{{ data.image_background2.alt }}" title="{{ data.image_background2.title }}">
+    </div>
+    <div class="numbers-module-header">
+        <div class="numbers-module-title">{{ data.title_and_description|raw }}</div>
+    </div>
+    <div class="module-numbers">
+        {% for number in data.numbers %}
+            <div class="number">
+                {% if number.number_image %}
+                <div class="number-icon">
+                    <img src="{{ number.number_image.url }}" alt="{{ number.number_image.alt }}" title="{{ number.number_image.title }}">
+                </div>
+                {% endif %}
+                <div class="number-content">
+                    <h3 class="number-title" data-target="{{ number.number_title }}" data-index="{{ loop.index }}">0</h3>
+                    <div class="number-description">{{ number.number_description|raw }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>

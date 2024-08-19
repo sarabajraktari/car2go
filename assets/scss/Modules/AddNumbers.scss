@@ -1,0 +1,126 @@
+
+
+#add-numbers-module {
+    @apply relative bg-[#0F0F0F] text-white py-10;
+}
+
+.car-photo {
+    @apply absolute top-0 left-0 py-14;
+    img {
+        @apply h-28 w-auto;
+    }
+}
+
+.lines-photo {
+    @apply absolute top-5 right-0;
+    img {
+        @apply h-24 w-auto;
+    }
+}
+
+.numbers-module-header {
+    @apply text-center mb-16;
+    h2 {
+        @apply text-4xl font-bold;
+    }
+    p {
+        @apply text-[22px] font-[350];
+    }
+}
+
+.number-title {
+   @apply flex items-center gap-px;
+}
+
+.number-value {
+   @apply text-[25px];
+}
+
+.plus-sign {
+   @apply text-[30px] inline-block ml-px;
+}
+
+.module-numbers {
+    @apply flex justify-center space-x-3 px-4;
+}
+
+.number {
+    @apply bg-white text-black rounded-lg p-6 flex items-center space-x-3 w-64 transition duration-[800ms];
+}
+// hover move
+.number:hover{
+     @apply transform translate-y-[-10px];
+}
+
+.number-icon {
+    @apply bg-black p-3 rounded-md;
+}
+
+// hover color 
+.number:hover .number-icon {
+    @apply bg-[#D9D9D9];
+}
+
+.number-icon img {
+    @apply h-8 w-8;
+}
+
+.number-title {
+    @apply text-xl font-bold;
+}
+
+.number-description {
+    @apply text-xs pt-2;
+}
+
+// responsive
+@media (max-width: 768px) {
+    .car-photo, .lines-photo {
+        @apply hidden;
+    }
+
+    .numbers-module-header h2 {
+        @apply text-2xl;
+    }
+
+    .numbers-module-header p {
+        @apply text-[20px];
+    }
+
+    .number-title {
+        @apply flex items-center gap-px;
+    }
+
+    .number-value {
+        @apply text-[25px] font-bold;
+    }
+
+    .plus-sign {
+        @apply text-[30px] inline-block ml-px;
+    }
+
+    .module-numbers {
+        @apply flex-col space-x-0 space-y-4;
+    }
+
+    .number {
+        @apply w-full p-4 flex items-start space-y-3;
+        @apply bg-white rounded-lg shadow-md; 
+    }
+
+    .number-icon {
+        @apply p-2 flex justify-center items-center w-16 h-16; 
+    }
+
+    .number-icon img {
+        @apply h-8 w-8;
+    }
+
+    .number-title {
+        @apply text-lg font-semibold;
+    }
+
+    .number-description {
+        @apply text-xs ;
+    }
+}
