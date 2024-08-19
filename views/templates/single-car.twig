@@ -1,38 +1,28 @@
-<div class="flex flex-col p-4 space-y-6">
+<div class="relative flex flex-col p-4 space-y-6 items-center">
     <!-- Title and Description -->
-    <div class="text-center">
-        <div class="font-bold text-2xl mb-4">
-            {{ car.title_and_description|raw }}
-        </div>
+    <div id="car_title_and_description" class="text-center">
+        {{ car.title_and_description|raw }}
     </div>
 
-    <!-- Container for Features and Image -->
-    <div class="flex flex-col md:flex-row space-y-6 md:space-y-0">
-        <!-- Features -->
-        {% if car.car_features %}
-            <div class="w-full md:w-1/2 p-4">
-                <div class="space-y-4">
-                    {% for feature in car.car_features %}
-                        <div class="flex items-start space-x-4">
-                            {% if feature.icon %}
-                                <img src="{{ feature.icon.url }}" alt="{{ feature.icon.alt|e }}" class="w-8 h-8">
-                            {% endif %}
-                            <div>
-                                {% if feature.features %}
-                                    <p>{{ feature.features }}</p>
-                                {% endif %}
-                            </div>
+    <!-- Features and Car Image Section -->
+    <div class="relative flex flex-col md:flex-row items-center p-8 md:space-x-[-4rem] space-y-8 md:space-y-0">
+        <!-- Features Section -->
+        <div class="relative z-10 w-full md:w-1/3 space-y-2">
+            {% for feature in car.car_features %}
+                <div class="flex items-start p-3 bg-white border border-gray-200 rounded-lg shadow-md space-x-4">
+                        <div class="bg-gray-100 p-3 rounded-xl flex-shrink-0">
+                            <img src="{{ feature.icon.url }}" class="w-8 h-8">
                         </div>
-                    {% endfor %}
+                        <div class="text-gray-950">{{ feature.features }}</div>
                 </div>
-            </div>
-        {% endif %}
+            {% endfor %}
+        </div>
 
-        <!-- Image -->
-        {% if car.car_image %}
-            <div class="w-full md:w-1/2 p-4">
-                <img src="{{ car.car_image.url }}" alt="{{ car.car_image.alt|e }}" class="w-full h-auto object-cover">
+        <!-- Car Image Section -->
+        <div class="relative w-full md:w-7/8 flex justify-center pl-">
+            <div class="bg-gray-100 rounded-lg p-5 py-20 px-16 shadow-md">
+                    <img src="{{ car.car_image.url }}" class="w-full h-auto object-cover">
             </div>
-        {% endif %}
+        </div>
     </div>
 </div>

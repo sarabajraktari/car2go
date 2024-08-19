@@ -37,15 +37,12 @@ class Setup {
 
         $isSingleCarPage = false;
         $carData = null;
-        $carsData = [];
     
         if (is_singular('car-post')) { 
             $isSingleCarPage = true;
             $carSlug = get_post_field('post_name', get_post());
             $carData = Car::getSingleCarData($carSlug); 
-        } else {
-            $carsData = Car::getData();
-        }
+        } 
     
       $headerData = Header::getData(); 
       $footerData = Footer::getData();
@@ -54,7 +51,6 @@ class Setup {
             'header' => $headerData,
             'footer' => $footerData,
             'car' => $carData, 
-            'cars' => $carsData, 
             'is_single_car_page' => $isSingleCarPage,
         ]);
     }
