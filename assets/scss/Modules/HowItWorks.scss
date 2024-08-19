@@ -3,6 +3,7 @@
     @apply py-12;
     @apply text-center;
     @apply text-white; 
+    @apply max-w-screen-xl mx-auto;
 }
 .module-header {
     @apply mb-8;
@@ -54,7 +55,7 @@
         @apply items-center;
     }
     .step {
-        @apply max-w-[70%];
+        // @apply max-w-[70%];
     }
     .step-icon img{
         @apply w-[10rem]; 

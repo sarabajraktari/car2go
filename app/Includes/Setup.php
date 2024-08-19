@@ -3,6 +3,7 @@
 namespace Internship\Includes;
 
 use Internship\Interfaces\ModuleInterface;
+use Internship\Menus\Header;
 use Internship\Menus\Footer;
 
 class Setup {
@@ -32,9 +33,11 @@ class Setup {
             }
         }
 
-        $footerData = Footer::getData();
+      $headerData = Header::getData(); 
+      $footerData = Footer::getData();
         echo self::$twig->render('page.twig', [
             'modules' => $modules,
+            'header' => $headerData,
             'footer' => $footerData
         ]);
     }
@@ -78,6 +81,10 @@ class Setup {
             ob_start();
             var_dump($item);
             return ob_get_clean();
+        }));
+
+        self::$twig->addFunction(new \Twig\TwigFunction('is_front_page', function () {
+            return is_front_page();
         }));
 
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {
