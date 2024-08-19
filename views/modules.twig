@@ -1,5 +1,5 @@
 <div>
-    {% set fullWidthModules = ['Banner'] %}
+    {% set fullWidthModules = ['Banner','Addnumbers'] %}
     {% for module in modules %}
         {% if module.type in fullWidthModules %}
             <div class="w-full {{ module.type|lower }}-module">
