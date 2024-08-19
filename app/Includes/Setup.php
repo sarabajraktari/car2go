@@ -5,6 +5,8 @@ namespace Internship\Includes;
 use Internship\Interfaces\ModuleInterface;
 use Internship\Menus\Header;
 use Internship\Menus\Footer;
+use Internship\PostTypes\Car;
+
 
 class Setup {
     public static $loader;
@@ -33,12 +35,27 @@ class Setup {
             }
         }
 
+        $isSingleCarPage = false;
+        $carData = null;
+        $carsData = [];
+    
+        if (is_singular('car-post')) { 
+            $isSingleCarPage = true;
+            $carSlug = get_post_field('post_name', get_post());
+            $carData = Car::getSingleCarData($carSlug); 
+        } else {
+            $carsData = Car::getData();
+        }
+    
       $headerData = Header::getData(); 
       $footerData = Footer::getData();
         echo self::$twig->render('page.twig', [
             'modules' => $modules,
             'header' => $headerData,
-            'footer' => $footerData
+            'footer' => $footerData,
+            'car' => $carData, 
+            'cars' => $carsData, 
+            'is_single_car_page' => $isSingleCarPage,
         ]);
     }
 

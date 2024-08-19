@@ -4,4 +4,7 @@
     <div class="w-full">
         {{ include("modules.twig") }}
     </div>
+          {% if is_single_car_page %}
+             {{ include("templates/single-car.twig", { car: car }) }} 
+        {% endif %} 
 {% endblock %}

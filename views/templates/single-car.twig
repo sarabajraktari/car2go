@@ -1,0 +1,38 @@
+<div class="flex flex-col p-4 space-y-6">
+    <!-- Title and Description -->
+    <div class="text-center">
+        <div class="font-bold text-2xl mb-4">
+            {{ car.title_and_description|raw }}
+        </div>
+    </div>
+
+    <!-- Container for Features and Image -->
+    <div class="flex flex-col md:flex-row space-y-6 md:space-y-0">
+        <!-- Features -->
+        {% if car.car_features %}
+            <div class="w-full md:w-1/2 p-4">
+                <div class="space-y-4">
+                    {% for feature in car.car_features %}
+                        <div class="flex items-start space-x-4">
+                            {% if feature.icon %}
+                                <img src="{{ feature.icon.url }}" alt="{{ feature.icon.alt|e }}" class="w-8 h-8">
+                            {% endif %}
+                            <div>
+                                {% if feature.features %}
+                                    <p>{{ feature.features }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Image -->
+        {% if car.car_image %}
+            <div class="w-full md:w-1/2 p-4">
+                <img src="{{ car.car_image.url }}" alt="{{ car.car_image.alt|e }}" class="w-full h-auto object-cover">
+            </div>
+        {% endif %}
+    </div>
+</div>
