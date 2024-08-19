@@ -1,7 +1,7 @@
 
 
 #add-numbers-module {
-    @apply relative bg-[#0F0F0F] text-white py-10 max-w-7xl mx-auto;
+    @apply relative bg-black text-white py-10 max-w-7xl mx-auto;
 }
 
 .car-photo {
@@ -37,7 +37,7 @@
 }
 
 .plus-sign {
-   @apply text-[30px] inline-block ml-px;
+   @apply text-[25px] inline-block ml-px;
 }
 
 .module-numbers {
