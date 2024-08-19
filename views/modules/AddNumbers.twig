@@ -18,7 +18,7 @@
                 {% endif %}
                 <div class="number-content">
                     <h3 class="number-title" data-target="{{ number.number_title }}" data-index="{{ loop.index }}">0</h3>
-                    <p class="number-description">{{ number.number_description|raw }}</p>
+                    <div class="number-description">{{ number.number_description|raw }}</div>
                 </div>
             </div>
         {% endfor %}

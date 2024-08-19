@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const numbers = document.querySelectorAll('.number-title');
     const duration = 2000;
 
-
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -28,15 +27,15 @@ document.addEventListener('DOMContentLoaded', function () {
             if (startValue >= endValue) {
                 clearInterval(timer);
                 if (index === 1) {
-                    element.textContent = endValue + 'K+'; 
+                    element.innerHTML = `<span class="number-value">${endValue}K</span><span class="plus-sign">+</span>`; 
                 } else {
-                    element.textContent = endValue + '+'; 
+                    element.innerHTML = `<span class="number-value">${endValue}</span><span class="plus-sign">+</span>`; 
                 }
             } else {
                 if (index === 1) {
-                    element.textContent = Math.floor(startValue) + 'K+';
+                    element.innerHTML = `<span class="number-value">${Math.floor(startValue)}K</span><span class="plus-sign">+</span>`; 
                 } else {
-                    element.textContent = Math.floor(startValue) + '+'; 
+                    element.innerHTML = `<span class="number-value">${Math.floor(startValue)}</span><span class="plus-sign">+</span>`; 
                 }
             }
         }, 20);
