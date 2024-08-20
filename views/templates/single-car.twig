@@ -1,28 +1,25 @@
-<div class="relative flex flex-col p-4 space-y-6 items-center">
+<div class="relative flex flex-col p-4 space-y-6 items-center w-full">
     <!-- Title and Description -->
-    <div id="car_title_and_description" class="text-center">
-        {{ car.title_and_description|raw }}
-    </div>
+    <div class="text-center text-black font-bold text-4xl ">{{ car.title }}</div>
+    <div class="text-center text-base font-semibold text-gray-600 max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[16px] lg:max-w-[60%]">{{ car.description|raw }}</div>
 
-    <!-- Features and Car Image Section -->
-    <div class="relative flex flex-col md:flex-row items-center p-8 md:space-x-[-4rem] space-y-8 md:space-y-0">
+    <div class="relative flex flex-col md:flex-row items-center p-8 md:space-x-[-5rem] space-y-8 md:space-y-0 w-full">
         <!-- Features Section -->
-        <div class="relative z-10 w-full md:w-1/3 space-y-2">
+        <div class="relative z-10 w-full md:w-1/4 space-y-2">
             {% for feature in car.car_features %}
-                <div class="flex items-start p-3 bg-white border border-gray-200 rounded-lg shadow-md space-x-4">
-                        <div class="bg-gray-100 p-3 rounded-xl flex-shrink-0">
-                            <img src="{{ feature.icon.url }}" class="w-8 h-8">
-                        </div>
-                        <div class="text-gray-950">{{ feature.features }}</div>
+                <div class="flex items-start p-4 bg-white border border-gray-200 rounded-lg shadow-md space-x-4">
+                    <div class="bg-gray-100 p-4 rounded-xl flex-shrink-0">
+                        <img src="{{ feature.icon.url }}" class="w-8 h-8">
+                    </div>
+                    <div class="text-gray-800 text-lg pt-4">{{ feature.features }}</div>
                 </div>
             {% endfor %}
         </div>
 
-        <!-- Car Image Section -->
-        <div class="relative w-full md:w-7/8 flex justify-center pl-">
-            <div class="bg-gray-100 rounded-lg p-5 py-20 px-16 shadow-md">
-                    <img src="{{ car.car_image.url }}" class="w-full h-auto object-cover">
-            </div>
-        </div>
-    </div>
+      <!-- Car Image Section -->
+      <div class="relative w-full md:w-4/5 flex justify-center">
+        <div class="bg-gray-100 rounded-lg p-5 shadow-md w-full flex justify-center">
+        <img src="{{ car.car_image.url }}" class="w-full h-auto object-contain md:w-4/5 rounded-xl">
+       </div>
+      </div>
 </div>

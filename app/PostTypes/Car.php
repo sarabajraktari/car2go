@@ -8,7 +8,7 @@ class Car {
 
     public static function getSingleCarData($carSlug) {
         $args = array(
-            'post_type' => 'car-post',
+            'post_type' => 'cars',
             'name' => $carSlug, // Filter by the car slug (used in the URL)
             'posts_per_page' => 1 
         );
@@ -21,7 +21,8 @@ class Car {
             $carDetails = get_field('car_details', $carID);
 
             $carData = [
-                'title_and_description' => $carDetails['title_and_description'],
+                'title' => get_the_title($carID),
+                'description' => $carDetails['description'],
                 'car_image' => $carDetails['car_image'],
                 'car_features' => $carDetails['car_features']
             ];
