@@ -60,6 +60,12 @@ add_filter('acf/settings/load_json', function($paths) {
     return $paths;
 });
 
+
+add_filter('timber/context', function($context) {
+    $context['home_url'] = home_url();
+});
+
+
 // Register navigation menus
 add_action('after_setup_theme', function () {
     register_nav_menus([
@@ -106,4 +112,81 @@ if (function_exists('acf_add_options_page')) {
     ));
 }
 
+// Register Custom Post Type for Car Posts
+add_action( 'init', function() {
+	register_post_type( 'car-post', array(
+		'labels' => array(
+			'name' => 'Car Posts',
+			'singular_name' => 'Car Post',
+			'menu_name' => 'Car Posts',
+			'all_items' => 'All Car Posts',
+			'edit_item' => 'Edit Car Post',
+			'view_item' => 'View Car Post',
+			'view_items' => 'View Car Posts',
+			'add_new_item' => 'Add New Car Post',
+			'new_item' => 'New Car Post',
+			'parent_item_colon' => 'Parent Car Post:',
+			'search_items' => 'Search Car Posts',
+			'not_found' => 'No car posts found',
+			'not_found_in_trash' => 'No car posts found in Trash',
+			'archives' => 'Car Post Archives',
+			'attributes' => 'Car Post Attributes',
+			'insert_into_item' => 'Insert into car post',
+			'uploaded_to_this_item' => 'Uploaded to this car post',
+			'filter_items_list' => 'Filter car posts list',
+			'filter_by_date' => 'Filter car posts by date',
+			'items_list_navigation' => 'Car Posts list navigation',
+			'items_list' => 'Car Posts list',
+			'item_published' => 'Car Post published.',
+			'item_published_privately' => 'Car Post published privately.',
+			'item_reverted_to_draft' => 'Car Post reverted to draft.',
+			'item_scheduled' => 'Car Post scheduled.',
+			'item_updated' => 'Car Post updated.',
+			'item_link' => 'Car Post Link',
+			'item_link_description' => 'A link to a car post.',
+		),
+		'public' => true,
+		'show_in_rest' => true,
+		'menu_position' => 30,
+		'menu_icon' => 'dashicons-car',
+		'supports' => array(
+			'title',
+			'revisions',
+			'thumbnail',
+		),
+		'delete_with_user' => false,
+	) );
+} );
+
+// Register Custom Taxonomy for Cars
+add_action( 'init', function() {
+	register_taxonomy( 'car', array( 'car-post' ), array(
+		'labels' => array(
+			'name' => 'Cars',
+			'singular_name' => 'Car',
+			'menu_name' => 'Cars',
+			'all_items' => 'All Cars',
+			'edit_item' => 'Edit Car',
+			'view_item' => 'View Car',
+			'update_item' => 'Update Car',
+			'add_new_item' => 'Add New Car',
+			'new_item_name' => 'New Car Name',
+			'search_items' => 'Search Cars',
+			'popular_items' => 'Popular Cars',
+			'separate_items_with_commas' => 'Separate cars with commas',
+			'add_or_remove_items' => 'Add or remove cars',
+			'choose_from_most_used' => 'Choose from the most used cars',
+			'not_found' => 'No cars found',
+			'no_terms' => 'No cars',
+			'items_list_navigation' => 'Cars list navigation',
+			'items_list' => 'Cars list',
+			'back_to_items' => '← Go to cars',
+			'item_link' => 'Car Link',
+			'item_link_description' => 'A link to a car',
+		),
+		'public' => true,
+		'show_in_menu' => true,
+		'show_in_rest' => true,
+	) );
+} );
 

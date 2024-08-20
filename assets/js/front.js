@@ -5,4 +5,5 @@ import './test1.js';
 import './custom-splide.js';
 import './age-verification.js';
 import './scroll-to-top.js';
+import './AddNumbers.js';
 
