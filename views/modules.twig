@@ -1,4 +1,4 @@
-    {% set blackBackground = ['Banner','Addnumbers'] %}
+    {% set blackBackground = ['Banner','Addnumbers','Howitworks','Faq'] %}
     <div>
         {% for module in modules %}
             <div class="w-full {{ module.type|lower }}-module {{ module.type in blackBackground ? 'bg-black' : 'bg-white' }}">
