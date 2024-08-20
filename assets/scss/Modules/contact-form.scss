@@ -1,0 +1,51 @@
+.contact-form {
+    .mb-4 {
+        margin-bottom: 1rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db; 
+        border-radius: 0.5rem; 
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus {
+            border-color: #3b82f6; 
+            box-shadow: 0 0 0 0.125rem rgba(59, 130, 246, 0.5); 
+            outline: none;
+        }
+    }
+
+    textarea {
+        height: 8rem; 
+    }
+
+    input[type="submit"] {
+        background-color: #000; 
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem; 
+        width: 100%;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #111; 
+        }
+    }
+
+    .wpcf7-response-output {
+        margin-top: 1rem;
+        font-size: 1rem;
+        color: #000000; 
+    }
+
+    .wpcf7-spinner {
+        display: none !important; 
+    }    
+}
