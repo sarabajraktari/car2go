@@ -1,8 +1,8 @@
-{% set blackBackground = ['Banner'] %}
-<div>
-    {% for module in modules %}
-        <div class="w-full {{ module.type|lower }}-module {{ module.type in blackBackground ? 'bg-black' : 'bg-white' }}">
-            {{ renderModule(module, module.key) }}
-        </div>
-    {% endfor %}
-</div>
+    {% set blackBackground = ['Banner','Addnumbers','Howitworks','Faq'] %}
+    <div>
+        {% for module in modules %}
+            <div class="w-full {{ module.type|lower }}-module {{ module.type in blackBackground ? 'bg-black' : 'bg-white' }}">
+                {{ renderModule(module, module.key) }}
+            </div>
+        {% endfor %}
+    </div>
