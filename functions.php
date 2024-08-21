@@ -112,55 +112,53 @@ if (function_exists('acf_add_options_page')) {
     ));
 }
 
-// Register Custom Post Type for Car Posts
-add_action( 'init', function() {
-	register_post_type( 'car-post', array(
-		'labels' => array(
-			'name' => 'Car Posts',
-			'singular_name' => 'Car Post',
-			'menu_name' => 'Car Posts',
-			'all_items' => 'All Car Posts',
-			'edit_item' => 'Edit Car Post',
-			'view_item' => 'View Car Post',
-			'view_items' => 'View Car Posts',
-			'add_new_item' => 'Add New Car Post',
-			'new_item' => 'New Car Post',
-			'parent_item_colon' => 'Parent Car Post:',
-			'search_items' => 'Search Car Posts',
-			'not_found' => 'No car posts found',
-			'not_found_in_trash' => 'No car posts found in Trash',
-			'archives' => 'Car Post Archives',
-			'attributes' => 'Car Post Attributes',
-			'insert_into_item' => 'Insert into car post',
-			'uploaded_to_this_item' => 'Uploaded to this car post',
-			'filter_items_list' => 'Filter car posts list',
-			'filter_by_date' => 'Filter car posts by date',
-			'items_list_navigation' => 'Car Posts list navigation',
-			'items_list' => 'Car Posts list',
-			'item_published' => 'Car Post published.',
-			'item_published_privately' => 'Car Post published privately.',
-			'item_reverted_to_draft' => 'Car Post reverted to draft.',
-			'item_scheduled' => 'Car Post scheduled.',
-			'item_updated' => 'Car Post updated.',
-			'item_link' => 'Car Post Link',
-			'item_link_description' => 'A link to a car post.',
-		),
-		'public' => true,
-		'show_in_rest' => true,
-		'menu_position' => 30,
-		'menu_icon' => 'dashicons-car',
-		'supports' => array(
-			'title',
-			'revisions',
-			'thumbnail',
-		),
-		'delete_with_user' => false,
-	) );
-} );
 
+add_action( 'init', function() {
+	register_post_type( 'cars', array(
+	'labels' => array(
+		'name' => 'Cars',
+		'singular_name' => 'Cars',
+		'menu_name' => 'Cars',
+		'all_items' => 'All Cars',
+		'edit_item' => 'Edit Car',
+		'view_item' => 'View Car',
+		'view_items' => 'View Cars',
+		'add_new_item' => 'Add New Car',
+		'new_item' => 'New Car',
+		'parent_item_colon' => 'Parent Cars:',
+		'search_items' => 'Search Cars',
+		'not_found' => 'No cars found',
+		'not_found_in_trash' => 'No cars found in Trash',
+		'archives' => 'Cars Archives',
+		'attributes' => 'Cars Attributes',
+		'insert_into_item' => 'Insert into cars',
+		'uploaded_to_this_item' => 'Uploaded to this cars',
+		'filter_items_list' => 'Filter cars list',
+		'filter_by_date' => 'Filter cars by date',
+		'items_list_navigation' => 'Cars list navigation',
+		'items_list' => 'Cars list',
+		'item_published' => 'Cars published.',
+		'item_published_privately' => 'Cars published privately.',
+		'item_reverted_to_draft' => 'Cars reverted to draft.',
+		'item_scheduled' => 'Cars scheduled.',
+		'item_updated' => 'Cars updated.',
+		'item_link' => 'Cars Link',
+		'item_link_description' => 'A link to a cars.',
+	),
+	'public' => true,
+	'show_in_rest' => true,
+	'menu_position' => 30,
+	'menu_icon' => 'dashicons-car',
+	'supports' => array(
+		0 => 'title',
+		1 => 'revisions',
+	),
+	'delete_with_user' => false,
+) );
+} );
 // Register Custom Taxonomy for Cars
 add_action( 'init', function() {
-	register_taxonomy( 'car', array( 'car-post' ), array(
+	register_taxonomy( 'car', array( 'cars' ), array(
 		'labels' => array(
 			'name' => 'Cars',
 			'singular_name' => 'Car',

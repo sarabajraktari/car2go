@@ -38,7 +38,7 @@ class Setup {
         $isSingleCarPage = false;
         $carData = null;
     
-        if (is_singular('car-post')) { 
+        if (is_singular('cars')) { 
             $isSingleCarPage = true;
             $carSlug = get_post_field('post_name', get_post());
             $carData = Car::getSingleCarData($carSlug); 

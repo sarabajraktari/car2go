@@ -21,8 +21,8 @@
                 "sub_fields": [
                     {
                         "key": "field_66c0f06f9d809",
-                        "label": "Title and Description",
-                        "name": "title_and_description",
+                        "label": "Description",
+                        "name": "description",
                         "aria-label": "",
                         "type": "wysiwyg",
                         "instructions": "",
@@ -143,7 +143,7 @@
                 {
                     "param": "post_type",
                     "operator": "==",
-                    "value": "car-post"
+                    "value": "cars"
                 }
             ]
         ],
