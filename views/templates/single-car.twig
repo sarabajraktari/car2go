@@ -1,9 +1,9 @@
-<div class="relative flex flex-col p-4 space-y-6 items-center w-full">
+<div class="relative flex flex-col p-4 space-y-6 items-center w-full md:w-4/5 mx-auto">
     <!-- Title and Description -->
     <div class="text-center text-black font-bold text-4xl ">{{ car.title }}</div>
     <div class="text-center text-base font-semibold text-gray-600 max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[16px] lg:max-w-[60%]">{{ car.description|raw }}</div>
 
-    <div class="relative flex flex-col md:flex-row items-center p-8 md:space-x-[-5rem] space-y-8 md:space-y-0 w-full">
+    <div class="relative flex flex-col md:flex-row items-center md:p-8 md:space-x-[-5rem] space-y-8 md:space-y-0 w-full">
         <!-- Features Section -->
         <div class="relative z-10 w-full md:w-1/4 space-y-2">
             {% for feature in car.car_features %}
@@ -18,7 +18,7 @@
 
       <!-- Car Image Section -->
       <div class="relative w-full md:w-4/5 flex justify-center">
-        <div class="bg-gray-100 rounded-lg p-5 shadow-md w-full flex justify-center">
+        <div class="md:bg-gray-100 bg-transparent rounded-lg md:p-5 md:shadow-md w-full flex justify-center">
         <img src="{{ car.car_image.url }}" class="w-full h-auto object-contain md:w-4/5 rounded-xl">
        </div>
       </div>
