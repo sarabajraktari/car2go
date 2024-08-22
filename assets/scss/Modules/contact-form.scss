@@ -46,6 +46,42 @@
     }
 
     .wpcf7-spinner {
-        display: none !important; 
-    }    
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw; /* Full width */
+        height: 100vh; /* Full height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.0); /* Semi-transparent background */
+        z-index: 1000;
+        pointer-events: auto; /* Ensures it can be clicked */
+    }
+
+    @media (max-width: 768px) {
+        .wpcf7-spinner {
+            left: -25px; /* Set left to 25px for screens smaller than 760px */
+        }
+    }
+
+    .wpcf7-spinner::after {
+        content: "";
+        border: 4px solid rgba(0, 0, 0, 0.5);
+        border-top-color: transparent;
+        background-color: #fff; 
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
 }
