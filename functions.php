@@ -13,7 +13,7 @@ add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
 function enqueue_custom_scripts() {
     // Enqueue your custom JavaScript file
-    wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/header-mobile-menu.js', array(), null, true);
+    wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/modules/header-mobile-menu.js', array(), null, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
 
@@ -25,7 +25,7 @@ function enqueue_splide_assets() {
     wp_enqueue_script('splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/js/splide.min.js', array(), '3.6.9', true);
     
     // Enqueue your custom JS to initialize Splide
-    wp_enqueue_script('custom-splide-js', get_template_directory_uri() . '/assets/js/custom-splide.js', array('splide-js'), '1.0.0', true);
+    wp_enqueue_script('custom-splide-js', get_template_directory_uri() . '/assets/js/modules/custom-splide.js', array('splide-js'), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_splide_assets');
 
