@@ -18,6 +18,9 @@ module.exports = {
       animation: {
         'slide-in': 'slideIn 1s ease-out forwards',
       },
+      maxWidth: {
+        '5.5xl': '67rem',
+      },
     },
   },
   plugins: [],
