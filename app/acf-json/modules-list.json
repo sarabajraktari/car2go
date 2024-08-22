@@ -513,6 +513,26 @@
                         "display": "block",
                         "sub_fields": [
                             {
+                                "key": "field_66c65407bc9df",
+                                "label": "Title and Description",
+                                "name": "title_and_description",
+                                "aria-label": "",
+                                "type": "wysiwyg",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "tabs": "all",
+                                "toolbar": "full",
+                                "media_upload": 1,
+                                "delay": 0
+                            },
+                            {
                                 "key": "field_66bb70eaf3ae9",
                                 "label": "FAQ",
                                 "name": "faq",
@@ -576,6 +596,26 @@
                                         "parent_repeater": "field_66bb70eaf3ae9"
                                     }
                                 ]
+                            },
+                            {
+                                "key": "field_66c64dc6f3e78",
+                                "label": "E-mail",
+                                "name": "e-mail",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "car2goks@gmail.com",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": ""
                             }
                         ],
                         "min": "",
