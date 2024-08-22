@@ -87,7 +87,9 @@ if (function_exists('acf_add_options_page')) {
         'menu_title' => 'Header Settings',
         'menu_slug' => 'header-settings',
         'capability' => 'edit_posts',
-        'redirect' => false
+        'redirect' => false,
+		'position' => 10,  
+        'icon_url' => 'dashicons-admin-customizer',
     ));
 }
 
