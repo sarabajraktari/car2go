@@ -513,26 +513,6 @@
                         "display": "block",
                         "sub_fields": [
                             {
-                                "key": "field_66c65407bc9df",
-                                "label": "Title and Description",
-                                "name": "title_and_description",
-                                "aria-label": "",
-                                "type": "wysiwyg",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": "",
-                                "tabs": "all",
-                                "toolbar": "full",
-                                "media_upload": 1,
-                                "delay": 0
-                            },
-                            {
                                 "key": "field_66bb70eaf3ae9",
                                 "label": "FAQ",
                                 "name": "faq",
@@ -596,26 +576,6 @@
                                         "parent_repeater": "field_66bb70eaf3ae9"
                                     }
                                 ]
-                            },
-                            {
-                                "key": "field_66c64dc6f3e78",
-                                "label": "E-mail",
-                                "name": "e-mail",
-                                "aria-label": "",
-                                "type": "text",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": "car2goks@gmail.com",
-                                "maxlength": "",
-                                "placeholder": "",
-                                "prepend": "",
-                                "append": ""
                             }
                         ],
                         "min": "",
@@ -842,6 +802,175 @@
                                 "max_size": "",
                                 "mime_types": "",
                                 "preview_size": "medium"
+                            }
+                        ],
+                        "min": "",
+                        "max": ""
+                    },
+                    "layout_66c71f3be2814": {
+                        "key": "layout_66c71f3be2814",
+                        "name": "ourteam",
+                        "label": "OurTeam",
+                        "display": "block",
+                        "sub_fields": [
+                            {
+                                "key": "field_66c71f46e2816",
+                                "label": "OurTeam",
+                                "name": "our_team",
+                                "aria-label": "",
+                                "type": "repeater",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "layout": "table",
+                                "min": 0,
+                                "max": 0,
+                                "collapsed": "",
+                                "button_label": "Add Row",
+                                "rows_per_page": 20,
+                                "sub_fields": [
+                                    {
+                                        "key": "field_66c71f53e2817",
+                                        "label": "Name",
+                                        "name": "name",
+                                        "aria-label": "",
+                                        "type": "text",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "default_value": "",
+                                        "maxlength": "",
+                                        "placeholder": "",
+                                        "prepend": "",
+                                        "append": "",
+                                        "parent_repeater": "field_66c71f46e2816"
+                                    },
+                                    {
+                                        "key": "field_66c71f75e2818",
+                                        "label": "Job Title",
+                                        "name": "job_title",
+                                        "aria-label": "",
+                                        "type": "text",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "default_value": "",
+                                        "maxlength": "",
+                                        "placeholder": "",
+                                        "prepend": "",
+                                        "append": "",
+                                        "parent_repeater": "field_66c71f46e2816"
+                                    },
+                                    {
+                                        "key": "field_66c71f93e2819",
+                                        "label": "Image",
+                                        "name": "image",
+                                        "aria-label": "",
+                                        "type": "image",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "return_format": "array",
+                                        "library": "all",
+                                        "min_width": "",
+                                        "min_height": "",
+                                        "min_size": "",
+                                        "max_width": "",
+                                        "max_height": "",
+                                        "max_size": "",
+                                        "mime_types": "",
+                                        "preview_size": "medium",
+                                        "parent_repeater": "field_66c71f46e2816"
+                                    },
+                                    {
+                                        "key": "field_66c71fa1e281a",
+                                        "label": "Social Media",
+                                        "name": "social_media",
+                                        "aria-label": "",
+                                        "type": "repeater",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "layout": "table",
+                                        "pagination": 0,
+                                        "min": 0,
+                                        "max": 0,
+                                        "collapsed": "",
+                                        "button_label": "Add Row",
+                                        "rows_per_page": 20,
+                                        "sub_fields": [
+                                            {
+                                                "key": "field_66c71fb4e281b",
+                                                "label": "Platform",
+                                                "name": "platform",
+                                                "aria-label": "",
+                                                "type": "image",
+                                                "instructions": "",
+                                                "required": 0,
+                                                "conditional_logic": 0,
+                                                "wrapper": {
+                                                    "width": "",
+                                                    "class": "",
+                                                    "id": ""
+                                                },
+                                                "return_format": "array",
+                                                "library": "all",
+                                                "min_width": "",
+                                                "min_height": "",
+                                                "min_size": "",
+                                                "max_width": "",
+                                                "max_height": "",
+                                                "max_size": "",
+                                                "mime_types": "",
+                                                "preview_size": "medium",
+                                                "parent_repeater": "field_66c71fa1e281a"
+                                            },
+                                            {
+                                                "key": "field_66c71fbfe281c",
+                                                "label": "URL",
+                                                "name": "url",
+                                                "aria-label": "",
+                                                "type": "link",
+                                                "instructions": "",
+                                                "required": 0,
+                                                "conditional_logic": 0,
+                                                "wrapper": {
+                                                    "width": "",
+                                                    "class": "",
+                                                    "id": ""
+                                                },
+                                                "return_format": "array",
+                                                "parent_repeater": "field_66c71fa1e281a"
+                                            }
+                                        ],
+                                        "parent_repeater": "field_66c71f46e2816"
+                                    }
+                                ]
                             }
                         ],
                         "min": "",
