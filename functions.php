@@ -190,3 +190,49 @@ add_action( 'init', function() {
 	) );
 } );
 
+// author post type
+
+add_action( 'init', function() {
+	register_post_type( 'authors', array(
+	'labels' => array(
+		'name' => 'Authors',
+		'singular_name' => 'Author',
+		'menu_name' => 'Authors',
+		'all_items' => 'All Authors',
+		'edit_item' => 'Edit Author',
+		'view_item' => 'View Author',
+		'view_items' => 'View Authors',
+		'add_new_item' => 'Add New Author',
+		'new_item' => 'New Author',
+		'parent_item_colon' => 'Parent Author:',
+		'search_items' => 'Search Authors',
+		'not_found' => 'No authors found',
+		'not_found_in_trash' => 'No authors found in Trash',
+		'archives' => 'Author Archives',
+		'attributes' => 'Author Attributes',
+		'insert_into_item' => 'Insert into author',
+		'uploaded_to_this_item' => 'Uploaded to this author',
+		'filter_items_list' => 'Filter authors list',
+		'filter_by_date' => 'Filter authors by date',
+		'items_list_navigation' => 'Authors list navigation',
+		'items_list' => 'Authors list',
+		'item_published' => 'Author published.',
+		'item_published_privately' => 'Author published privately.',
+		'item_reverted_to_draft' => 'Author reverted to draft.',
+		'item_scheduled' => 'Author scheduled.',
+		'item_updated' => 'Author updated.',
+		'item_link' => 'Author Link',
+		'item_link_description' => 'A link to a author.',
+	),
+	'public' => true,
+	'show_in_rest' => true,
+	'menu_position' => 30,
+	'menu_icon' => 'dashicons-admin-users',
+	'supports' => array(
+		0 => 'title',
+		1 => 'revisions',
+	),
+	'delete_with_user' => false,
+) );
+} );
+
