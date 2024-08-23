@@ -6,6 +6,7 @@ use Internship\Interfaces\ModuleInterface;
 use Internship\Menus\Header;
 use Internship\Menus\Footer;
 use Internship\PostTypes\Car;
+use Internship\PostTypes\Author;
 
 
 class Setup {
@@ -43,6 +44,16 @@ class Setup {
             $carSlug = get_post_field('post_name', get_post());
             $carData = Car::getSingleCarData($carSlug); 
         } 
+
+        $Author = false;
+        $authorData = null;
+
+        if(is_singular('authors')) {
+            $Author = true;
+            $authorSlug = get_post_field('post_name', get_post());
+            $authorData = Author::getSingleAuthorData($authorSlug);
+        }
+    
     
       $headerData = Header::getData(); 
       $footerData = Footer::getData();
@@ -52,6 +63,8 @@ class Setup {
             'footer' => $footerData,
             'car' => $carData, 
             'is_single_car_page' => $isSingleCarPage,
+            'author' => $authorData,
+            'is_author_page' => $Author,
         ]);
     }
 
