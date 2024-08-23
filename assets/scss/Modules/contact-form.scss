@@ -1,0 +1,87 @@
+.contact-form {
+    .mb-4 {
+        margin-bottom: 1rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db; 
+        border-radius: 0.5rem; 
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:focus {
+            border-color: #3b82f6; 
+            box-shadow: 0 0 0 0.125rem rgba(59, 130, 246, 0.5); 
+            outline: none;
+        }
+    }
+
+    textarea {
+        height: 8rem; 
+    }
+
+    input[type="submit"] {
+        background-color: #000; 
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem; 
+        width: 100%;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #111; 
+        }
+    }
+
+    .wpcf7-response-output {
+        margin-top: 1rem;
+        font-size: 1rem;
+        color: #000000; 
+    }
+
+    .wpcf7-spinner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw; /* Full width */
+        height: 100vh; /* Full height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.0); /* Semi-transparent background */
+        z-index: 1000;
+        pointer-events: auto; /* Ensures it can be clicked */
+    }
+
+    @media (max-width: 768px) {
+        .wpcf7-spinner {
+            left: -25px; /* Set left to 25px for screens smaller than 760px */
+        }
+    }
+
+    .wpcf7-spinner::after {
+        content: "";
+        border: 4px solid rgba(0, 0, 0, 0.5);
+        border-top-color: transparent;
+        background-color: #fff; 
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
