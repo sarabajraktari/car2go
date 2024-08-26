@@ -22,12 +22,10 @@ class Author {
 
             $authorData = [
                 'title' => get_the_title($authorID),
-                'author_image' => $authorDetails['author_image'],
+                'author_image' => get_the_post_thumbnail_url($authorID, 'full'),
                 'author_location' => $authorDetails['author_location'],
-                'author_description' => $authorDetails['author_description'],
+                'author_description' => apply_filters('the_content', get_the_content($authorID)),
             ];
-
-            
 
             wp_reset_postdata(); 
 

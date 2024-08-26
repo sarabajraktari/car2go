@@ -229,10 +229,11 @@ add_action( 'init', function() {
 	'menu_position' => 30,
 	'menu_icon' => 'dashicons-admin-users',
 	'supports' => array(
-		0 => 'title',
-		1 => 'revisions',
-	),
+            0 => 'title',
+            1 => 'editor',
+            2 => 'thumbnail',
+            4 => 'revisions'
+        ),
 	'delete_with_user' => false,
 ) );
 } );
-
