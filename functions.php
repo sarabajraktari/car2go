@@ -42,6 +42,13 @@ function remove_editor_from_page() {
 }
 add_action('init', 'remove_editor_from_page');
 
+function my_theme_setup() {
+    // Enable support for Post Thumbnails on posts and pages
+    add_theme_support('post-thumbnails');
+}
+add_action('after_setup_theme', 'my_theme_setup');
+
+
 //! Check if acf field plugin is active
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 if (!is_plugin_active('advanced-custom-fields-pro/acf.php')) {
@@ -152,9 +159,11 @@ add_action( 'init', function() {
 	'menu_position' => 30,
 	'menu_icon' => 'dashicons-car',
 	'supports' => array(
-		0 => 'title',
-		1 => 'revisions',
-	),
+            0 => 'title',
+            1 => 'editor',
+            2 => 'thumbnail',
+            4 => 'revisions'
+        ),
 	'delete_with_user' => false,
 ) );
 } );
@@ -189,4 +198,3 @@ add_action( 'init', function() {
 		'show_in_rest' => true,
 	) );
 } );
-
