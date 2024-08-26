@@ -1,0 +1,14 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-600">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full flex flex-col space-y-4">
+        <div class="flex items-start space-x-6">
+                <img class="w-20 h-20 rounded-full" src="{{ author.author_image }}" alt="{{ author.author_image.alt }}">
+            <div class="flex flex-col justify-start">
+                <div class="text-2xl font-bold text-gray-800">{{ author.title }}</div>
+                <div class="text-gray-500">{{ author.author_location }}</div>
+            </div>
+        </div>
+        <div class="text-gray-700 mt-4">
+            {{ author.author_description|raw }}
+        </div>
+    </div>
+</div>

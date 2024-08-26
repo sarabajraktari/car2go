@@ -7,4 +7,10 @@
           {% if is_single_car_page %}
              {{ include("templates/single-car.twig", { car: car }) }} 
         {% endif %} 
+
+        {% if is_author_page %}
+           {{ include("templates/author.twig", { author: author  }) }}
+        {% endif %}   
+        
+
 {% endblock %}
