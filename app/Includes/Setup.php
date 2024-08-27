@@ -6,13 +6,14 @@ use Internship\Interfaces\ModuleInterface;
 use Internship\Menus\Header;
 use Internship\Menus\Footer;
 use Internship\PostTypes\Car;
-
+use Internship\PostTypes\Author;
+use Internship\PostTypes\Cards;
 
 class Setup {
     public static $loader;
     public static $twig;
 
-    public static function renderPage() { //! Render the page.twig with all the modules
+    public static function renderPage() { 
         self::addToTwig();
 
         $modules = [];
@@ -43,15 +44,38 @@ class Setup {
             $carSlug = get_post_field('post_name', get_post());
             $carData = Car::getSingleCarData($carSlug); 
         } 
+
+        $isAuthorPage = false;
+        $authorData = null;
+
+        if (is_singular('authors')) {
+            $isAuthorPage = true;
+            $authorSlug = get_post_field('post_name', get_post());
+            $authorData = Author::getSingleAuthorData($authorSlug);
+        }
+
+        $isCardsPage = false;
+        $cardsData = null;
+
+        if (is_singular('cards')) {
+            $isCardsPage = true;
+            $postType = get_post_meta(get_the_ID(), 'post_type', true);
+            $cardsData = Cards::getCardData($postType);
+        }
     
-      $headerData = Header::getData(); 
-      $footerData = Footer::getData();
+        $headerData = Header::getData(); 
+        $footerData = Footer::getData();
+
         echo self::$twig->render('page.twig', [
             'modules' => $modules,
             'header' => $headerData,
             'footer' => $footerData,
             'car' => $carData, 
             'is_single_car_page' => $isSingleCarPage,
+            'author' => $authorData,
+            'is_author_page' => $isAuthorPage,
+            'cards' => $cardsData,
+            'is_cards_page' => $isCardsPage,
         ]);
     }
 

@@ -190,3 +190,81 @@ add_action( 'init', function() {
 	) );
 } );
 
+// Registered 'Cards' Custom Post Type
+add_action('init', function() {
+    register_post_type('cards', array(
+        'labels' => array(
+            'name' => 'Cards',
+            'singular_name' => 'Card',
+            'menu_name' => 'Cards',
+            'all_items' => 'All Cards',
+            'edit_item' => 'Edit Card',
+            'view_item' => 'View Card',
+            'view_items' => 'View Cards',
+            'add_new_item' => 'Add New Card',
+            'new_item' => 'New Card',
+            'parent_item_colon' => 'Parent Card:',
+            'search_items' => 'Search Cards',
+            'not_found' => 'No cards found',
+            'not_found_in_trash' => 'No cards found in Trash',
+            'archives' => 'Card Archives',
+            'attributes' => 'Card Attributes',
+            'insert_into_item' => 'Insert into card',
+            'uploaded_to_this_item' => 'Uploaded to this card',
+            'filter_items_list' => 'Filter cards list',
+            'filter_by_date' => 'Filter cards by date',
+            'items_list_navigation' => 'Cards list navigation',
+            'items_list' => 'Cards list',
+            'item_published' => 'Card published.',
+            'item_published_privately' => 'Card published privately.',
+            'item_reverted_to_draft' => 'Card reverted to draft.',
+            'item_scheduled' => 'Card scheduled.',
+            'item_updated' => 'Card updated.',
+            'item_link' => 'Card Link',
+            'item_link_description' => 'A link to a card.',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'menu_position' => 5,
+        'menu_icon' => 'dashicons-index-card',
+        'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+        'delete_with_user' => false,
+    ));
+});
+
+// Added meta box to select post type in 'Cards' post type
+function add_post_type_meta_box() {
+    add_meta_box(
+        'select_post_type',
+        'Select Post Type',
+        'render_post_type_meta_box',
+        'cards',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'add_post_type_meta_box');
+
+function render_post_type_meta_box($post) {
+    $postTypes = get_post_types(array('public' => true), 'objects');
+    $selectedPostType = get_post_meta($post->ID, 'post_type', true);
+
+    echo '<label for="post_type_select">Choose a post type:</label>';
+    echo '<select name="post_type_select" id="post_type_select">';
+    foreach ($postTypes as $postType) {
+        echo '<option value="' . esc_attr($postType->name) . '" ' . selected($selectedPostType, $postType->name, false) . '>' . esc_html($postType->label) . '</option>';
+    }
+    echo '</select>';
+}
+
+// In this section of code we Save the selected post type
+function save_post_type_meta_box($post_id) {
+    if (array_key_exists('post_type_select', $_POST)) {
+        update_post_meta(
+            $post_id,
+            'post_type',
+            $_POST['post_type_select']
+        );
+    }
+}
+add_action('save_post', 'save_post_type_meta_box');
