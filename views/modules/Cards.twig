@@ -1,0 +1,40 @@
+<div class="cards-container">
+  <div class="cards-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+    {% for post in data %}
+      <div class="card-item bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="relative">
+          <img src="{{ post.thumbnail }}" alt="{{ post.title }}" class="w-full h-60 object-cover rounded-t-lg">
+        </div>
+        <div class="p-6">
+          <h2 class="text-2xl font-semibold text-gray-800">{{ post.title }}</h2>
+          <p class="mt-2 text-gray-600 description-line-clamp">
+            {{ post.description  [:100] }}<span class="hidden">{{ post.description [100:] }}</span>
+          </p>
+          <button class="text-blue-500 show-more-button" onclick="toggleDescription(this)">Show More</button>
+          <div class="see-more-button-container mt-4">
+            <a href="{{ post.link }}" class="flex items-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40">
+              Read More
+              <svg class="ml-2 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  function toggleDescription(button) {
+    const description = button.previousElementSibling;
+    const hiddenText = description.querySelector('span');
+    if (hiddenText.classList.contains('hidden')) {
+      hiddenText.classList.remove('hidden');
+      button.textContent = 'Show Less';
+    } else {
+      hiddenText.classList.add('hidden');
+      button.textContent = 'Show More';
+    }
+  }
+</script> 
