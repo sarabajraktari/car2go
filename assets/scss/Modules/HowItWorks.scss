@@ -1,32 +1,23 @@
 #how-it-works-module {
-    @apply bg-black; 
-    @apply py-12;
-    @apply text-center;
-    @apply text-white; 
-    @apply max-w-screen-xl mx-auto;
+    @apply bg-gray-100 py-12 text-center max-w-screen-xl mx-auto;
 }
 .module-header {
     @apply mb-8;
 
     h2{
-    @apply text-[2.7rem]; 
-    @apply font-bold;
-    @apply text-white; 
+    @apply text-[2.7rem] font-bold text-white; 
     }
 
     p{
-     @apply mt-6;
-    @apply text-white; 
-    @apply text-[20px];
-    @apply font-[350]; 
+     @apply mt-6 text-black text-[20px] font-[350]; 
     }
 }
 .module-title {
     h2{
-        @apply text-2xl font-bold text-center pb-6 sm:text-3xl lg:text-4xl sm:max-w-[50%] lg:max-w-[40%] mx-auto;
+        @apply text-2xl font-bold text-center pb-6 text-black sm:text-3xl lg:text-4xl sm:max-w-[50%] lg:max-w-[40%] mx-auto;
     }
     p{
-        @apply text-base text-center font-semibold text-white max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[18px] lg:max-w-[40%];
+        @apply text-base text-center font-semibold text-black max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[18px] lg:max-w-[40%];
     }
 }
 
@@ -34,32 +25,30 @@
 .module-steps {
     @apply flex justify-around mx-auto py-8 text-center;
 }
+.step:hover {
+    @apply bg-gray-100;
+}
 .step {
-    @apply flex-1 mx-4 p-4 bg-black text-white justify-center;
+    @apply flex-1 mx-4 p-4 bg-gray-200 text-black justify-center;
 }
 .step-icon {
     @apply flex justify-center items-center mb-4;
 }
 .step-title {
-    @apply text-xl;
-    @apply font-semibold;
-    @apply text-white;
+    @apply text-xl font-semibold text-black;
 }
 .step-description {
     @apply mt-2;
-    @apply text-gray-300; 
 }
 @media (max-width: 768px) {
     .module-steps {
-        @apply flex flex-col;
-        @apply items-center;
+        @apply flex flex-col items-center;
     }
     .step {
         // @apply max-w-[70%];
     }
     .step-icon img{
-        @apply w-[10rem]; 
-        @apply h-[10rem]; 
+        @apply w-[10rem] h-[10rem]; 
     }
     .step-title{
         @apply text-2xl;

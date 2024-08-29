@@ -1,14 +1,5 @@
-
-
 #add-numbers-module {
     @apply relative bg-black text-white py-10 max-w-7xl mx-auto;
-}
-
-.car-photo {
-    @apply absolute top-0 left-0 py-14;
-    img {
-        @apply h-28 w-auto;
-    }
 }
 
 .lines-photo {
@@ -37,7 +28,7 @@
 }
 
 .plus-sign {
-   @apply text-[25px] inline-block ml-px;
+    @apply text-[25px] inline-block mb-1;
 }
 
 .module-numbers {
