@@ -23,7 +23,10 @@ class Cards implements ModuleInterface {
         if (!$post_type) {
             return [];
         }
-    
+
+        $enable_load_more = $flexibleContent['enable_load_more'] ?? false;
+        $item_number = ($enable_load_more && !empty($flexibleContent['item_number'])) ? $flexibleContent['item_number'] : 0;
+
         $posts = [];
 
         // Check the selected post type and fetch data accordingly
@@ -49,7 +52,7 @@ class Cards implements ModuleInterface {
         } else if ($post_type === 'Authors') {
             $query = new \WP_Query([
                 'post_type' => 'authors',
-                'posts_per_page' => -1,
+                'posts_per_page' => -1, 
             ]);
 
             if ($query->have_posts()) {
@@ -66,12 +69,18 @@ class Cards implements ModuleInterface {
             }
         }
 
-        return $posts;
+        return [
+            'posts' => $posts,
+            'enable_load_more' => $enable_load_more,
+            'item_number' => $item_number,
+        ];
     }
 
     public static function render($key, $data) {
         Setup::view('modules/Cards.twig', [
-            'data' => $data,
+            'data' => $data['posts'],
+            'enable_load_more' => $data['enable_load_more'],
+            'item_number' => $data['item_number'],
         ]);
     }
 }
