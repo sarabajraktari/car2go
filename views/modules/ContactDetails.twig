@@ -1,0 +1,17 @@
+<section id="contact-details-module" class="py-10">
+    <div class="module-details flex flex-col lg:flex-row gap-4 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 items-center justify-center">
+        {% for details in data.details %}
+            <div class="detail bg-white rounded-lg shadow-lg p-4 text-center flex flex-col items-center w-full max-w-xs sm:max-w-sm lg:max-w-[14rem] transition-colors duration-300 hover:bg-black hover:text-white">
+                {% if details.details_image %}
+                    <div class="details-icon mb-2 flex justify-center items-center w-12 h-12 rounded-full bg-black">
+                        <img class="w-6 h-6" src="{{ details.details_image.url }}" alt="{{ details.details_image.alt }}" title="{{ details.details_image.title }}">
+                    </div>
+                {% endif %}
+                <div class="details-content">
+                    <h3 class="details-title font-bold text-base mb-1">{{ details.details_title }}</h3>
+                    <p class="details-description text-gray-600 text-sm">{{ details.details_description|raw }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
