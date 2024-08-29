@@ -27,7 +27,7 @@ class Cards implements ModuleInterface {
         $posts = [];
 
         // Check the selected post type and fetch data accordingly
-        if ($post_type === 'cars') {
+        if ($post_type === 'Cars') {
 
             $query = new \WP_Query([
                 'post_type' => 'cars',
