@@ -1,0 +1,28 @@
+<div class="cards-container">
+    <div class="cards-grid grid grid-cols-1 max-w-screen-xl mx-auto sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4" id="cards-grid">
+        {% for post in data %}
+            <div class="card-item bg-white rounded-lg shadow-lg overflow-hidden {% if enable_load_more and loop.index > item_number %}hidden{% endif %}"> <!-- Hide items beyond the initial item_number -->
+                <div class="relative">
+                    <img src="{{ post.thumbnail }}" alt="{{ post.title }}" class="w-full h-60 object-cover rounded-t-lg">
+                </div>
+                <div class="p-6">
+                    <h2 class="text-2xl font-semibold text-gray-800">{{ post.title }}</h2>
+                    <p class="mt-2 text-gray-600 line-clamp-2">{{ post.description }}</p>
+                    <div class="see-more-button-container mt-4">
+                        <a href="{{ post.link }}" class="flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40">
+                            Read More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if enable_load_more %}
+        <div class="load-more-button-container flex justify-center p-4">
+            <button id="load-more-button" class="load-all-cards flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40">
+                Load More
+            </button>
+        </div>
+    {% endif %}
+</div>
