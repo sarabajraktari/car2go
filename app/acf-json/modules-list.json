@@ -739,6 +739,31 @@
                                 ]
                             },
                             {
+                                "key": "field_66bdadb72b727",
+                                "label": "Image Background1",
+                                "name": "image_background1",
+                                "aria-label": "",
+                                "type": "image",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "return_format": "array",
+                                "library": "all",
+                                "min_width": "",
+                                "min_height": "",
+                                "min_size": "",
+                                "max_width": "",
+                                "max_height": "",
+                                "max_size": "",
+                                "mime_types": "",
+                                "preview_size": "medium"
+                            },
+                            {
                                 "key": "field_66bdb4bd70099",
                                 "label": "Image Background2",
                                 "name": "image_background2",
@@ -991,14 +1016,14 @@
                         "min": "",
                         "max": ""
                     },
-                    "layout_66d02f156b618": {
-                        "key": "layout_66d02f156b618",
+                    "layout_66d179b974cc4": {
+                        "key": "layout_66d179b974cc4",
                         "name": "contactdetails",
                         "label": "ContactDetails",
                         "display": "block",
                         "sub_fields": [
                             {
-                                "key": "field_66d02f376b61a",
+                                "key": "field_66d179d874cc6",
                                 "label": "Details",
                                 "name": "details",
                                 "aria-label": "",
@@ -1019,7 +1044,7 @@
                                 "rows_per_page": 20,
                                 "sub_fields": [
                                     {
-                                        "key": "field_66d02f4e6b61b",
+                                        "key": "field_66d179e874cc7",
                                         "label": "details title",
                                         "name": "details_title",
                                         "aria-label": "",
@@ -1037,10 +1062,10 @@
                                         "placeholder": "",
                                         "prepend": "",
                                         "append": "",
-                                        "parent_repeater": "field_66d02f376b61a"
+                                        "parent_repeater": "field_66d179d874cc6"
                                     },
                                     {
-                                        "key": "field_66d02f826b61c",
+                                        "key": "field_66d179fc74cc8",
                                         "label": "details description",
                                         "name": "details_description",
                                         "aria-label": "",
@@ -1058,10 +1083,10 @@
                                         "toolbar": "full",
                                         "media_upload": 1,
                                         "delay": 0,
-                                        "parent_repeater": "field_66d02f376b61a"
+                                        "parent_repeater": "field_66d179d874cc6"
                                     },
                                     {
-                                        "key": "field_66d02f956b61d",
+                                        "key": "field_66d17a0f74cc9",
                                         "label": "details image",
                                         "name": "details_image",
                                         "aria-label": "",
@@ -1084,7 +1109,7 @@
                                         "max_size": "",
                                         "mime_types": "",
                                         "preview_size": "medium",
-                                        "parent_repeater": "field_66d02f376b61a"
+                                        "parent_repeater": "field_66d179d874cc6"
                                     }
                                 ]
                             }
