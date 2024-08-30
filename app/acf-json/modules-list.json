@@ -1015,6 +1015,92 @@
                         ],
                         "min": "",
                         "max": ""
+                    },
+                    "layout_66cde8aa2daf6": {
+                        "key": "layout_66cde8aa2daf6",
+                        "name": "cards",
+                        "label": "Cards",
+                        "display": "block",
+                        "sub_fields": [
+                            {
+                                "key": "field_66cde8b42daf8",
+                                "label": "Select Post Types",
+                                "name": "select_post_types",
+                                "aria-label": "",
+                                "type": "select",
+                                "instructions": "Select the post type you want to display on the Cards.",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "50",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "choices": {
+                                    "Cars": "Cars",
+                                    "Authors": "Authors"
+                                },
+                                "default_value": false,
+                                "return_format": "value",
+                                "multiple": 0,
+                                "allow_null": 0,
+                                "ui": 0,
+                                "ajax": 0,
+                                "placeholder": ""
+                            },
+                            {
+                                "key": "field_66d0a1c9f54c1",
+                                "label": "Enable Load More",
+                                "name": "enable_load_more",
+                                "aria-label": "",
+                                "type": "true_false",
+                                "instructions": "Enable Load More button to limit the number of cards shown to 9 per page",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "message": "",
+                                "default_value": 0,
+                                "ui_on_text": "On",
+                                "ui_off_text": "Off",
+                                "ui": 1
+                            },
+                            {
+                                "key": "field_66d0b56e8d6d7",
+                                "label": "Item Number",
+                                "name": "item_number",
+                                "aria-label": "",
+                                "type": "number",
+                                "instructions": "Please specify the number of items you want to be displayed",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_66d0a1c9f54c1",
+                                            "operator": "==",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": 6,
+                                "min": 3,
+                                "max": "",
+                                "placeholder": "",
+                                "step": "",
+                                "prepend": "",
+                                "append": ""
+                            }
+                        ],
+                        "min": "",
+                        "max": ""
                     }
                 },
                 "min": "",
