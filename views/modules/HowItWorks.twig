@@ -6,7 +6,7 @@
         {% for step in data.steps %}
             <div class="step">
                 {% if step.step_image %}
-                    <div class="step-icon">
+                  <div class="step-icon">
                         <img class="w-[5rem] h-[5rem] object-cover rounded-full flex justify-center items-center" src="{{ step.step_image.url }}" alt="{{ step.step_image.alt }}" title="{{ step.step_image.title }}">
                     </div>
                 {% endif %}
