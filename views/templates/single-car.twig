@@ -40,4 +40,29 @@
     </div>
 {% endif %}
 
+      <!-- Car Specifications --> 
+      <div class="text-center text-black font-bold text-4xl pb-4 ">Car Specifications</div>
+      
+{% if car.specifications is not empty %}
+<div class="flex justify-center mr-4">
+    <div class="car-specifications grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-12 gap-x-14  w-full">
+        {% for spec in car.specifications %}
+        <div class="specification flex items-center bg-white p-4 sm:p-6 rounded-lg transition-colors duration-300 hover:bg-black hover:text-white shadow-lg">
+            {% if spec.image %}
+            <div class="specification-image w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0  bg-white p-2 rounded-md">
+                <img src="{{ spec.image.url }}" alt="{{ spec.title }}" class="w-full h-full object-contain">
+            </div>
+            {% endif %}
+            <div class="specification-content ml-4 sm:ml-6">
+                <h3 class="text-sm sm:text-base font-semibold ">{{ spec.title }}</h3>
+                <div class="specification-description text-sm sm:text-base ">
+                    {{ spec.description|raw }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
 
