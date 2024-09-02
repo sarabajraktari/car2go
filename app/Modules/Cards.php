@@ -27,6 +27,7 @@ class Cards implements ModuleInterface {
         $enable_load_more = $flexibleContent['enable_load_more'] ?? false;
         $item_number = $flexibleContent['item_number'];
         $redirect_link = $flexibleContent['redirect_link'];
+        $title_and_description = $flexibleContent['title_and_description'];
         
 
         $posts = [];
@@ -76,6 +77,7 @@ class Cards implements ModuleInterface {
             'enable_load_more' => $enable_load_more,
             'item_number' => $item_number,
             'redirect_link' => $redirect_link,
+            'title_and_description' => $title_and_description,
         ];
     }
 
@@ -85,6 +87,7 @@ class Cards implements ModuleInterface {
             'enable_load_more' => $data['enable_load_more'],
             'item_number' => $data['item_number'],
             'redirect_link' => $data['redirect_link'],
+            'title_and_description' => $data['title_and_description'],
         ]);
     }
 }

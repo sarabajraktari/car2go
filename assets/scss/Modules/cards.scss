@@ -1,0 +1,53 @@
+.cards-container{
+    //added this to the Cards.twig file for conditional application of the class
+}
+
+.cards-header {
+    //@apply mb-8;
+
+    h2{
+    @apply text-[2.7rem]; 
+    @apply font-bold;
+    @apply text-black; 
+    }
+
+    p{
+     //@apply mt-6;
+    @apply text-black; 
+    @apply text-[20px];
+    @apply font-[350]; 
+    }
+}
+.cards-title {
+    h2{
+        @apply text-2xl font-bold text-center pb-6 sm:text-3xl lg:text-4xl sm:max-w-[50%] lg:max-w-[40%] mx-auto;
+    }
+    p{
+        @apply text-base text-center font-semibold text-black max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[18px] lg:max-w-[40%];
+    }
+}
+
+#cards-grid{
+    @apply grid grid-cols-1 max-w-screen-xl mx-auto sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4;
+}
+
+.card-item{
+    @apply bg-white rounded-lg shadow-lg overflow-hidden;
+}
+
+.p-g{
+    h2{
+        @apply text-2xl font-semibold text-gray-800;
+    }
+    p{
+        @apply mt-2 text-gray-600 line-clamp-2;
+    }
+}
+
+.load-all-cards {
+    @apply flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40;
+}
+
+.browse-all-cards{
+    @apply flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40;
+}

@@ -1023,6 +1023,26 @@
                         "display": "block",
                         "sub_fields": [
                             {
+                                "key": "field_66d59f0b7868c",
+                                "label": "Title and Description",
+                                "name": "title_and_description",
+                                "aria-label": "",
+                                "type": "wysiwyg",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "tabs": "all",
+                                "toolbar": "full",
+                                "media_upload": 1,
+                                "delay": 0
+                            },
+                            {
                                 "key": "field_66cde8b42daf8",
                                 "label": "Select Post Types",
                                 "name": "select_post_types",
