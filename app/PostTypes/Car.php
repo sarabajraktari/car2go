@@ -24,7 +24,8 @@ class Car {
                 'title' => get_the_title($carID),
                 'description' => apply_filters('the_content', get_the_content($carID)), 
                 'car_image' => get_the_post_thumbnail_url($carID, 'full'),
-                'car_features' => $carDetails['car_features']
+                'car_features' => $carDetails['car_features'],
+                'iframe' => $carDetails['iframe'],
             ];
 
             wp_reset_postdata(); 

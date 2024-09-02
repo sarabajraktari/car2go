@@ -19,7 +19,25 @@
       <!-- Car Image Section -->
       <div class="relative w-full md:w-4/5 flex justify-center">
         <div class="md:bg-gray-100 bg-transparent rounded-lg md:p-5 md:shadow-md w-full flex justify-center">
-        <img src="{{ car.car_image }}" class="w-full h-auto object-contain md:w-4/5 rounded-xl">
+        <img src="{{ car.car_image }}" class="w-full h-auto object-contain md:w-4/5 rounded-xl animate-slideInFromRightMiddle">
        </div>
       </div>
 </div>
+<!-- Iframe Video Section -->
+{% if car.iframe %}
+    <div class="w-full max-w-4xl mx-auto mt-8">
+        <div class="relative pb-[56.25%] overflow-hidden rounded-lg shadow-lg">
+            <iframe 
+                src="{{ car.iframe.url }}?autoplay=1&mute=1&loop=1&controls=1" 
+                class="absolute top-0 left-0 w-full h-full"
+                title="YouTube video player"
+                frameborder="0" 
+                allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture" 
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+{% endif %}
+
+

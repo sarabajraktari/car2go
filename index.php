@@ -8,4 +8,4 @@ $context = [
     // Add other context variables as needed
 ];
 
-Setup::renderPage('templates/page.twig', $context);
+Setup::renderPage('page.twig', $context);
