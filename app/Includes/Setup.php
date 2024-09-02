@@ -13,8 +13,13 @@ class Setup {
     public static $loader;
     public static $twig;
 
-    public static function renderPage() { //! Render the page.twig with all the modules
+    public static function renderPage($template = 'views/page.twig', $context = []) {
         self::addToTwig();
+
+        // Kontrollo nëse është një faqe 404
+        if (is_404()) {
+            $template = 'templates/404.twig'; // Përdor shabllonin 404 nëse është faqe 404
+        }
 
         $modules = [];
         $flexible_content = get_field('modules_list');
@@ -53,11 +58,11 @@ class Setup {
             $authorSlug = get_post_field('post_name', get_post());
             $authorData = Author::getSingleAuthorData($authorSlug);
         }
-    
-    
-      $headerData = Header::getData(); 
-      $footerData = Footer::getData();
-        echo self::$twig->render('page.twig', [
+
+
+        $headerData = Header::getData(); 
+        $footerData = Footer::getData();
+        echo self::$twig->render($template, array_merge($context, [
             'modules' => $modules,
             'header' => $headerData,
             'footer' => $footerData,
@@ -65,7 +70,7 @@ class Setup {
             'is_single_car_page' => $isSingleCarPage,
             'author' => $authorData,
             'is_author_page' => $Author,
-        ]);
+        ]));
     }
 
     public static function view($template, $data = []) {
