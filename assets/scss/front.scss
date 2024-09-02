@@ -11,3 +11,18 @@
 @import './Modules/contact-form.scss';
 @import "./Modules/Faq.scss";
 @import "./404.scss";
+@import "./Modules/cards.scss";
+
+.keri{
+    animation: animateCar 700ms forwards ease-out;
+}
+
+@keyframes animateCar {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
