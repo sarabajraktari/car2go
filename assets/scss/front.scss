@@ -16,7 +16,9 @@
 .keri{
     animation: animateCar 700ms forwards ease-out;
 }
-
+.logo{
+    animation: animateLogo 700ms forwards ease-out;
+}
 @keyframes animateCar {
     from {
         transform: scale(0);
@@ -24,5 +26,13 @@
 
     to {
         transform: scale(1);
+    }
+}
+@keyframes animateLogo{
+    0% {
+        transform: translateX(-100%); /* Start off-screen to the left */
+    }
+    100% {
+        transform: translateX(0); /* End at the final position */
     }
 }
