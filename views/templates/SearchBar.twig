@@ -1,0 +1,25 @@
+<div class="search-bar">
+    <form id="search-form" action="/cars/" method="get">
+        <!-- Search field -->
+        <input type="text" name="search" placeholder="Search...">
+        
+        <!-- Brand Dropdown -->
+        <select name="brand">
+            <option value="">Select Brand</option>
+            {% for brand in brands %}
+                <option value="{{ brand.slug }}">{{ brand.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <!-- City Dropdown -->
+        <select name="city">
+            <option value="">Select City</option>
+            {% for city in cities %}
+                <option value="{{ city.slug }}">{{ city.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <!-- Submit Button -->
+        <button type="submit">Search</button>
+    </form>
+</div>

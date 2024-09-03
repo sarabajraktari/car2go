@@ -7,6 +7,7 @@ use Internship\Menus\Header;
 use Internship\Menus\Footer;
 use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
+use Internship\PostTypes\TaxonomyData;
 
 
 class Setup {
@@ -59,6 +60,18 @@ class Setup {
             $authorData = Author::getSingleAuthorData($authorSlug);
         }
 
+        // Fetch taxonomy data for 'brand' and 'city'
+        $brandTerms = TaxonomyData::getTaxonomyData('brand');
+        $cityTerms = TaxonomyData::getTaxonomyData('city');
+
+        // Add taxonomy data to context
+        $context['brands'] = $brandTerms;
+        $context['cities'] = $cityTerms;
+        // echo '<pre>';
+        // var_dump($context['brands']);
+        // var_dump($context['cities']);
+        // echo '</pre>';
+        // die();
 
         $headerData = Header::getData(); 
         $footerData = Footer::getData();
@@ -70,6 +83,8 @@ class Setup {
             'is_single_car_page' => $isSingleCarPage,
             'author' => $authorData,
             'is_author_page' => $Author,
+            'brands' => $brandTerms,  // Add brand terms to the context
+            'cities' => $cityTerms,   // Add city terms to the context
         ]));
     }
 

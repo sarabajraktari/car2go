@@ -194,6 +194,32 @@ add_action( 'init', function() {
         'rewrite' => array( 'slug' => 'brand' ),
     ));
 
+    // Register the Cities taxonomy
+    register_taxonomy( 'car_city', 'cars', array(
+        'labels' => array(
+            'name' => 'Cities',
+            'singular_name' => 'City',
+            'menu_name' => 'Cities',
+            'all_items' => 'All Cities',
+            'edit_item' => 'Edit City',
+            'view_item' => 'View City',
+            'update_item' => 'Update City',
+            'add_new_item' => 'Add New City',
+            'new_item_name' => 'New City Name',
+            'search_items' => 'Search Cities',
+            'popular_items' => 'Popular Cities',
+            'separate_items_with_commas' => 'Separate cities with commas',
+            'add_or_remove_items' => 'Add or remove cities',
+            'choose_from_most_used' => 'Choose from the most used cities',
+            'not_found' => 'No cities found',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'hierarchical' => false,
+        'show_admin_column' => true,
+        'rewrite' => array( 'slug' => 'city' ),
+    ));
+
 
 // author post type
 
