@@ -52,3 +52,17 @@
 .browse-all-cards{
     @apply flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40;
 }
+
+.see-more-button-container{
+    @apply mt-4 mb-2 mr-4;
+
+    a{
+        @apply flex items-center justify-center px-2 py-2 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40;
+    }
+}
+
+.more-details-button{
+    a{
+        @apply mt-4 font-medium text-black hover:underline px-4 py-2 transition flex items-center;
+    }
+}

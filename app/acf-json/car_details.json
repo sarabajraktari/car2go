@@ -20,6 +20,122 @@
                 "layout": "block",
                 "sub_fields": [
                     {
+                        "key": "field_66d73ff241fd4",
+                        "label": "Rent Details",
+                        "name": "rent_details",
+                        "aria-label": "",
+                        "type": "group",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "layout": "table",
+                        "sub_fields": [
+                            {
+                                "key": "field_66d74094bcc33",
+                                "label": "Price",
+                                "name": "price",
+                                "aria-label": "",
+                                "type": "number",
+                                "instructions": "Please specify the price\/day of this vehicle",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "min": 10,
+                                "max": 2000,
+                                "placeholder": "",
+                                "step": "",
+                                "prepend": "",
+                                "append": ""
+                            },
+                            {
+                                "key": "field_66d74099bcc34",
+                                "label": "Number of seats",
+                                "name": "number_of_seats",
+                                "aria-label": "",
+                                "type": "number",
+                                "instructions": "Please specify the number of seats",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": 5,
+                                "min": "",
+                                "max": "",
+                                "placeholder": "",
+                                "step": "",
+                                "prepend": "",
+                                "append": ""
+                            },
+                            {
+                                "key": "field_66d74164452d1",
+                                "label": "Transmission type",
+                                "name": "transmission_type",
+                                "aria-label": "",
+                                "type": "select",
+                                "instructions": "Please select transmission type",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "choices": {
+                                    "Manual": "Manual",
+                                    "Automatic": "Automatic"
+                                },
+                                "default_value": false,
+                                "return_format": "value",
+                                "multiple": 0,
+                                "allow_null": 0,
+                                "ui": 0,
+                                "ajax": 0,
+                                "placeholder": ""
+                            },
+                            {
+                                "key": "field_66d741ac452d2",
+                                "label": "Fuel type",
+                                "name": "fuel_type",
+                                "aria-label": "",
+                                "type": "select",
+                                "instructions": "Please select fuel type",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "choices": {
+                                    "Petrol": "Petrol",
+                                    "Diesel": "Diesel",
+                                    "Gas": "Gas",
+                                    "Electric": "Electric"
+                                },
+                                "default_value": false,
+                                "return_format": "value",
+                                "multiple": 0,
+                                "allow_null": 0,
+                                "ui": 0,
+                                "ajax": 0,
+                                "placeholder": ""
+                            }
+                        ]
+                    },
+                    {
                         "key": "field_66c0f0a29d80b",
                         "label": "Car Features",
                         "name": "car_features",
@@ -105,6 +221,98 @@
                             "id": ""
                         },
                         "return_format": "array"
+                    },
+                    {
+                        "key": "field_66d5735187bf4",
+                        "label": "Specifications",
+                        "name": "specifications",
+                        "aria-label": "",
+                        "type": "repeater",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "layout": "table",
+                        "pagination": 0,
+                        "min": 0,
+                        "max": 0,
+                        "collapsed": "",
+                        "button_label": "Add Row",
+                        "rows_per_page": 20,
+                        "sub_fields": [
+                            {
+                                "key": "field_66d573e487bf5",
+                                "label": "specifications title",
+                                "name": "specifications_title",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "parent_repeater": "field_66d5735187bf4"
+                            },
+                            {
+                                "key": "field_66d5740387bf6",
+                                "label": "specifications description",
+                                "name": "specifications_description",
+                                "aria-label": "",
+                                "type": "wysiwyg",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "tabs": "all",
+                                "toolbar": "full",
+                                "media_upload": 1,
+                                "delay": 0,
+                                "parent_repeater": "field_66d5735187bf4"
+                            },
+                            {
+                                "key": "field_66d5742087bf8",
+                                "label": "specifications image",
+                                "name": "specifications_image",
+                                "aria-label": "",
+                                "type": "image",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "return_format": "array",
+                                "library": "all",
+                                "min_width": "",
+                                "min_height": "",
+                                "min_size": "",
+                                "max_width": "",
+                                "max_height": "",
+                                "max_size": "",
+                                "mime_types": "",
+                                "preview_size": "medium",
+                                "parent_repeater": "field_66d5735187bf4"
+                            }
+                        ]
                     }
                 ]
             }
