@@ -31,7 +31,7 @@
 }
 
 .specification-image img {
-    @apply -[50px] h-[50px] transition-transform duration-100 ease-in-out;
+    @apply w-[50px] h-[50px] transition-transform duration-100 ease-in-out;
 }
 
 .specification:hover .specification-image img {
