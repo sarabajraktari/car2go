@@ -1,5 +1,4 @@
 <div class="cards-container {% if title_and_description is not empty %}py-12{% endif %}">
-<<<<<<< HEAD
    <div class="cards-header {% if title_and_description is not empty %}mb-8 mt-6{% endif %}">
       <div class="cards-title max-w-screen-xl mx-auto">{{ title_and_description|raw }}</div>
    </div>
@@ -19,26 +18,6 @@
                   / day
                   </span>
                </h4>
-=======
-        <div class="cards-header {% if title_and_description is not empty %}mb-8 mt-6{% endif %}">
-            <div class="cards-title max-w-screen-xl mx-auto">{{ title_and_description|raw }}</div>
-        </div>
-    <div class="cards-grid" id="cards-grid">
-        {% for post in data %}
-            <div class="card-item {% if (enable_load_more and loop.index > item_number) or (not enable_load_more and redirect_link is not empty and loop.index > item_number) %}hidden{% endif %}">
-                <div class="relative">
-                    <img src="{{ post.thumbnail }}" alt="{{ post.title }}" class="w-full h-60 object-cover rounded-t-lg">
-                </div>
-                <div class="p-6">
-                    <h2>{{ post.title }}</h2>
-                    <p>{{ post.description }}</p>
-                    <div class="see-more-button-container mt-4">
-                        <a href="{{ post.link }}" class="flex items-center justify-center px-2 py-2 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40">
-                            Read More
-                        </a>
-                    </div>
-                </div>
->>>>>>> develop
             </div>
             <div class="justify-between items-center">
                <span class="block mr-2 mb-4">
