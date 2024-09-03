@@ -1,6 +1,6 @@
 <div class="cards-container {% if title_and_description is not empty %}py-12{% endif %}">
         <div class="cards-header {% if title_and_description is not empty %}mb-8 mt-6{% endif %}">
-            <div class="cards-title ">{{ title_and_description|raw }}</div>
+            <div class="cards-title max-w-screen-xl mx-auto">{{ title_and_description|raw }}</div>
         </div>
     <div class="cards-grid" id="cards-grid">
         {% for post in data %}
