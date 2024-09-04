@@ -54,15 +54,15 @@
 }
 
 .see-more-button-container{
-    @apply mt-4 mb-2 mr-4;
+    @apply mt-4 mb-2 lg:mr-4;
 
     a{
-        @apply flex items-center justify-center px-2 py-2 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40;
+        @apply flex items-center justify-center font-semibold px-2 py-2 bg-black text-white rounded-full text-base hover:bg-gray-800 lg:w-40 w-full;
     }
 }
 
 .more-details-button{
     a{
-        @apply mt-4 font-medium text-black hover:underline px-4 py-2 transition flex items-center;
+        @apply mt-4 flex items-center justify-center text-center text-base font-semibold text-black bg-gray-100 rounded-full hover:bg-gray-200 p-2 transition lg:w-40 w-full;
     }
 }
