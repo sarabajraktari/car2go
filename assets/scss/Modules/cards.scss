@@ -66,3 +66,60 @@
         @apply mt-4 flex items-center justify-center text-center text-base font-semibold text-black bg-gray-100 rounded-full hover:bg-gray-200 p-2 transition lg:w-40 w-full;
     }
 }
+
+
+/* Styling for author cards */
+.author-card {
+    max-width: 300px; /* Adjust the max-width as needed */
+    min-height: 200px; /* Adjust the min-height as needed */
+    margin: 0 auto; /* Center the cards */
+}
+
+/* Responsive adjustments for author cards */
+@media (min-width: 768px) {
+    .author-card {
+        max-width: 350px; /* Increase max-width on medium screens */
+    }
+}
+
+@media (min-width: 1024px) {
+    .author-card {
+        max-width: 400px; /* Increase max-width on larger screens */
+        margin: 0 10px; /* Adjust margin to control space around cards */
+    }
+}
+
+/* Specific styling for the author cards' text and layout */
+.author-card img {
+    max-width: 64px; /* Adjust size of the image if needed */
+}
+
+.author-card h2 {
+    @apply text-lg font-bold text-gray-800;
+}
+
+.author-card p {
+    @apply text-gray-600 text-ellipsis overflow-hidden max-h-20;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.author-card .learn-more {
+    @apply text-blue-500 hover:underline;
+}
+
+
+.authors-container {
+    padding: 0 10px; /* Add padding only to the left and right sides */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+.owl-carousel {
+    width: 100%; /* Ensure the carousel takes the full width of its container */
+    max-width: 1200px; /* Optional: Set a maximum width if desired */
+}
+

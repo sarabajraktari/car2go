@@ -13,13 +13,13 @@ class Cards implements ModuleInterface {
         if (!isset($modules[$key])) {
             return [];
         }
-        
+
         // Get the specific module's data using the key
         $flexibleContent = $modules[$key];
-    
+
         // Fetch the selected post type from the ACF field
-        $post_type = $flexibleContent['select_post_types']; 
-    
+        $post_type = $flexibleContent['select_post_types'];
+
         if (!$post_type) {
             return [];
         }
@@ -28,7 +28,6 @@ class Cards implements ModuleInterface {
         $item_number = $flexibleContent['item_number'];
         $redirect_link = $flexibleContent['redirect_link'];
         $title_and_description = $flexibleContent['title_and_description'];
-        
 
         $posts = [];
 
@@ -51,6 +50,7 @@ class Cards implements ModuleInterface {
                         'thumbnail'   => get_the_post_thumbnail_url(get_the_ID(), 'full'),
                         'link'        => get_permalink(), 
                         'rent_details' => $carDetails['rent_details'],
+                        'post_type'   => get_post_type(), // Shtojmë llojin e postimit
                     ];
                 }
                 wp_reset_postdata();
@@ -58,7 +58,7 @@ class Cards implements ModuleInterface {
         } else if ($post_type === 'Authors') {
             $query = new \WP_Query([
                 'post_type' => 'authors',
-                'posts_per_page' => -1, 
+                'posts_per_page' => -1,
             ]);
 
             if ($query->have_posts()) {
@@ -68,7 +68,8 @@ class Cards implements ModuleInterface {
                         'title'       => get_the_title(),
                         'description' => get_post_field('post_content', get_the_ID()),
                         'thumbnail'   => get_the_post_thumbnail_url(get_the_ID(), 'full'),
-                        'link'        => get_permalink(), 
+                        'link'        => get_permalink(),
+                        'post_type'   => get_post_type(), // Shtojmë llojin e postimit
                     ];
                 }
                 wp_reset_postdata();
