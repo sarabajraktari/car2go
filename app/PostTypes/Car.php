@@ -24,8 +24,15 @@ class Car {
                 'title' => get_the_title($carID),
                 'description' => apply_filters('the_content', get_the_content($carID)), 
                 'car_image' => get_the_post_thumbnail_url($carID, 'full'),
-                'car_features' => $carDetails['car_features'],
-                'iframe' => $carDetails['iframe'],
+                'car_features' => $carDetails['car_features'] ?? null,
+                'iframe' => $carDetails['iframe'] ?? null,
+                'specifications' => is_array($carDetails['specifications']) ? array_map(function($spec) {
+                    return [
+                        'title' => $spec['specifications_title'],
+                        'description' => $spec['specifications_description'],
+                        'image' => $spec['specifications_image'],
+                    ];
+                }, $carDetails['specifications']) : [],
             ];
 
             wp_reset_postdata(); 
@@ -33,6 +40,7 @@ class Car {
             return $carData;
         }
         
+        return null; // Return null if no post is found
     }
 }
-
+?>

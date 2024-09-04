@@ -47,15 +47,15 @@
 
     .wpcf7-spinner {
         position: fixed;
-        top: 0;
-        left: 0;
+        top: -25px;
+        left: 0px;
         width: 100vw; /* Full width */
         height: 100vh; /* Full height */
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: rgba(0, 0, 0, 0.0); /* Semi-transparent background */
-        z-index: 1000;
+        z-index: 2000;
         pointer-events: auto; /* Ensures it can be clicked */
     }
 

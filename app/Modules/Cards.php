@@ -43,11 +43,14 @@ class Cards implements ModuleInterface {
             if ($query->have_posts()) {
                 while ($query->have_posts()) {
                     $query->the_post();
+                    $carDetails = get_field('car_details', get_the_ID());
+                    
                     $posts[] = [
                         'title'       => get_the_title(),
                         'description' => get_post_field('post_content', get_the_ID()),
                         'thumbnail'   => get_the_post_thumbnail_url(get_the_ID(), 'full'),
                         'link'        => get_permalink(), 
+                        'rent_details' => $carDetails['rent_details'],
                     ];
                 }
                 wp_reset_postdata();
@@ -71,7 +74,7 @@ class Cards implements ModuleInterface {
                 wp_reset_postdata();
             }
         }
-
+        
         return [
             'posts' => $posts,
             'enable_load_more' => $enable_load_more,

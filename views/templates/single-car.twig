@@ -40,4 +40,30 @@
     </div>
 {% endif %}
 
+      <!-- Car Specifications --> 
+<div class="text-center text-black font-bold text-4xl pb-4">Car Specifications</div>
+{% if car.specifications is not empty %}
+<div class="">
+    <div class="car-specifications">
+        {% for spec in car.specifications %}
+        <div class="specification">
+            {% if spec.image %}
+            <div class="specification-image">
+                <img src="{{ spec.image.url }}" alt="{{ spec.title }}">
+            </div>
+            {% endif %}
+            <div class="specification-content">
+                <h3>{{ spec.title }}</h3>
+                <div class="specification-description">
+                    {{ spec.description|raw }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
+
 
