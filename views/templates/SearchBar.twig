@@ -4,21 +4,21 @@
         <!-- Search Field -->
         <input type="text" name="search" placeholder="Search a car..." class="w-full md:w-auto p-3 border rounded-lg shadow-inner">
 
-        <!-- Brand Dropdown -->
-        <select name="brand" class="w-full md:w-auto p-3 border rounded-lg shadow-inner">
-            <option value="">Select Brand</option>
-            {% for brand in brands %}
-                <option value="{{ brand.slug }}" {% if brand.slug == selected_brand %}selected{% endif %}>{{ brand.name }}</option>
-            {% endfor %}
-        </select>
+       <!-- Brand Dropdown -->
+       <select name="brand" class="w-full md:w-auto p-3 md:border md:rounded-lg md:shadow-inner border-none rounded-none shadow-none">
+           <option value="">Select Brand</option>
+           {% for brand in brands %}
+               <option value="{{ brand.slug }}" {% if brand.slug == selected_brand %}selected{% endif %}>{{ brand.name }}</option>
+           {% endfor %}
+       </select>
 
-        <!-- City Dropdown -->
-        <select name="city" class="w-full md:w-auto p-3 border rounded-lg shadow-inner">
-            <option value="">Select City</option>
-            {% for city in cities %}
-                <option value="{{ city.slug }}" {% if city.slug == selected_city %}selected{% endif %}>{{ city.name }}</option>
-            {% endfor %}
-        </select>
+       <!-- City Dropdown -->
+       <select name="city" class="w-full md:w-auto p-3 md:border md:rounded-lg md:shadow-inner border-none rounded-none shadow-none">
+           <option value="">Select City</option>
+           {% for city in cities %}
+               <option value="{{ city.slug }}" {% if city.slug == selected_city %}selected{% endif %}>{{ city.name }}</option>
+           {% endfor %}
+       </select>
 
         <!-- Submit Button -->
         <button type="submit" class="w-full md:w-auto flex items-center justify-center px-4 py-2 bg-black text-white rounded-lg shadow-md hover:bg-gray-500">
