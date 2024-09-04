@@ -9,8 +9,6 @@
 <body>
     {# Age verification part  #}
     {{ include("modules/age-verification.twig") }}
-    {% include 'templates/SearchBar.twig' with {'brands': brands, 'cities': cities} %}
-
     <main>
         {% block content %}
             <p>No Content</p>
