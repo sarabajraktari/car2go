@@ -7,8 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let hiddenItems = Array.from(items).filter(item => item.classList.contains('hidden'));
 
     if (hiddenItems.length === 0) {
-        loadButton.classList.add('hidden');
-        loadButtonContainer.classList.add('hidden');
+        if (loadButton) {
+            loadButton.classList.add('hidden');
+        }
+        if (loadButtonContainer) {
+            loadButtonContainer.classList.add('hidden');
+        }
     }
 
     if (loadButton) {
@@ -28,7 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (hiddenItems.length === 0) {
                     loadButton.classList.add('hidden');
-                    loadButtonContainer.classList.add('hidden');
+                    if (loadButtonContainer) {
+                        loadButtonContainer.classList.add('hidden');
+                    }
                 }
             }
         });

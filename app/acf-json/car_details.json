@@ -20,6 +20,122 @@
                 "layout": "block",
                 "sub_fields": [
                     {
+                        "key": "field_66d73ff241fd4",
+                        "label": "Rent Details",
+                        "name": "rent_details",
+                        "aria-label": "",
+                        "type": "group",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "layout": "table",
+                        "sub_fields": [
+                            {
+                                "key": "field_66d74094bcc33",
+                                "label": "Price",
+                                "name": "price",
+                                "aria-label": "",
+                                "type": "number",
+                                "instructions": "Please specify the price\/day of this vehicle",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "min": 10,
+                                "max": 2000,
+                                "placeholder": "",
+                                "step": "",
+                                "prepend": "",
+                                "append": ""
+                            },
+                            {
+                                "key": "field_66d74099bcc34",
+                                "label": "Number of seats",
+                                "name": "number_of_seats",
+                                "aria-label": "",
+                                "type": "number",
+                                "instructions": "Please specify the number of seats",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": 5,
+                                "min": "",
+                                "max": "",
+                                "placeholder": "",
+                                "step": "",
+                                "prepend": "",
+                                "append": ""
+                            },
+                            {
+                                "key": "field_66d74164452d1",
+                                "label": "Transmission type",
+                                "name": "transmission_type",
+                                "aria-label": "",
+                                "type": "select",
+                                "instructions": "Please select transmission type",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "choices": {
+                                    "Manual": "Manual",
+                                    "Automatic": "Automatic"
+                                },
+                                "default_value": false,
+                                "return_format": "value",
+                                "multiple": 0,
+                                "allow_null": 0,
+                                "ui": 0,
+                                "ajax": 0,
+                                "placeholder": ""
+                            },
+                            {
+                                "key": "field_66d741ac452d2",
+                                "label": "Fuel type",
+                                "name": "fuel_type",
+                                "aria-label": "",
+                                "type": "select",
+                                "instructions": "Please select fuel type",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "choices": {
+                                    "Petrol": "Petrol",
+                                    "Diesel": "Diesel",
+                                    "Gas": "Gas",
+                                    "Electric": "Electric"
+                                },
+                                "default_value": false,
+                                "return_format": "value",
+                                "multiple": 0,
+                                "allow_null": 0,
+                                "ui": 0,
+                                "ajax": 0,
+                                "placeholder": ""
+                            }
+                        ]
+                    },
+                    {
                         "key": "field_66c0f0a29d80b",
                         "label": "Car Features",
                         "name": "car_features",

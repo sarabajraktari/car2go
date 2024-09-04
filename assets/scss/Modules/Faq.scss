@@ -30,6 +30,8 @@
 
     .faq-content {
         @apply max-w-5.5xl mx-auto mt-8 space-y-4 md:mt-16;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     .faq-item {
