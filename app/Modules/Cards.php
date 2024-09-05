@@ -29,7 +29,6 @@ class Cards implements ModuleInterface {
         $redirect_link = $flexibleContent['redirect_link'];
         $title_and_description = $flexibleContent['title_and_description'];
         
-
         $posts = [];
 
         // Check the selected post type and fetch data accordingly

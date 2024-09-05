@@ -602,7 +602,7 @@
                                 "label": "E-mail",
                                 "name": "e-mail",
                                 "aria-label": "",
-                                "type": "wysiwyg",
+                                "type": "email",
                                 "instructions": "",
                                 "required": 0,
                                 "conditional_logic": 0,
@@ -611,11 +611,10 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "default_value": "car2goks@gmail.com",
-                                "tabs": "all",
-                                "toolbar": "full",
-                                "media_upload": 1,
-                                "delay": 0
+                                "default_value": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": ""
                             }
                         ],
                         "min": "",
@@ -1247,19 +1246,19 @@
                         "min": "",
                         "max": ""
                     },
-                    "layout_66d179b974cc4": {
-                        "key": "layout_66d179b974cc4",
-                        "name": "contactdetails",
-                        "label": "ContactDetails",
+                    "layout_66d953cf9c2bc": {
+                        "key": "layout_66d953cf9c2bc",
+                        "name": "comingsoon",
+                        "label": "ComingSoon",
                         "display": "block",
                         "sub_fields": [
                             {
-                                "key": "field_66d179d874cc6",
-                                "label": "Details",
-                                "name": "details",
+                                "key": "field_66d953d89c2be",
+                                "label": "Coming Soon",
+                                "name": "coming_soon",
                                 "aria-label": "",
-                                "type": "repeater",
-                                "instructions": "",
+                                "type": "true_false",
+                                "instructions": "Coming Soon Page toggle",
                                 "required": 0,
                                 "conditional_logic": 0,
                                 "wrapper": {
@@ -1267,82 +1266,72 @@
                                     "class": "",
                                     "id": ""
                                 },
-                                "layout": "table",
-                                "min": 0,
-                                "max": 0,
-                                "collapsed": "",
-                                "button_label": "Add Row",
-                                "rows_per_page": 20,
-                                "sub_fields": [
-                                    {
-                                        "key": "field_66d179e874cc7",
-                                        "label": "details title",
-                                        "name": "details_title",
-                                        "aria-label": "",
-                                        "type": "text",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "maxlength": "",
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "parent_repeater": "field_66d179d874cc6"
-                                    },
-                                    {
-                                        "key": "field_66d179fc74cc8",
-                                        "label": "details description",
-                                        "name": "details_description",
-                                        "aria-label": "",
-                                        "type": "wysiwyg",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "tabs": "all",
-                                        "toolbar": "full",
-                                        "media_upload": 1,
-                                        "delay": 0,
-                                        "parent_repeater": "field_66d179d874cc6"
-                                    },
-                                    {
-                                        "key": "field_66d17a0f74cc9",
-                                        "label": "details image",
-                                        "name": "details_image",
-                                        "aria-label": "",
-                                        "type": "image",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "return_format": "array",
-                                        "library": "all",
-                                        "min_width": "",
-                                        "min_height": "",
-                                        "min_size": "",
-                                        "max_width": "",
-                                        "max_height": "",
-                                        "max_size": "",
-                                        "mime_types": "",
-                                        "preview_size": "medium",
-                                        "parent_repeater": "field_66d179d874cc6"
-                                    }
-                                ]
+                                "message": "",
+                                "default_value": 0,
+                                "ui_on_text": "On",
+                                "ui_off_text": "Off",
+                                "ui": 1
+                            },
+                            {
+                                "key": "field_66d9543f9b99c",
+                                "label": "Coming Soon Message",
+                                "name": "coming_soon_message",
+                                "aria-label": "",
+                                "type": "text",
+                                "instructions": "Please enter the message you want to display to the user",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_66d953d89c2be",
+                                            "operator": "==",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": ""
+                            },
+                            {
+                                "key": "field_66d9546920eca",
+                                "label": "Background Image",
+                                "name": "background_image",
+                                "aria-label": "",
+                                "type": "image",
+                                "instructions": "Please select a background image",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_66d953d89c2be",
+                                            "operator": "==",
+                                            "value": "1"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "return_format": "url",
+                                "library": "all",
+                                "min_width": "",
+                                "min_height": "",
+                                "min_size": "",
+                                "max_width": "",
+                                "max_height": "",
+                                "max_size": "",
+                                "mime_types": "",
+                                "preview_size": "medium"
                             }
                         ],
                         "min": "",

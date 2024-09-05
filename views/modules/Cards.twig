@@ -1,4 +1,4 @@
-<div class="cards-container {% if title_and_description is not empty %}py-12{% endif %}">
+<div class="cards-container {% if title_and_description is not empty %}py-12 {%else%}py-6{% endif %}">
    <div class="cards-header {% if title_and_description is not empty %}mb-8 mt-6{% endif %}">
       <div class="cards-title max-w-screen-xl mx-auto">{{ title_and_description|raw }}</div>
    </div>
@@ -43,7 +43,7 @@
             </div>
             <div class="flex justify-left lg:space-x-6 lg:flex-row flex-col w-full">
                <div class="see-more-button-container">
-                  <a href="{{ post.link }}">
+                  <a href="{{ site_url }}/coming-soon/">
                   Rent Now
                   </a>
                </div>
@@ -58,14 +58,14 @@
       {% endfor %}
    </div>
    {% if enable_load_more %}
-   <div class="load-more-button-container flex justify-center p-4">
+   <div class="load-more-button-container flex justify-center p-4 mt-8">
       <button id="load-more-button" class="load-all-cards">
       Load More
       </button>
    </div>
    {%else%}
    {% if is_front_page() %}
-   <div class="browse-all-button-container flex justify-center p-4 {}">
+   <div class="browse-all-button-container flex justify-center p-4 mt-8">
       <a href="{{ redirect_link }}" class="browse-all-cards">
       Browse All
       </a>
