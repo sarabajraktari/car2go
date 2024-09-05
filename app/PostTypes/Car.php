@@ -25,7 +25,7 @@ class Car {
                 'description' => apply_filters('the_content', get_the_content($carID)), 
                 'car_image' => get_the_post_thumbnail_url($carID, 'full'),
                 'car_features' => $carDetails['car_features'] ?? null,
-                'iframe' => $carDetails['iframe'] ?? null,
+
                 'specifications' => is_array($carDetails['specifications']) ? array_map(function($spec) {
                     return [
                         'title' => $spec['specifications_title'],
@@ -33,6 +33,7 @@ class Car {
                         'image' => $spec['specifications_image'],
                     ];
                 }, $carDetails['specifications']) : [],
+                'iframe' => $carDetails['iframe'] ?? null,
             ];
 
             wp_reset_postdata(); 

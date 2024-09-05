@@ -2,6 +2,16 @@
 
 require_once 'vendor/autoload.php';
 
+
+function remove_author_permalink($post_link, $post) {
+    if ($post->post_type == 'authors') {
+        return ''; // Returning an empty string removes the permalink.
+    }
+    return $post_link;
+}
+add_filter('post_type_link', 'remove_author_permalink', 10, 2);
+
+
 //! Register SCSS and JS scripts.
 function enqueue_theme_assets() {
     wp_enqueue_style('front_style', get_stylesheet_directory_uri() . '/assets/dist/css/front.css', [], wp_get_theme(get_template())->Version);
