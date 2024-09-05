@@ -5,15 +5,15 @@
     <div class="faq-content">
         {% if data.faq is iterable %}
             {% for i, item in data.faq %}
-            <div class="faq-item" x-data="{ open: false }">
-                <button type="button" id="question{{ i+1 }}" class="faq-question" @click="open = ! open">
+            <div class="faq-item">
+                <input type="checkbox" id="faq-toggle{{ i+1 }}" class="faq-toggle">
+                <label for="faq-toggle{{ i+1 }}" class="faq-question">
                     <span>{{ item.question }}</span>
-                    <svg id="arrow{{ i+1 }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                         :class="{ 'transform rotate-180': open }" class="faq-icon">
+                    <svg id="arrow{{ i+1 }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="faq-icon">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
-                </button>
-                <div id="answer{{ i+1 }}" class="faq-answer" x-show="open" x-transition:enter.duration.500ms x-transition:leave.duration.400ms>
+                </label>
+                <div id="answer{{ i+1 }}" class="faq-answer">
                     <hr>
                     <p>{{ item.answer|raw }}</p>
                 </div>

@@ -1,4 +1,4 @@
-<div class="cards-container {% if title_and_description is not empty %}py-12{% endif %}">
+<div class="cards-container {% if title_and_description is not empty %}py-12 {%else%}py-6{% endif %}">
    <div class="cards-header {% if title_and_description is not empty %}mb-8 mt-6{% endif %}">
       <div class="cards-title max-w-screen-xl mx-auto">{{ title_and_description|raw }}</div>
    </div>
@@ -50,7 +50,7 @@
             </div>
             <div class="flex justify-left lg:space-x-6 lg:flex-row flex-col w-full">
                <div class="see-more-button-container">
-                  <a href="{{ post.link }}">
+                  <a href="{{ site_url }}/coming-soon/">
                   Rent Now
                   </a>
                </div>

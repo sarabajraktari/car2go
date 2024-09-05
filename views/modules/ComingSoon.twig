@@ -1,0 +1,18 @@
+<div class="min-h-screen bg-gray-900 flex flex-col items-center justify-center relative px-4">
+    <!-- Background image with full-screen cover and no repeat -->
+    <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30"
+        style="background-image: url('{{data.background_image}}'); background-size: cover; background-repeat: no-repeat;">
+    </div>
+    
+    <h1 class="lg:text-3xl md:text-2xl text-white font-bold mb-8 z-10 text-center">This feature is coming soon</h1>
+    
+    <!-- White text inside the p tag -->
+    <p class="text-white lg:text-3xl md:text-2xl z-10 mb-8 text-center">
+        {{data.coming_soon_message}}
+    </p>
+    
+    <!-- Button to go back to homepage -->
+    <a href="/" class="z-10 bg-white text-gray-900 font-bold py-3 px-6 rounded-full hover:bg-gray-200 transition-all">
+        Back to Home
+    </a>
+</div>
