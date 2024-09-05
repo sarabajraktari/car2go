@@ -33,7 +33,7 @@
 </div>
 
 <!-- Cars List -->
-<div class="cars-list container mx-auto mt-8">
+<div class="cars-list container mx-auto mt-8 mb-8">
     {% if cars is empty %}
         <p class="text-center text-gray-600">No cars found.</p>
     {% else %}
@@ -72,7 +72,7 @@
                         </div>
                         <div class="flex justify-left lg:space-x-6 lg:flex-row flex-col w-full mt-4">
                          <div class="see-more-button-container">
-                           <a href="{{ car.link }}">
+                         <a href="{{ site_url }}/coming-soon/">
                            Rent Now
                            </a>
                          </div>
