@@ -5,3 +5,4 @@ import './modules/custom-splide.js';
 import './modules/gallery.js';
 import './modules/load-more.js';
 import './modules/scroll-to-top.js';
+import './modules/SeacrchBar.js';

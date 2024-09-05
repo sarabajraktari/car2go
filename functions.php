@@ -177,37 +177,60 @@ add_action( 'init', function() {
 	'delete_with_user' => false,
 ) );
 } );
-// Register Custom Taxonomy for Cars
-add_action( 'init', function() {
-	register_taxonomy( 'car', array( 'cars' ), array(
-		'labels' => array(
-			'name' => 'Cars',
-			'singular_name' => 'Car',
-			'menu_name' => 'Cars',
-			'all_items' => 'All Cars',
-			'edit_item' => 'Edit Car',
-			'view_item' => 'View Car',
-			'update_item' => 'Update Car',
-			'add_new_item' => 'Add New Car',
-			'new_item_name' => 'New Car Name',
-			'search_items' => 'Search Cars',
-			'popular_items' => 'Popular Cars',
-			'separate_items_with_commas' => 'Separate cars with commas',
-			'add_or_remove_items' => 'Add or remove cars',
-			'choose_from_most_used' => 'Choose from the most used cars',
-			'not_found' => 'No cars found',
-			'no_terms' => 'No cars',
-			'items_list_navigation' => 'Cars list navigation',
-			'items_list' => 'Cars list',
-			'back_to_items' => '← Go to cars',
-			'item_link' => 'Car Link',
-			'item_link_description' => 'A link to a car',
-		),
-		'public' => true,
-		'show_in_menu' => true,
-		'show_in_rest' => true,
-	) );
-} );
+
+    // Register the Brand taxonomy
+    register_taxonomy( 'car_brand', 'cars', array(
+        'labels' => array(
+            'name' => 'Brands',
+            'singular_name' => 'Brand',
+            'menu_name' => 'Car Brands',
+            'all_items' => 'All Brands',
+            'edit_item' => 'Edit Brand',
+            'view_item' => 'View Brand',
+            'update_item' => 'Update Brand',
+            'add_new_item' => 'Add New Brand',
+            'new_item_name' => 'New Brand Name',
+            'search_items' => 'Search Brands',
+            'popular_items' => 'Popular Brands',
+            'separate_items_with_commas' => 'Separate brands with commas',
+            'add_or_remove_items' => 'Add or remove brands',
+            'choose_from_most_used' => 'Choose from the most used brands',
+            'not_found' => 'No brands found',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'hierarchical' => true,
+        'show_admin_column' => true,
+        'rewrite' => array( 'slug' => 'brand' ),
+    ));
+
+    // Register the Cities taxonomy
+    register_taxonomy( 'car_city', 'cars', array(
+        'labels' => array(
+            'name' => 'Cities',
+            'singular_name' => 'City',
+            'menu_name' => 'Cities',
+            'all_items' => 'All Cities',
+            'edit_item' => 'Edit City',
+            'view_item' => 'View City',
+            'update_item' => 'Update City',
+            'add_new_item' => 'Add New City',
+            'new_item_name' => 'New City Name',
+            'search_items' => 'Search Cities',
+            'popular_items' => 'Popular Cities',
+            'separate_items_with_commas' => 'Separate cities with commas',
+            'add_or_remove_items' => 'Add or remove cities',
+            'choose_from_most_used' => 'Choose from the most used cities',
+            'not_found' => 'No cities found',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'hierarchical' => false,
+        'show_admin_column' => true,
+        'rewrite' => array( 'slug' => 'city' ),
+    ));
+
+
 // author post type
 
 add_action( 'init', function() {
