@@ -75,26 +75,26 @@
         <div class="owl-carousel owl-theme">
             {% for post in data %}
                 {% if post.post_type == 'authors' %}
-                    <div class="item author-card">
-<div class="relative flex items-start space-x-4 p-4  rounded-lg shadow-lg overflow-hidden transition-colors duration-300 hover:bg-gray-200 hover:shadow-xl">
-        <img class="w-16 h-16 rounded-full" src="{{ post.thumbnail }}" alt="{{ post.title }}">
-        <div class="flex flex-col justify-center">
-            <h2 class="text-lg font-bold text-gray-800">{{ post.title }}</h2>
+                  <div class="item author-card">
+                        <div class="relative flex items-start space-x-4 p-4  rounded-lg shadow-lg overflow-hidden transition-colors duration-300 hover:bg-gray-200 hover:shadow-xl">
+                           <img class="w-16 h-16 rounded-full" src="{{ post.thumbnail }}" alt="{{ post.title }}">
+                           <div class="flex flex-col justify-center">
+                                 <h2 class="text-lg font-bold text-gray-800">{{ post.title }}</h2>
 
-            <!-- Star Rating Section -->
-            <div class="star-rating flex mt-1">
-                <i class="fas fa-star text-yellow-500"></i>
-                <i class="fas fa-star text-yellow-500"></i>
-                <i class="fas fa-star text-yellow-500"></i>
-                <i class="fas fa-star text-yellow-500"></i>
-                <i class="fas fa-star text-yellow-500"></i>
-            </div><br>
+                                 <!-- Star Rating Section -->
+                                 <div class="star-rating flex mt-1">
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                 </div><br>
 
-            <p class="text-gray-600">{{ post.description }}</p>
-            
-        </div>
-    </div>
-</div>
+                                 <p class="text-gray-600 min-h-[170px]">{{ post.description }}</p>
+                                 
+                           </div>
+                        </div>
+                  </div>
 
                 {% endif %}
             {% endfor %}
