@@ -6,20 +6,15 @@ $(document).ready(function(){
         autoplayTimeout: 2000,
         autoplayHoverPause: true,
         responsive: {
-            0: {
+            320: {
                 items: 1
             },
-            600: {
+            770: {
                 items: 2
             },
-            1000: {
+            1180: {
                 items: 3
             }
         }
-    });
-    
-    $('.learn-more').click(function() {
-        $(this).siblings('p').css('display', 'block');
-        // $(this).remove();
     });
 });
