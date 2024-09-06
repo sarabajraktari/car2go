@@ -107,13 +107,13 @@
 
 
    {% if enable_load_more and has_cars %}
-        <div class="load-more-button-container flex justify-center p-4">
+        <div class="load-more-button-container flex justify-center mt-8">
             <button id="load-more-button" class="load-all-cards">
                 Load More
             </button>
         </div>
     {% elseif is_front_page() and has_cars %}
-        <div class="browse-all-button-container flex justify-center p-4">
+        <div class="browse-all-button-container flex justify-center mt-8">
             <a href="{{ redirect_link }}" class="browse-all-cards">
                 Browse All
             </a>

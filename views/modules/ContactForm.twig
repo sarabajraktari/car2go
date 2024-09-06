@@ -1,11 +1,13 @@
-<div class="flex flex-col md:flex-row p-8 rounded-lg shadow-lg max-w-6xl mx-auto">
-    <!-- Image -->
-    <div class="hidden md:block md:w-1/2">
-        <img src="{{ data.image }}" alt="Contact Image" class="rounded-lg w-[600px] h-[515px] max-w-full max-h-full object-cover">
-    </div>
-    <!-- Contact Form -->
-    <div class="md:w-1/2 md:pl-8 md:mt-0 contact-form">
-        <h2 class="text-3xl font-bold mb-4">Get in touch!</h2>
-        {{ data.contactform|raw }}
+<div class="contact-form-container mb-8 p-4" >
+    <div class="flex flex-col md:flex-row p-8 rounded-lg shadow-lg max-w-6xl mx-auto">
+        <!-- Image -->
+        <div class="hidden md:block md:w-1/2">
+            <img src="{{ data.image }}" alt="Contact Image" class="rounded-lg w-[600px] h-[515px] max-w-full max-h-full object-cover">
+        </div>
+        <!-- Contact Form -->
+        <div class="contact-form md:w-1/2 md:pl-8 md:mt-0">
+            <h2 class="text-3xl font-bold mb-4">Get in touch!</h2>
+            {{ data.contactform|raw }}
+        </div>
     </div>
 </div>
