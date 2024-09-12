@@ -7,6 +7,7 @@ use Internship\Menus\Header;
 use Internship\Menus\Footer;
 use Internship\PostTypes\Author;
 use Internship\PostTypes\Car;
+use Internship\PostTypes\TaxonomyData;
 
 class Setup {
     public static $loader;
@@ -15,10 +16,13 @@ class Setup {
     public static function renderPage($template = 'views/page.twig', $context = []) {
         self::addToTwig();
 
-        // Kontrollo nëse është një faqe 404
+        // Check if it's a 404 page
         if (is_404()) {
-            $template = 'templates/404.twig'; // Përdor shabllonin 404 nëse është faqe 404
+            $template = 'templates/404.twig'; // Use 404 template if it's a 404 page
         }
+
+        $brands = TaxonomyData::getTaxonomyData('brand');
+        $cities = TaxonomyData::getTaxonomyData('city');
 
         $modules = [];
         $flexible_content = get_field('modules_list');
@@ -53,7 +57,7 @@ class Setup {
         $Author = false;
         $authorData = null;
 
-        if(is_singular('authors')) {
+        if (is_singular('authors')) {
             $Author = true;
             $authorSlug = get_post_field('post_name', get_post());
             $authorData = Author::getSingleAuthorData($authorSlug);
@@ -70,6 +74,8 @@ class Setup {
             'is_single_car_page' => $isSingleCarPage,
             'author' => $authorData,
             'is_author_page' => $Author,
+            'brands' => $brands, 
+            'cities' => $cities, 
         ]));
     }
 
@@ -84,6 +90,18 @@ class Setup {
             'allow_callables' => true,
         ]);
 
+        $brands = TaxonomyData::getTaxonomyData('brand');
+        $cities = TaxonomyData::getTaxonomyData('city');
+
+        self::$twig->addGlobal('brands', $brands);
+        self::$twig->addGlobal('cities', $cities);
+
+
+        error_log(print_r($brands, true));
+        error_log(print_r($cities, true));
+
+
+        // Add common Twig functions
         self::$twig->addFunction(new \Twig\TwigFunction('wp_head', function () {
             return wp_head();
         }));
@@ -116,6 +134,21 @@ class Setup {
 
         self::$twig->addFunction(new \Twig\TwigFunction('is_front_page', function () {
             return is_front_page();
+        }));
+
+        self::$twig->addFunction(new \Twig\TwigFunction('get_permalink', function ($post_id = null) {
+            if ($post_id) {
+
+                return get_permalink($post_id);
+            } else {
+
+                $current_url = (is_ssl() ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                return $current_url;
+            }
+        }));
+
+        self::$twig->addFunction(new \Twig\TwigFunction('url_contains', function ($url, $substring) {
+            return strpos($url, $substring) !== false;
         }));
 
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {

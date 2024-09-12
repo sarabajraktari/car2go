@@ -3,9 +3,21 @@
       <div class="cards-title max-w-screen-xl mx-auto">{{ title_and_description|raw }}</div>
    </div>
 
+   {% set permalink = get_permalink() %}
+
+
+{% if 'cars' in permalink %}
    {% if search_form and post_type != 'Authors' %}
       {% include 'templates/SearchBar.twig' %}
    {% endif %}
+{% else %}
+       {% if search_form and not url_contains(permalink, 'cars') %}
+       <div class="flex items-center justify-center">
+    <p class="text-center pb-4 text-red-500">The search feature for Cards in the front page is disabled since it is contained within the Banner module. To hide this message set the 'Search Form' to Off</p>
+</div>
+{% endif %}
+{% endif %}
+
 
 {% if post_type == 'Cars' %}
    {% if data is empty %}
@@ -105,7 +117,7 @@
       </button>
    </div>
 
-   {% elseif is_front_page() and post_type == 'Cars' and not search_form %}
+   {% elseif is_front_page() and post_type == 'Cars' %}
    <div class="browse-all-button-container flex justify-center p-4">
       <a href="{{ redirect_link }}" class="browse-all-cards">
       Browse All

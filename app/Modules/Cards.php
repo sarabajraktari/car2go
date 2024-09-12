@@ -6,7 +6,6 @@ use Internship\Includes\Setup;
 use Internship\Interfaces\ModuleInterface;
 use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
-use Internship\PostTypes\TaxonomyData;
 
 class Cards implements ModuleInterface {
 
@@ -36,9 +35,6 @@ class Cards implements ModuleInterface {
         $selected_brand = isset($_GET['brand']) ? sanitize_text_field($_GET['brand']) : '';
         $selected_city = isset($_GET['city']) ? sanitize_text_field($_GET['city']) : '';
 
-        $brands = TaxonomyData::getTaxonomyData('brand');
-        $cities = TaxonomyData::getTaxonomyData('city');
-
         if ($post_type === 'Cars') {
             $posts = Car::getFilteredCarsData($selected_brand, $selected_city, $search_query);
         } else if ($post_type === 'Authors') {
@@ -52,8 +48,6 @@ class Cards implements ModuleInterface {
             'redirect_link' => $redirect_link,
             'title_and_description' => $title_and_description,
             'search_form' => $search_form,
-            'brands' => $brands,
-            'cities' => $cities,
             'search_query' => $search_query,
             'selected_brand' => $selected_brand,
             'selected_city' => $selected_city,
@@ -97,8 +91,6 @@ class Cards implements ModuleInterface {
             'redirect_link' => $data['redirect_link'],
             'title_and_description' => $data['title_and_description'],
             'search_form' => $data['search_form'],
-            'brands' => $data['brands'],
-            'cities' => $data['cities'],
             'search_query' => $data['search_query'],
             'selected_brand' => $data['selected_brand'],
             'selected_city' => $data['selected_city'],
@@ -106,4 +98,3 @@ class Cards implements ModuleInterface {
         ]);
     }
 }
- 
