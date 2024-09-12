@@ -5,10 +5,8 @@ namespace Internship\Includes;
 use Internship\Interfaces\ModuleInterface;
 use Internship\Menus\Header;
 use Internship\Menus\Footer;
-use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
-use Internship\PostTypes\TaxonomyData;
-
+use Internship\PostTypes\Car;
 
 class Setup {
     public static $loader;
@@ -31,6 +29,7 @@ class Setup {
                 $moduleClass = 'Internship\\Modules\\' . $moduleType;
                 if (class_exists($moduleClass) && in_array(ModuleInterface::class, class_implements($moduleClass))) {
                     $moduleData = $moduleClass::getData($key);
+
                     $modules[] = [
                         'type' => $moduleType,
                         'key' => $key,
@@ -44,7 +43,7 @@ class Setup {
 
         $isSingleCarPage = false;
         $carData = null;
-    
+
         if (is_singular('cars')) { 
             $isSingleCarPage = true;
             $carSlug = get_post_field('post_name', get_post());
@@ -60,28 +59,9 @@ class Setup {
             $authorData = Author::getSingleAuthorData($authorSlug);
         }
 
-        // Fetch filter values from query parameters
-        $search_query = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
-        $selected_brand = isset($_GET['brand']) ? sanitize_text_field($_GET['brand']) : '';
-        $selected_city = isset($_GET['city']) ? sanitize_text_field($_GET['city']) : '';
-
-        // Get filtered cars
-        $cars = Car::getFilteredCarsData($selected_brand, $selected_city, $search_query);
-
-        // Get taxonomy data for filters
-        $brands = TaxonomyData::getTaxonomyData('brand');
-        $cities = TaxonomyData::getTaxonomyData('city');
-
-        if (is_page('cars')) {
-           $context['show_search_bar'] = true; 
-           $context['brands'] = get_field('brands'); 
-           $context['cities'] = get_field('cities'); 
-       } else {
-           $context['show_search_bar'] = false; 
-       }
-
         $headerData = Header::getData(); 
         $footerData = Footer::getData();
+
         echo self::$twig->render($template, array_merge($context, [
             'modules' => $modules,
             'header' => $headerData,
@@ -90,12 +70,6 @@ class Setup {
             'is_single_car_page' => $isSingleCarPage,
             'author' => $authorData,
             'is_author_page' => $Author,
-            'cars' => $cars,
-            'brands' => $brands,
-            'cities' => $cities,
-            'search_query' => $search_query,
-            'selected_brand' => $selected_brand,
-            'selected_city' => $selected_city,
         ]));
     }
 

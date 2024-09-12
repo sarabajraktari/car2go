@@ -1,90 +1,43 @@
-<div class="search-bar container mx-auto mt-6 max-w-6xl">
-    <form id="search-form" action="/cars/" method="get" class="flex flex-col items-start bg-white p-6 rounded-lg shadow-lg space-y-4 md:space-y-0 md:space-x-4 md:flex-row md:items-center">
-        
-        <!-- Search Field -->
-        <input type="text" name="search" placeholder="Search a car..." class="w-full lg:w-[300px] md:w-auto p-3 border rounded-lg shadow-inner">
+<div class="search-bar container mx-auto max-w-6xl pb-8 relative">
+   <form id="search-form" action="car2go/cars/" method="get" class="flex flex-col items-start bg-white p-6 rounded-lg shadow-lg space-y-4 md:space-y-0 md:space-x-4 md:flex-row md:items-center relative">
+      <!-- Search input -->
+      <div class="w-full md:w-1/3 relative">
+         <input type="text" id="search-input" name="search" placeholder="Search a car..." class="w-full p-4 border border-gray-300 rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500" value="{{ search_query }}">
+         <ul id="suggestions" class="absolute bg-white shadow-lg z-50 w-full rounded-lg mt-1 hidden">
+         </ul>
+      </div>
 
-       <!-- Brand Dropdown -->
-       <select name="brand" class="w-full lg:w-[300px] md:w-auto p-3 md:border md:rounded-lg md:shadow-inner border-none rounded-none shadow-none">
-           <option value="">Select Brand</option>
-           {% for brand in brands %}
-               <option value="{{ brand.slug }}" {% if brand.slug == selected_brand %}selected{% endif %}>{{ brand.name }}</option>
-           {% endfor %}
-       </select>
-
-       <!-- City Dropdown -->
-       <select name="city" class="w-full lg:w-[300px] md:w-auto p-3 md:border md:rounded-lg md:shadow-inner border-none rounded-none shadow-none">
-           <option value="">Select City</option>
-           {% for city in cities %}
-               <option value="{{ city.slug }}" {% if city.slug == selected_city %}selected{% endif %}>{{ city.name }}</option>
-           {% endfor %}
-       </select>
-
-        <!-- Submit Button -->
-        <button type="submit" class="w-full lg:w-[200px] md:w-auto flex items-center justify-center px-4 py-2 bg-black text-white rounded-lg shadow-md hover:bg-gray-500">
-            <i class="fas fa-search mr-2"></i>Search
-        </button>
-
-        <!-- Reset Button -->
-        <button type="button" id="reset-button" class="w-full lg:w-[200px] md:w-auto flex items-center justify-center px-4 py-2 bg-gray-200 text-black rounded-lg shadow-md hover:bg-gray-300">
-            <i class="fas fa-redo mr-2"></i>Reset
-        </button>
-    </form>
-</div>
-
-<!-- Cars List -->
-<div class="cars-list container mx-auto mt-8 mb-8">
-    {% if cars is empty %}
-        <p class="text-center text-gray-600">No cars found.</p>
-    {% else %}
-        <div class="grid gap-6 w-10/12 mx-auto  sm:grid-cols-2 lg:grid-cols-3">
-            {% for car in cars %}
-                <div class="car-card bg-white shadow-md rounded overflow-hidden">
-                    <img src="{{ car.car_image }}" alt="{{ car.title }}" class="w-full h-60 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h2 class="text-2xl font-semibold text-gray-800">{{ car.title }}</h3>
-                        <p class="mt-2 text-gray-600 line-clamp-2 ">{{ car.description }}</p>
-                        <div class="text-left mt-8 mb-8">
-                            <h4 class="text-2xl md:text-3xl font-semibold text-black">
-                                ${{ car.rent_details.price }}
-                                <span class="text-gray-600 text-lg md:text-xl">/ day</span>
-                            </h4>
-                        </div>
-                        <div class="flex flex-col space-y-3">
-                            <span class="flex items-center">
-                                <svg class="w-6 h-6 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M4.66666 12.3195C4.66666 12.3195 2.66666 6.98617 2.66666 4.3195C2.66666 1.65283 3.99999 1.65283 3.99999 1.65283H4.66666C4.66666 1.65283 5.33332 1.65283 5.33332 2.3195C5.33332 2.98617 4.66666 2.98617 4.66666 4.3195C4.66666 5.65283 6.66666 6.98617 6.66666 8.98617C6.66666 10.9862 4.66666 12.3195 4.66666 12.3195ZM7.99999 11.6528C7.33332 11.6528 5.33332 13.3195 5.33332 13.3195C5.13332 13.4528 5.19999 13.6528 5.33332 13.8528C5.33332 13.8528 5.99999 15.0528 7.33332 15.0528H11.3333C12.0667 15.0528 12.6667 14.4528 12.6667 13.7195V13.0528C12.6667 12.3195 12.0667 11.7195 11.3333 11.7195H7.99999V11.6528Z" fill="#828282"></path>
-                                </svg>
-                                {{ car.rent_details.number_of_seats }} Passengers
-                            </span>
-                            <span class="flex items-center">
-                                <svg class="w-6 h-6 mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M6 0.254639C6.42385 0.254503 6.83345 0.40771 7.15317 0.685976C7.47289 0.964242 7.68115 1.34878 7.7395 1.7686C7.79785 2.18842 7.70236 2.61517 7.47064 2.97008C7.23893 3.325 6.88664 3.5841 6.47881 3.69956V6.16003C6.47881 6.28702 6.42837 6.40881 6.33857 6.49861C6.24878 6.5884 6.12699 6.63885 6 6.63885C5.87301 6.63885 5.75122 6.5884 5.66142 6.49861C5.57163 6.40881 5.52118 6.28702 5.52118 6.16003V3.69956C5.11426 3.58321 4.76305 3.32384 4.53214 2.96916C4.30123 2.61447 4.20616 2.18834 4.26443 1.76914C4.32269 1.34995 4.53037 0.965893 4.84925 0.687627C5.16813 0.409361 5.57678 0.255603 6 0.254639ZM6.79803 2.0103C6.79803 1.79865 6.71395 1.59567 6.56429 1.44601C6.41463 1.29635 6.21165 1.21227 6 1.21227C5.78835 1.21227 5.58537 1.29635 5.43571 1.44601C5.28605 1.59567 5.20197 1.79865 5.20197 2.0103C5.20197 2.22195 5.28605 2.42493 5.43571 2.57459C5.58537 2.72425 5.78835 2.80832 6 2.80832C6.21165 2.80832 6.41463 2.72425 6.56429 2.57459C6.71395 2.42493 6.79803 2.22195 6.79803 2.0103ZM11.7458 3.12753C11.7458 2.70423 11.5776 2.29827 11.2783 1.99895C10.979 1.69964 10.573 1.53148 10.1497 1.53148C9.72644 1.53148 9.32047 1.69964 9.02116 1.99895C8.72184 2.29827 8.55368 2.70423 8.55368 3.12753V5.36201H7.11724V6.31964H9.51131V3.12753C9.51131 2.95821 9.57858 2.79583 9.6983 2.6761C9.81803 2.55637 9.98042 2.48911 10.1497 2.48911C10.3191 2.48911 10.4814 2.55637 10.6012 2.6761C10.7209 2.79583 10.7882 2.95821 10.7882 3.12753V10.7886C10.7882 10.9579 10.7209 11.1203 10.6012 11.24C10.4814 11.3597 10.3191 11.427 10.1497 11.427C9.98042 11.427 9.81803 11.3597 9.6983 11.24C9.57858 11.1203 9.51131 10.9579 9.51131 10.7886V7.59648H6.63842V10.7886C6.63842 10.9579 6.57116 11.1203 6.45143 11.24C6.3317 11.3597 6.16932 11.427 6 11.427C5.83068 11.427 5.66829 11.3597 5.54857 11.24C5.42884 11.1203 5.36158 10.9579 5.36158 10.7886V7.59648H1.53105C1.44639 7.59648 1.3652 7.56285 1.30533 7.50299C1.24547 7.44312 1.21184 7.36193 1.21184 7.27727V3.12753C1.21184 2.95821 1.2791 2.79583 1.39883 2.6761C1.51856 2.55637 1.68094 2.48911 1.85026 2.48911C2.01958 2.48911 2.18197 2.55637 2.30169 2.6761C2.42142 2.79583 2.48868 2.95821 2.48868 3.12753V6.31964H4.88276V5.36201H3.44631V3.12753C3.44631 2.70423 3.27816 2.29827 2.97884 1.99895C2.67952 1.69964 2.27356 1.53148 1.85026 1.53148C1.42696 1.53148 1.021 1.69964 0.721682 1.99895C0.422363 2.29827 0.254209 2.70423 0.254209 3.12753V7.27727C0.254209 7.61591 0.388733 7.94068 0.628187 8.18013C0.867641 8.41959 1.19241 8.55411 1.53105 8.55411H4.40395V10.7886C4.40395 11.2119 4.5721 11.6178 4.87142 11.9172C5.17074 12.2165 5.5767 12.3846 6 12.3846C6.4233 12.3846 6.82926 12.2165 7.12858 11.9172C7.4279 11.6178 7.59605 11.2119 7.59605 10.7886V8.55411H8.55368V10.7886C8.55368 11.2119 8.72184 11.6178 9.02116 11.9172C9.32047 12.2165 9.72644 12.3846 10.1497 12.3846C10.573 12.3846 10.979 12.2165 11.2783 11.9172C11.5776 11.6178 11.7458 11.2119 11.7458 10.7886V3.12753Z" fill="#828282"></path>
-                                </svg>
-                                {{ car.rent_details.transmission_type }} Transmission
-                            </span>
-                            <span class="flex items-center">
-                                <svg class="w-6 h-6 mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                   <path d="M12.621 2.49659L12.6307 2.48482L9.86036 0.24087L8.98771 1.31713L10.4193 2.47651C10.0641 2.69231 9.78215 3.00996 9.60997 3.38817C9.43779 3.76638 9.38338 4.18764 9.45381 4.59718C9.5577 5.2198 9.9864 5.75794 10.5412 6.05921C11.161 6.39649 11.7047 6.36533 12.1881 6.19357L12.1777 10.4751C12.1786 10.5898 12.1508 10.7028 12.0969 10.8041C12.0431 10.9053 11.9648 10.9916 11.8692 11.0549C11.7737 11.1183 11.6638 11.1569 11.5496 11.1672C11.4353 11.1774 11.3204 11.159 11.215 11.1136C11.1325 11.0784 11.0577 11.0273 10.9948 10.9633C10.9308 10.8992 10.88 10.823 10.8454 10.7393C10.8109 10.6555 10.7931 10.5657 10.7933 10.4751L10.8092 9.08992C10.8099 8.81731 10.7566 8.54726 10.6523 8.29537C10.5481 8.04348 10.3949 7.81474 10.2018 7.62235C10.0089 7.42899 9.77968 7.27557 9.52738 7.17087C9.27508 7.06617 9.00461 7.01225 8.73145 7.01219H8.03888V1.47158C8.03888 1.10421 7.89294 0.751895 7.63318 0.492128C7.37341 0.232361 7.02109 0.0864258 6.65372 0.0864258H1.80569C1.43832 0.0864258 1.086 0.232361 0.826234 0.492128C0.566468 0.751895 0.420532 1.10421 0.420532 1.47158V11.1677C0.420532 11.535 0.566468 11.8873 0.826234 12.1471C1.086 12.4069 1.43832 12.5528 1.80569 12.5528H6.65372C7.02109 12.5528 7.37341 12.4069 7.63318 12.1471C7.89294 11.8873 8.03888 11.535 8.03888 11.1677V8.39735H8.73145C8.82565 8.39735 8.91637 8.41605 9.00225 8.45137C9.16708 8.52353 9.29847 8.65541 9.37001 8.82051C9.40594 8.90577 9.42431 8.9974 9.42403 9.08992L9.40741 10.4751C9.40741 10.7563 9.46212 11.0284 9.57086 11.284C9.67544 11.5326 9.82573 11.755 10.0148 11.9426C10.207 12.1369 10.4361 12.291 10.6885 12.3957C10.941 12.5005 11.2118 12.5539 11.4851 12.5528C11.7663 12.5528 12.0378 12.4988 12.2941 12.3894C12.542 12.2855 12.765 12.1352 12.9527 11.9454C13.1466 11.7529 13.3004 11.5238 13.4051 11.2714C13.5098 11.019 13.5635 10.7483 13.5629 10.4751L13.5795 4.24189C13.5788 3.89395 13.4907 3.55177 13.3232 3.2468C13.1557 2.94183 12.9142 2.68385 12.621 2.49659ZM6.65372 3.54931H1.80569V1.47158H6.65372V3.54931ZM11.5018 4.93446C11.3181 4.93446 11.1419 4.8615 11.012 4.73161C10.8822 4.60173 10.8092 4.42557 10.8092 4.24189C10.8092 4.0582 10.8822 3.88204 11.012 3.75216C11.1419 3.62228 11.3181 3.54931 11.5018 3.54931C11.6854 3.54931 11.8616 3.62228 11.9915 3.75216C12.1214 3.88204 12.1943 4.0582 12.1943 4.24189C12.1943 4.42557 12.1214 4.60173 11.9915 4.73161C11.8616 4.8615 11.6854 4.93446 11.5018 4.93446Z" fill="#828282"></path>
-                                </svg>
-                                {{ car.rent_details.fuel_type }}
-                            </span>
-                        </div>
-                        <div class="flex justify-left lg:space-x-6 lg:flex-row flex-col w-full mt-4">
-                         <div class="see-more-button-container">
-                         <a href="{{ site_url }}/coming-soon/">
-                           Rent Now
-                           </a>
-                         </div>
-                        <div class="more-details-button">
-                              <a href="{{ car.link }}">
-                                 More Details
-                             </a>
-                             </div>
-                            </div>
-                    </div>
-                </div>
+      <!-- Brand select -->
+      <div class="w-full md:w-1/3">
+         <select name="brand" class="w-full p-4 border border-gray-300 rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option value="">Select Brand</option>
+            {% for brand in brands %}
+            <option value="{{ brand.slug }}" {% if brand.slug == selected_brand %}selected{% endif %}>{{ brand.name }}</option>
             {% endfor %}
-        </div>
-    {% endif %}
+         </select>
+      </div>
+
+      <!-- City select -->
+      <div class="w-full md:w-1/3">
+         <select name="city" class="w-full p-4 border border-gray-300 rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option value="">Select City</option>
+            {% for city in cities %}
+            <option value="{{ city.slug }}" {% if city.slug == selected_city %}selected{% endif %}>{{ city.name }}</option>
+            {% endfor %}
+         </select>
+      </div>
+
+      <!-- Buttons container -->
+      <div class="w-full md:w-auto flex space-x-4 mt-4 md:mt-0">
+         <!-- Search button -->
+         <button type="submit" class="flex items-center justify-center px-6 py-3 bg-black text-white rounded-lg shadow-md hover:bg-gray-700 transition duration-200">
+            <i class="fas fa-search mr-2"></i>Search
+         </button>
+         
+         <!-- Reset button -->
+         <button type="button" id="reset-button" class="flex items-center justify-center px-6 py-3 bg-gray-200 text-black rounded-lg shadow-md hover:bg-gray-300 transition duration-200">
+            <i class="fas fa-redo mr-2"></i>Reset
+         </button>
+      </div>
+   </form>
 </div>
