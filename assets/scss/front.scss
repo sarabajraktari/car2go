@@ -13,6 +13,9 @@
 @import "./404.scss";
 @import "./Modules/cards.scss";
 
+@import "./style-dark.scss";
+@import "./style-light.scss";
+
 .keri{
     animation: animateCar 700ms forwards ease-out;
 }

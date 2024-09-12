@@ -8,7 +8,7 @@
                     {% for cartype in data.cartypes_list %}
                         <li class="splide__slide">
                             <div class="cartype-item-box">
-                                <img src="{{ cartype.image.url }}" alt="{{ cartype.car_type_name }}">
+                                <img class="object-contain" src="{{ cartype.image.url }}" alt="{{ cartype.car_type_name }}">
                                 <h2>{{ cartype.car_type_name }}</h2>
                                 <p>{{ cartype.car_type_items }}</p>
                             </div>

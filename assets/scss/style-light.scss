@@ -1,0 +1,155 @@
+.theme-toggle-button {
+    position: fixed;
+    bottom: 20px; 
+    left: 20px;   
+    background-color: #f1f1f1; 
+    border: none;
+    border-radius: 50%; 
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    cursor: pointer;
+    z-index: 1000;
+  }
+  
+  .theme-toggle-button:hover {
+    background-color: #ddd; 
+  }
+  
+  .theme-icon {
+    fill: #000; 
+    width: 24px;
+    height: 24px;
+  }
+
+
+body.light .car-rental-banner {
+    background-color: #e8e8e8; 
+    color: #000000; 
+}
+
+body.light .car-rental-banner a {
+    color: #000000; 
+}
+
+body.light .car-rental-banner .icon {
+    background-color: #000000; 
+    color: #ffffff; 
+}
+
+body.light #cartypes {
+    background-color: white; 
+
+}
+
+body.light header {
+    background-color: #e8e8e8; 
+    color: #000000; 
+}
+
+body.light nav a {
+    color: #000000; 
+    font-weight: 600;
+    line-height: 1.5rem;
+}
+
+body.light .header-menu .toggle-submenu {
+    background-color: white; 
+}
+
+body.light .see-more-button-container a{
+    background-color: #e8e8e8; 
+    color: #000; 
+}
+
+body.light #add-numbers-module {
+    background-color: #e8e8e8; 
+    color: black;
+}
+
+body.light #add-numbers-module .title {
+    color: black;
+}
+
+body.light #how-it-works-module {
+    background-color: white; 
+    color: black;
+}
+
+body.light #how-it-works-module .module-title {
+    color: black;
+}
+
+body.light .cards-container {
+    background-color: white;
+}
+
+body.light #faq-module { 
+    background-color: #f8f8f8;
+    color: black;
+}
+
+body.light #faq-module .faq-title h2{ 
+    color: black;
+    margin-bottom: -30px;
+}
+
+body.light #faq-module .faq-title p{ 
+    color: black;
+}
+
+body.light #faq-module .faq-footer{ 
+    color: black;
+}
+
+body.light #faq-module .faq-footer a{ 
+    color: black;
+}
+
+body.light .footer {
+    background-color: #e8e8e8; 
+    color: #000000; 
+}
+
+body.light .footer a{
+    color: black; 
+    font-weight: 600;
+}
+
+body.light .module-banner {
+    background-color: #e8e8e8;
+}
+
+body.light .module-addnumbers {
+    background-color: #e8e8e8;
+}
+
+body.light .module-faq {
+    background-color: #f8f8f8;
+}
+
+body.light .module-default {
+    background-color: white;
+}
+
+body.light .module-cards hr{
+    background-color: #ccc; 
+}
+
+body.light .faq-question:hover{
+    background-color: #f9fafb;
+}
+
+body.light .test:hover{
+    background-color: #e5e7eb;
+}
+
+body.light .browse-all-cards{
+    background-color: #e8e8e8;
+    color: black;
+    font-weight: 600;
+}
+
+body.light .theme-colors {
+    background-color: white;
+}
+

@@ -1,0 +1,42 @@
+<button id="theme-toggle" class="theme-toggle-button" aria-label="Toggle dark/light mode">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="theme-icon">
+    <circle cx="12" cy="12" r="6"/>
+  </svg>
+</button>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('theme-toggle');
+
+const footerLogo = document.getElementById('footer-theme-logo');
+const bannerImage = document.getElementById('banner-theme-image');
+
+ const themeLogo = document.getElementById('theme-logo');
+    const lightLogo = 'http://localhost/internship/wp-content/themes/car2go/assets/media/logo.png'; 
+    const darkLogo = 'http://localhost/internship/wp-content/themes/car2go/assets/media/logo.jpg'; 
+
+const lightBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/foto.png'; // Light mode banner image
+    const darkBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/black_car_bg.png';
+
+    const theme = localStorage.getItem('theme') || 'light';
+    
+    document.body.classList.add(theme);
+
+    themeLogo.src = theme === 'light' ? lightLogo : darkLogo;
+    footerLogo.src = theme === 'light' ? lightLogo : darkLogo;
+    bannerImage.src = theme === 'light' ? lightBannerImage : darkBannerImage;
+    
+    toggleButton.addEventListener('click', () => {
+        const currentTheme = document.body.classList.contains('light') ? 'light' : 'dark';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.body.classList.replace(currentTheme, newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        themeLogo.src = newTheme === 'light' ? lightLogo : darkLogo;
+        footerLogo.src = newTheme === 'light' ? lightLogo : darkLogo;
+        bannerImage.src = newTheme === 'light' ? lightBannerImage : darkBannerImage; 
+    });
+});
+
+</script>
