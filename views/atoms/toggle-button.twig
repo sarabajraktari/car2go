@@ -5,37 +5,51 @@
 </button>
 
 <script>
+
 document.addEventListener('DOMContentLoaded', () => {
+
     const toggleButton = document.getElementById('theme-toggle');
+    const footerLogo = document.getElementById('footer-theme-logo');
+    const bannerImage = document.getElementById('banner-theme-image');
+    const themeLogo = document.getElementById('theme-logo');
 
-const footerLogo = document.getElementById('footer-theme-logo');
-const bannerImage = document.getElementById('banner-theme-image');
-
- const themeLogo = document.getElementById('theme-logo');
     const lightLogo = 'http://localhost/internship/wp-content/themes/car2go/assets/media/logo.png'; 
     const darkLogo = 'http://localhost/internship/wp-content/themes/car2go/assets/media/logo.jpg'; 
-
-const lightBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/foto.png'; // Light mode banner image
+    const lightBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/light-car.png'; 
     const darkBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/black_car_bg.png';
 
     const theme = localStorage.getItem('theme') || 'light';
-    
     document.body.classList.add(theme);
 
-    themeLogo.src = theme === 'light' ? lightLogo : darkLogo;
-    footerLogo.src = theme === 'light' ? lightLogo : darkLogo;
-    bannerImage.src = theme === 'light' ? lightBannerImage : darkBannerImage;
-    
-    toggleButton.addEventListener('click', () => {
-        const currentTheme = document.body.classList.contains('light') ? 'light' : 'dark';
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.body.classList.replace(currentTheme, newTheme);
-        localStorage.setItem('theme', newTheme);
+    if (themeLogo) {
+        themeLogo.src = theme === 'light' ? lightLogo : darkLogo;
+    }
+    if (footerLogo) {
+        footerLogo.src = theme === 'light' ? lightLogo : darkLogo;
+    }
+    if (bannerImage) {
+        bannerImage.src = theme === 'light' ? lightBannerImage : darkBannerImage;
+    }
 
-        themeLogo.src = newTheme === 'light' ? lightLogo : darkLogo;
-        footerLogo.src = newTheme === 'light' ? lightLogo : darkLogo;
-        bannerImage.src = newTheme === 'light' ? lightBannerImage : darkBannerImage; 
-    });
+    if (toggleButton) {
+        toggleButton.addEventListener('click', () => {
+            const currentTheme = document.body.classList.contains('light') ? 'light' : 'dark';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.classList.replace(currentTheme, newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (themeLogo) {
+                themeLogo.src = newTheme === 'light' ? lightLogo : darkLogo;
+            }
+            if (footerLogo) {
+                footerLogo.src = newTheme === 'light' ? lightLogo : darkLogo;
+            }
+            if (bannerImage) {
+                bannerImage.src = newTheme === 'light' ? lightBannerImage : darkBannerImage;
+            }
+        });
+    }
 });
+
 
 </script>
