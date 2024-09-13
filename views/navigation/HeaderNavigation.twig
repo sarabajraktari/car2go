@@ -13,7 +13,7 @@
                         <a href="{{ page.page_url.url }}" class="text-white transition duration-200 flex items-center">
                             {{ page.page_name }}
                             {% if page.sub_menu %}
-                                <svg class="w-4 h-4 ml-1 text-gray-400 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="shigjeta w-4 h-4 ml-1 text-gray-400 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             {% endif %}
@@ -36,7 +36,7 @@
 
         <div class="md:hidden">
             <button id="mobile-menu-button" class="text-white focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="close w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
@@ -53,7 +53,7 @@
                         </a>
                         {% if page.sub_menu %}
                             <button class="toggle-submenu focus:outline-none text-white">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="shigjeta-mobile w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
@@ -61,7 +61,7 @@
                     </div>
 
                     {% if page.sub_menu %}
-                        <ul class="pl-4 rounded-lg mt-2 hidden w-full">
+                        <ul class="gallery-submenu pl-4 rounded-lg mt-2 hidden w-full">
                             {% for sub_page in page.sub_menu %}
                                 <li class="border-b border-gray-700 last:border-none w-full">
                                     <a href="{{ sub_page.sub_page_url }}" class="block py-2 text-white hover:bg-gray-700 transition duration-200 w-full text-left">
