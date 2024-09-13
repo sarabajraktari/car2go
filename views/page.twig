@@ -2,10 +2,13 @@
 
 {% block content %}
     <div class="w-full">
-        {{ include("modules.twig") }}
+           {% if not is_single_car_page %}
+            {{ include("modules.twig") }}
+        {% endif %}
     </div>
           {% if is_single_car_page %}
              {{ include("templates/single-car.twig", { car: car }) }} 
+                {{ include("modules.twig") }}
         {% endif %} 
 
         {% if is_author_page %}
