@@ -55,13 +55,18 @@ jQuery(document).ready(function($) {
 
     $('#search-input').on('input', function() {
         let query = $(this).val();
+        let selectedBrand = $('select[name="brand"]').val(); 
+        let selectedCity = $('select[name="city"]').val();
+        
         if (query.length > 2) {
             $.ajax({
                 url: '../wp-admin/admin-ajax.php', 
                 method: 'GET',
                 data: {
                     action: 'get_car_suggestions',
-                    query: query
+                    query: query,
+                    brand_slug: selectedBrand, 
+                    city_slug: selectedCity    
                 },
                 success: function(response) {
                     let suggestions = JSON.parse(response);
@@ -69,20 +74,26 @@ jQuery(document).ready(function($) {
                     suggestionsList.empty().show();
                     currentFocus = -1; 
 
-                    let currentUrl = window.location.pathname;
+                    if (suggestions.length === 0) {
+                        suggestionsList.append(
+                            '<li class="p-2 suggestion-item cursor-default text-gray-500">No match found</li>'
+                        );
+                    } else {
+                        let currentUrl = window.location.pathname;
 
-                    suggestions.forEach(function(suggestion) {
-                        if (suggestion.title) {
-                            let searchUrl = '/cars/?search=' + encodeURIComponent(suggestion.title) + '&brand=&city=';
-                            if (currentUrl.includes('/cars/')) {
-                                searchUrl = '/?search=' + encodeURIComponent(suggestion.title) + '&brand=&city=';
+                        suggestions.forEach(function(suggestion) {
+                            if (suggestion.title) {
+                                let searchUrl = '/cars/?search=' + encodeURIComponent(suggestion.title) + '&brand=' + encodeURIComponent(selectedBrand) + '&city=' + encodeURIComponent(selectedCity);
+                                if (currentUrl.includes('/cars/')) {
+                                    searchUrl = '/?search=' + encodeURIComponent(suggestion.title) + '&brand=' + encodeURIComponent(selectedBrand) + '&city=' + encodeURIComponent(selectedCity);
+                                }
+
+                                suggestionsList.append(
+                                    '<li class="p-2 suggestion-item cursor-pointer"><a href="'+ searchUrl +'">' + suggestion.title + '</a></li>'
+                                );
                             }
-
-                            suggestionsList.append(
-                                '<li class="p-2 suggestion-item cursor-pointer"><a href="'+ searchUrl +'">' + suggestion.title + '</a></li>'
-                            );
-                        }
-                    });
+                        });
+                    }
                 }
             });
         } else {
