@@ -231,7 +231,6 @@ body.dark .wpcf7-response-output{
 }
 
 body.dark .contact-us{
-    border: 1px solid white;
     margin-bottom: 30px;
 
 }
@@ -323,4 +322,13 @@ body.dark #search-form button{
 body.dark .footer a{
     color: white; 
     font-weight: 600;
+}
+
+
+body.dark #mobile-menu ul li a{
+    margin-left: 7px;
+}
+
+body.dark .shigjeta-mobile{
+    margin-right: 7px;
 }
