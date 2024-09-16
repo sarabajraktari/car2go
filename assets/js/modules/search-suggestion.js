@@ -22,16 +22,13 @@ jQuery(document).ready(function($) {
         } else if (e.keyCode == 13) { 
             e.preventDefault();
             if (currentFocus > -1) {
-                
                 suggestions.eq(currentFocus).click();
-            } else {
-                
+            } else if ($('#search-input').val().trim() !== '') { 
                 $('#search-form').submit();
             }
         }
     });
 
-    
     $(document).on('mouseenter', '#suggestions li.suggestion-item', function() {
         let suggestions = $('#suggestions li.suggestion-item');
         removeActive(suggestions); 
@@ -43,7 +40,6 @@ jQuery(document).ready(function($) {
         $(this).removeClass('highlighted'); 
     });
 
-    
     function addActive(suggestions) {
         if (!suggestions) return false;
         removeActive(suggestions);
@@ -76,15 +72,16 @@ jQuery(document).ready(function($) {
                     let currentUrl = window.location.pathname;
 
                     suggestions.forEach(function(suggestion) {
-                        let searchUrl = '/cars/?search='+ suggestion.title +'&brand=&city=';
+                        if (suggestion.title) {
+                            let searchUrl = '/cars/?search=' + encodeURIComponent(suggestion.title) + '&brand=&city=';
+                            if (currentUrl.includes('/cars/')) {
+                                searchUrl = '/?search=' + encodeURIComponent(suggestion.title) + '&brand=&city=';
+                            }
 
-                        if (currentUrl.includes('/cars/')) {
-                            searchUrl = '/?search='+ suggestion.title +'&brand=&city=';
+                            suggestionsList.append(
+                                '<li class="p-2 suggestion-item cursor-pointer"><a href="'+ searchUrl +'">' + suggestion.title + '</a></li>'
+                            );
                         }
-
-                        suggestionsList.append(
-                            '<li class="p-2 suggestion-item cursor-pointer"><a href="'+ searchUrl +'">' + suggestion.title + '</a></li>'
-                        );
                     });
                 }
             });
@@ -99,10 +96,14 @@ jQuery(document).ready(function($) {
         }
     });
 
-    $(document).on('click', '#suggestions li', function() {
-        $('#search-input').val($(this).text());
-        $('#suggestions').hide();
-        $('#search-form').submit(); 
+    $(document).on('click', '#suggestions li', function(event) {
+        event.preventDefault();  // Prevent default action if no valid link
+        let text = $(this).text();
+        if (text) {
+            $('#search-input').val(text);
+            $('#suggestions').hide();
+            $('#search-form').submit(); 
+        }
     });
 
     $('#search-input').on('blur', function() {
@@ -116,7 +117,9 @@ jQuery(document).ready(function($) {
         if (event.key === 'Enter') {
             if (currentFocus === -1) { 
                 event.preventDefault(); 
-                $('#search-form').submit(); 
+                if ($('#search-input').val().trim() !== '') { 
+                    $('#search-form').submit();
+                }
             }
         }
     });

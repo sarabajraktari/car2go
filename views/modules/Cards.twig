@@ -18,10 +18,10 @@
 {% endif %}
 {% endif %}
 
-
 {% if post_type == 'Cars' %}
    {% if data is empty %}
         <p class="text-center text-gray-600">No results found for: '<b>{{search_query}}</b>'.</p>
+        <p class="ajax-errors-if-any hidden text-red-500"></p>
     {% else %}
    <div class="cards-grid" id="cards-grid">
       {% for post in data %}

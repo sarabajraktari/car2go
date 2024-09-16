@@ -279,18 +279,18 @@ add_action( 'init', function() {
 ) );
 } );
 
-// functions.php or a plugin file
 
 add_action('wp_ajax_get_car_suggestions', 'get_car_suggestions');
 add_action('wp_ajax_nopriv_get_car_suggestions', 'get_car_suggestions');
 
 function get_car_suggestions() {
     $search_query = sanitize_text_field($_GET['query']);
+    $search_query_normalized = str_replace(['-', ' '], ' ', $search_query);
 
     $args = array(
         'post_type' => 'cars',
-        's' => $search_query,
-        'posts_per_page' => 5, // in here you can Limit the number of suggestions
+        's' => $search_query_normalized,  
+        'posts_per_page' => 5,  
     );
 
     $query = new WP_Query($args);
@@ -307,7 +307,6 @@ function get_car_suggestions() {
     }
 
     wp_reset_postdata();
-
     echo json_encode($suggestions);
     wp_die();
 }
