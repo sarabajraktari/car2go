@@ -23,18 +23,19 @@
 
 
 <script>
-
 document.addEventListener('DOMContentLoaded', () => {
-
     const toggleButton = document.getElementById('theme-toggle');
     const footerLogo = document.getElementById('footer-theme-logo');
     const bannerImage = document.getElementById('banner-theme-image');
     const themeLogo = document.getElementById('theme-logo');
+    const contactImage = document.getElementById('contact-image'); // Add contact image
 
     const lightLogo = 'http://localhost/internship/wp-content/themes/car2go/assets/media/logo.png'; 
     const darkLogo = 'http://localhost/internship/wp-content/themes/car2go/assets/media/logo.jpg'; 
     const lightBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/light-car.jpg'; 
     const darkBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/black_car_bg.png';
+    const lightContactImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/contactus.png'; // Light mode contact image
+    const darkContactImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/contactus.png'; // Dark mode contact image
 
     const theme = localStorage.getItem('theme') || 'light';
     document.body.classList.add(theme);
@@ -47,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (bannerImage) {
         bannerImage.src = theme === 'light' ? lightBannerImage : darkBannerImage;
+    }
+    if (contactImage) {
+        contactImage.src = theme === 'light' ? lightContactImage : darkContactImage;
     }
 
     if (toggleButton) {
@@ -65,9 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (bannerImage) {
                 bannerImage.src = newTheme === 'light' ? lightBannerImage : darkBannerImage;
             }
+            if (contactImage) {
+                contactImage.src = newTheme === 'light' ? lightContactImage : darkContactImage;
+            }
         });
     }
 });
-
-
 </script>
