@@ -1,12 +1,52 @@
-body.dark .theme-toggle-button {
-    background-color: #333;
-    color: #fff;
+.theme-toggle-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: var(--toggle-bg-light, #e2e8f0); /* Customizable colors */
+    color: var(--toggle-icon-light, #1a202c);           /* Icon color light mode */
+    transition: background-color 0.3s, color 0.3s;
   }
   
-  body.dark .theme-icon {
-    fill: #fff;
+  .theme-toggle-button:hover {
+    background-color: var(--toggle-bg-light-hover, #cbd5e1);
   }
-
+  
+  .theme-toggle-button.dark {
+    background-color: var(--toggle-bg-dark, #2d3748);
+    color: var(--toggle-icon-dark, #fbd38d);
+  }
+  
+  .theme-toggle-button.dark:hover {
+    background-color: var(--toggle-bg-dark-hover, #4a5568);
+  }
+  
+  .theme-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  #icon-sun {
+    display: block;
+  }
+  
+  #icon-moon {
+    display: none;
+  }
+  
+  /* Show correct icons based on the theme */
+  .dark #icon-sun {
+    display: none;
+  }
+  
+  .dark #icon-moon {
+    display: block;
+  }
+  
 
 body.dark .car-rental-banner {
     background-color: #000000; 
@@ -20,15 +60,6 @@ body.dark .car-rental-banner a {
 body.dark .car-rental-banner .icon {
     background-color: #ffffff; 
     color: #000000;
-}
-
-.theme-toggle-button {
-
-    width: 60px;
-    height: 60px;
-    color: black;
-    background-color: #333;
-    pointer-events: auto;
 }
 
 body.dark #cartypes {
@@ -275,4 +306,16 @@ body.dark .gallery-submenu{
 
 body.dark #mobile-menu ul li a{
     font-weight: 600;
+}
+
+body.dark #theme-toggle{
+    background-color: white;
+}
+
+body.dark #search-form {
+    background-color: black;
+}
+
+body.dark #search-form button{
+    border: 1px solid white;
 }
