@@ -1,7 +1,7 @@
 <div class="relative flex flex-col p-4 space-y-6 items-center w-full md:w-4/5 mx-auto">
     <!-- Title and Description -->
-    <div class="text-center text-black font-bold text-4xl ">{{ car.title }}</div>
-    <div class="text-center text-base font-semibold text-gray-600 max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[16px] lg:max-w-[60%]">{{ car.description|raw }}</div>
+    <div class="car-title text-center text-black font-bold text-4xl ">{{ car.title }}</div>
+    <div class="car-description text-center text-base font-semibold text-gray-600 max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[16px] lg:max-w-[60%]">{{ car.description|raw }}</div>
 
     <div class="relative flex flex-col md:flex-row items-center md:p-8 md:space-x-[-5rem] space-y-8 md:space-y-0 w-full">
         <!-- Features Section -->
@@ -66,4 +66,4 @@
         </div>
     </div>
 {% endif %}
-</div>
+

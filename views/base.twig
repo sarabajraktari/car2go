@@ -15,9 +15,11 @@
     {# Age verification part  #}
     {{ include("modules/age-verification.twig") }}
     <main>
+    <div class="main-content">
         {% block content %}
             <p>No Content</p>
         {% endblock %}
+        </div>
     </main>
 
     {% include 'includes/footer.twig' %}
