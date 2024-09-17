@@ -5,10 +5,9 @@ namespace Internship\Includes;
 use Internship\Interfaces\ModuleInterface;
 use Internship\Menus\Header;
 use Internship\Menus\Footer;
-use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
+use Internship\PostTypes\Car;
 use Internship\PostTypes\TaxonomyData;
-
 
 class Setup {
     public static $loader;
@@ -17,10 +16,13 @@ class Setup {
     public static function renderPage($template = 'views/page.twig', $context = []) {
         self::addToTwig();
 
-        // Kontrollo nëse është një faqe 404
+        // Check if it's a 404 page
         if (is_404()) {
-            $template = 'templates/404.twig'; // Përdor shabllonin 404 nëse është faqe 404
+            $template = 'templates/404.twig'; // Use 404 template if it's a 404 page
         }
+
+        $brands = TaxonomyData::getTaxonomyData('brand');
+        $cities = TaxonomyData::getTaxonomyData('city');
 
         $modules = [];
         $flexible_content = get_field('modules_list');
@@ -31,6 +33,7 @@ class Setup {
                 $moduleClass = 'Internship\\Modules\\' . $moduleType;
                 if (class_exists($moduleClass) && in_array(ModuleInterface::class, class_implements($moduleClass))) {
                     $moduleData = $moduleClass::getData($key);
+
                     $modules[] = [
                         'type' => $moduleType,
                         'key' => $key,
@@ -44,7 +47,7 @@ class Setup {
 
         $isSingleCarPage = false;
         $carData = null;
-    
+
         if (is_singular('cars')) { 
             $isSingleCarPage = true;
             $carSlug = get_post_field('post_name', get_post());
@@ -54,34 +57,15 @@ class Setup {
         $Author = false;
         $authorData = null;
 
-        if(is_singular('authors')) {
+        if (is_singular('authors')) {
             $Author = true;
             $authorSlug = get_post_field('post_name', get_post());
             $authorData = Author::getSingleAuthorData($authorSlug);
         }
 
-        // Fetch filter values from query parameters
-        $search_query = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
-        $selected_brand = isset($_GET['brand']) ? sanitize_text_field($_GET['brand']) : '';
-        $selected_city = isset($_GET['city']) ? sanitize_text_field($_GET['city']) : '';
-
-        // Get filtered cars
-        $cars = Car::getFilteredCarsData($selected_brand, $selected_city, $search_query);
-
-        // Get taxonomy data for filters
-        $brands = TaxonomyData::getTaxonomyData('brand');
-        $cities = TaxonomyData::getTaxonomyData('city');
-
-        if (is_page('cars')) {
-           $context['show_search_bar'] = true; 
-           $context['brands'] = get_field('brands'); 
-           $context['cities'] = get_field('cities'); 
-       } else {
-           $context['show_search_bar'] = false; 
-       }
-
         $headerData = Header::getData(); 
         $footerData = Footer::getData();
+
         echo self::$twig->render($template, array_merge($context, [
             'modules' => $modules,
             'header' => $headerData,
@@ -90,12 +74,8 @@ class Setup {
             'is_single_car_page' => $isSingleCarPage,
             'author' => $authorData,
             'is_author_page' => $Author,
-            'cars' => $cars,
-            'brands' => $brands,
-            'cities' => $cities,
-            'search_query' => $search_query,
-            'selected_brand' => $selected_brand,
-            'selected_city' => $selected_city,
+            'brands' => $brands, 
+            'cities' => $cities, 
         ]));
     }
 
@@ -110,6 +90,18 @@ class Setup {
             'allow_callables' => true,
         ]);
 
+        $brands = TaxonomyData::getTaxonomyData('brand');
+        $cities = TaxonomyData::getTaxonomyData('city');
+
+        self::$twig->addGlobal('brands', $brands);
+        self::$twig->addGlobal('cities', $cities);
+
+
+        error_log(print_r($brands, true));
+        error_log(print_r($cities, true));
+
+
+        // Add common Twig functions
         self::$twig->addFunction(new \Twig\TwigFunction('wp_head', function () {
             return wp_head();
         }));
@@ -142,6 +134,21 @@ class Setup {
 
         self::$twig->addFunction(new \Twig\TwigFunction('is_front_page', function () {
             return is_front_page();
+        }));
+
+        self::$twig->addFunction(new \Twig\TwigFunction('get_permalink', function ($post_id = null) {
+            if ($post_id) {
+
+                return get_permalink($post_id);
+            } else {
+
+                $current_url = (is_ssl() ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                return $current_url;
+            }
+        }));
+
+        self::$twig->addFunction(new \Twig\TwigFunction('url_contains', function ($url, $substring) {
+            return strpos($url, $substring) !== false;
         }));
 
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {
