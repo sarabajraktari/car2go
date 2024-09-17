@@ -1,29 +1,17 @@
+ <hr style="border: none; height: 1px; margin: 20px 0;">
 <div class="cards-container {% if title_and_description is not empty %}py-12 {%else%}py-6{% endif %}">
    <div class="cards-header {% if title_and_description is not empty %}mb-8 mt-6{% endif %}">
       <div class="cards-title max-w-screen-xl mx-auto">{{ title_and_description|raw }}</div>
    </div>
 
-   {% set permalink = get_permalink() %}
-
-
-{% if 'cars' in permalink %}
-   {% if search_form and post_type != 'Authors' %}
-      {% include 'templates/SearchBar.twig' %}
-   {% endif %}
-{% else %}
-       {% if search_form and not url_contains(permalink, 'cars') %}
-       <div class="flex items-center justify-center">
-    <p class="text-center pb-4 text-red-500">Search feature for Cards in front page is disabled. To hide this message set the 'Search Form' to Off.</p>
-</div>
-{% endif %}
-{% endif %}
-
-{% if post_type == 'Cars' %}
-   {% if data is empty %}
-        <p class="text-center text-gray-600">No match found.</p>
-    {% else %}
    <div class="cards-grid" id="cards-grid">
+   {% set has_cars = false %}
+        {% set has_authors = false %}
+
       {% for post in data %}
+       {% if post.post_type == 'cars' %}
+       {% set has_cars = true %}
+
       <div class="card-item {% if (enable_load_more and loop.index > item_number) or (not enable_load_more and redirect_link is not empty and loop.index > item_number) %}hidden{% endif %}">
          <div class="relative">
             <img src="{{ post.thumbnail }}" alt="{{ post.title }}" class="w-full h-60 object-cover rounded-t-lg">
@@ -39,7 +27,7 @@
                   </span>
                </h4>
             </div>
-            <div class="justify-between items-center">
+            <div class="icons-items justify-between items-center">
                <span class="block mr-2 mb-4">
                   <svg class="w-6 h-6 inline-block mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                      <path d="M4.66666 12.3195C4.66666 12.3195 2.66666 6.98617 2.66666 4.3195C2.66666 1.65283 3.99999 1.65283 3.99999 1.65283H4.66666C4.66666 1.65283 5.33332 1.65283 5.33332 2.3195C5.33332 2.98617 4.66666 2.98617 4.66666 4.3195C4.66666 5.65283 6.66666 6.98617 6.66666 8.98617C6.66666 10.9862 4.66666 12.3195 4.66666 12.3195ZM7.99999 11.6528C7.33332 11.6528 5.33332 13.3195 5.33332 13.3195C5.13332 13.4528 5.19999 13.6528 5.33332 13.8528C5.33332 13.8528 5.99999 15.0528 7.33332 15.0528H11.3333C12.0667 15.0528 12.6667 14.4528 12.6667 13.7195V13.0528C12.6667 12.3195 12.0667 11.7195 11.3333 11.7195H7.99999V11.6528Z" fill="#828282"></path>
@@ -69,58 +57,68 @@
                </div>
                <div class="more-details-button">
                   <a href="{{ post.link }}">
-                  More Details
+                     More Details
                   </a>
                </div>
             </div>
          </div>
       </div>
+      {% elseif post.post_type == 'authors' %}
+                {% set has_authors = true %}
+                
+            {% endif %}
       {% endfor %}
-      
    </div>
-   {% endif %}
-   {% endif %}
-   <!-- Authors Section as Owl Carousel -->
-   <!-- Authors Section as Owl Carousel with Additional Container -->
-   {% if post_type == 'Authors' %}
-   <div class="authors-container">
-      <div class="owl-carousel owl-theme">
-         {% for post in data %}
-         <div class="item author-card">
-            <div class="relative flex items-start space-x-4 p-4  rounded-lg shadow-lg overflow-hidden transition-colors duration-300 hover:bg-gray-200 hover:shadow-xl">
-               <img class="w-16 h-16 rounded-full" src="{{ post.thumbnail }}" alt="{{ post.title }}">
-               <div class="flex flex-col justify-center">
-                  <h2 class="text-lg font-bold text-gray-800">{{ post.title }}</h2>
-                  <!-- Star Rating Section -->
-                  <div class="star-rating flex mt-1">
-                     <i class="fas fa-star text-yellow-500"></i>
-                     <i class="fas fa-star text-yellow-500"></i>
-                     <i class="fas fa-star text-yellow-500"></i>
-                     <i class="fas fa-star text-yellow-500"></i>
-                     <i class="fas fa-star text-yellow-500"></i>
+
+ <!-- Authors Section as Owl Carousel -->
+  <!-- Authors Section as Owl Carousel with Additional Container -->
+{% if has_authors %}
+    <div class="authors-container">
+        <div class="owl-carousel owl-theme">
+            {% for post in data %}
+                {% if post.post_type == 'authors' %}
+                  <div class="item author-card">
+                        <div class="test relative flex items-start space-x-4 p-4  rounded-lg shadow-lg overflow-hidden transition-colors duration-300">
+                           <img class="w-16 h-16 rounded-full" src="{{ post.thumbnail }}" alt="{{ post.title }}">
+                           <div class="flex flex-col justify-center">
+                                 <h2 class="text-lg font-bold text-gray-800">{{ post.title }}</h2>
+
+                                 <!-- Star Rating Section -->
+                                 <div class="star-rating flex mt-1">
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                 </div><br>
+
+                                 <p class="text-gray-600 min-h-[170px]">{{ post.description }}</p>
+                                 
+                           </div>
+                        </div>
                   </div>
-                  <br>
-                  <p class="text-gray-600 min-h-[170px]">{{ post.description }}</p>
-               </div>
-            </div>
-         </div>
-         {% endfor %}
-      </div>
-   </div>
-   {% endif %}
 
-   {% if enable_load_more and post_type == 'Cars' %}
-   <div class="load-more-button-container flex justify-center p-4">
-      <button id="load-more-button" class="load-all-cards">
-      Load More
-      </button>
-   </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 
-   {% elseif is_front_page() and post_type == 'Cars' %}
-   <div class="browse-all-button-container flex justify-center p-4">
-      <a href="{{ redirect_link }}" class="browse-all-cards">
-      Browse All
-      </a>
-   </div>
-   {% endif %}
+
+
+
+
+   {% if enable_load_more and has_cars %}
+        <div class="load-more-button-container flex justify-center p-4">
+            <button id="load-more-button" class="load-all-cards">
+                Load More
+            </button>
+        </div>
+    {% elseif is_front_page() and has_cars %}
+        <div class="browse-all-button-container flex justify-center p-4">
+            <a href="{{ redirect_link }}" class="browse-all-cards">
+                Browse All
+            </a>
+        </div>
+    {% endif %}
 </div>

@@ -20,9 +20,7 @@
 .cartype-item-box {
     @apply m-1 flex flex-col items-center p-4 object-contain transition-shadow transition-transform duration-300;
 
-    &:hover {
-        @apply bg-gray-300;
-    }
+    
 }
 
 .splide {
