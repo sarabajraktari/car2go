@@ -11,10 +11,5 @@
         {% if is_author_page %}
            {{ include("templates/author.twig", { author: author  }) }}
         {% endif %}  
-
-        {% if show_search_bar %}
-             {% include 'templates/SearchBar.twig' with {'brands': brands, 'cities': cities} %}
-        {% endif %} 
-        
-
+ 
 {% endblock %}

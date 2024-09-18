@@ -278,3 +278,91 @@ add_action( 'init', function() {
 	'delete_with_user' => false,
 ) );
 } );
+
+add_action('wp_ajax_get_car_suggestions', 'get_car_suggestions');
+add_action('wp_ajax_nopriv_get_car_suggestions', 'get_car_suggestions');
+
+function get_car_suggestions() {
+    global $wpdb;
+
+    $search_query = sanitize_text_field($_GET['query']);
+    $selected_brand = isset($_GET['brand_slug']) ? sanitize_text_field($_GET['brand_slug']) : '';
+    $selected_city = isset($_GET['city_slug']) ? sanitize_text_field($_GET['city_slug']) : '';
+    
+    $search_query_normalized = str_replace(['-', ' '], ' ', $search_query);
+
+    $args = array(
+        'post_type' => 'cars',
+        'posts_per_page' => 5, 
+        'post_status' => 'publish',
+        's' => '',
+    );
+
+    $tax_query = array('relation' => 'AND');
+    
+    if (!empty($selected_brand)) {
+        $tax_query[] = array(
+            'taxonomy' => 'car_brand',
+            'field'    => 'slug',
+            'terms'    => $selected_brand,
+        );
+    }
+
+    if (!empty($selected_city)) {
+        $tax_query[] = array(
+            'taxonomy' => 'car_city',
+            'field'    => 'slug',
+            'terms'    => $selected_city,
+        );
+    }
+
+    if (count($tax_query) > 1) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    // Exact match or matches at the beginning of words using REGEXP
+    $exact_match_posts = $wpdb->get_results(
+        $wpdb->prepare(
+            "
+            SELECT ID, post_title
+            FROM $wpdb->posts
+            WHERE post_title REGEXP %s
+            AND post_type = 'cars'
+            AND post_status = 'publish'
+            ",
+            '(^|\s)' . $wpdb->esc_like($search_query_normalized)
+        )
+    );
+
+    $suggestions = [];
+
+    if ($exact_match_posts) {
+        foreach ($exact_match_posts as $post) {
+
+            if (!empty($selected_brand)) {
+                $post_id = $post->ID;
+                $post_brands = wp_get_post_terms($post_id, 'car_brand', array('fields' => 'slugs'));
+                if (!in_array($selected_brand, $post_brands)) {
+                    continue; 
+                }
+            }
+            if (!empty($selected_city)) {
+                $post_id = $post->ID;
+                $post_cities = wp_get_post_terms($post_id, 'car_city', array('fields' => 'slugs'));
+                if (!in_array($selected_city, $post_cities)) {
+                    continue;
+                }
+            }
+
+            $suggestions[] = [
+                'title' => $post->post_title,
+                'link' => get_permalink($post->ID),
+            ];
+        }
+    }
+
+    wp_reset_postdata();
+    
+    echo json_encode($suggestions);
+    wp_die();
+}
