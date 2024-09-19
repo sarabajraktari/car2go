@@ -1,0 +1,70 @@
+<div class="min-h-screen w-full flex items-center justify-center bg-gray-100 ">
+    <div
+        class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10 ">
+        <div class="w-full">
+            <div class="text-center m-3">
+                <h1 class="text-3xl font-semibold text-gray-900 mt-3">Sign Up</h1>
+                <p class="mt-2 text-gray-500 mt-3">Create an account below</p>
+            </div>
+            <div class="mt-5 m-3">
+                {% if data.error %}
+                    <p style="color:red;">{{ data.error }}</p>
+                {% endif %}
+
+                {% if data.success %}
+                    <p style="color:green;">{{ data.success }}</p>
+                {% endif %}
+
+                <form action="" method="POST">
+                    <input type="hidden" name="add_user_form" value="1">
+
+
+                    <div class="relative mt-6 m-3">
+                        <input type="text" name="first_name" id="first_name" placeholder="First Name" required
+                            class="relative w-full border-b border-gray-300 bg-transparent py-2 px-3 text-gray-800 placeholder-gray-500
+                            focus:outline-none focus:border-blue-500 transition-colors duration-300" />
+                    </div>
+
+                    <div class="relative mt-6 m-3">
+                        <input type="text" name="last_name" id="last_name" placeholder="Last Name" required
+                            class="relative w-full border-b border-gray-300 bg-transparent py-2 px-3 text-gray-800 placeholder-gray-500
+                            focus:outline-none focus:border-blue-500 transition-colors duration-300" />
+                    </div>
+
+                    <div class="relative mt-6 m-3">
+                        <input type="text" name="username" id="username" placeholder="Username" required
+                            class="relative w-full border-b border-gray-300 bg-transparent py-2 px-3 text-gray-800 placeholder-gray-500
+                            focus:outline-none focus:border-blue-500 transition-colors duration-300" />
+                    </div>
+
+                    <div class="relative mt-6 m-3">
+                        <input type="email" name="email" id="email" placeholder="Email Address" required
+                            class="relative w-full border-b border-gray-300 bg-transparent py-2 px-3 text-gray-800 placeholder-gray-500
+                            focus:outline-none focus:border-blue-500 transition-colors duration-300" />
+                    </div>
+
+                    <div class="relative mt-6 mb-3">
+                        <input type="password" name="password" id="password" placeholder="Password" required
+                            class="relative w-full border-b border-gray-300 bg-transparent py-2 px-3 text-gray-800 placeholder-gray-500
+                            focus:outline-none focus:border-blue-500 transition-colors duration-300" />
+                    </div>
+
+                    <div class="my-6 mb-3">
+                        <button type="submit"
+                            class="w-full rounded-md bg-black px-3 py-4 text-white focus:bg-gray-600 focus:outline-none">
+                            Sign Up
+                        </button>
+                    </div>
+
+                    <p class="text-center text-sm text-gray-500 mb-3">
+                        Already have an account?
+                        <a href="http://internship.test/log-in/"
+                            class="font-semibold text-gray-600 hover:underline focus:text-gray-800 focus:outline-none">
+                            Log in
+                        </a>.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
