@@ -50,7 +50,7 @@
 }
 
 .browse-all-cards{
-    @apply flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40;
+    @apply flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40 mt-10;
 }
 
 .see-more-button-container{
@@ -65,4 +65,87 @@
     a{
         @apply mt-4 flex items-center justify-center text-center text-base font-semibold text-black bg-gray-100 rounded-full hover:bg-gray-200 p-2 transition lg:w-40 w-full;
     }
+}
+
+
+/* Styling for author cards */
+.author-card {
+    max-width: 380px;
+    min-width: 380px;
+    max-height: 250px;
+    min-height: 250px; /* Adjust the min-height as needed */
+    margin: 0 auto; /* Center the cards */
+    box-sizing: border-box; /* Ensure padding and border are included in dimensions */
+    flex: 0 0 calc(25% - 20px);
+}
+
+/* Specific styling for the author cards' text and layout */
+.author-card img {
+    max-width: 64px;
+    max-height: 64px;
+    min-height: 64px;
+    min-width: 64px;
+    object-fit: cover; /* Ensures the image maintains its aspect ratio and fits within the dimensions */
+    border-radius: 50%; /* Optional: to make the image circular */
+}
+
+.author-card h2 {
+    @apply text-lg font-bold text-gray-800;
+}
+
+.author-card p {
+    font-size: 14px; /* Preferred font size */
+    line-height: 1.4; /* Add line height for better readability */
+    overflow: hidden; /* Prevent content from overflowing the card */
+    margin: 0; /* Remove default margin for equal spacing */
+    padding: 0; /* Remove default padding for equal spacing */
+    box-sizing: border-box; /* Ensure padding and border are included in dimensions */
+}
+
+.authors-container {
+    padding: 0 10px; /* Add padding only to the left and right sides */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+/* Carousel styling */
+.owl-carousel {
+    width: 100%; /* Ensure the carousel takes the full width of its container */
+    max-width: 1200px; /* Optional: Set a maximum width if desired */
+}
+.owl-stage-outer{
+    height: 300px;
+}
+
+
+
+@media (max-width: 376px) {
+
+    .author-card {
+        max-width: 300px;
+        min-width: 300px;
+        max-height: 200px;
+        min-height: 200px; /* Adjust the min-height as needed */
+        margin: 0 auto; /* Center the cards */
+        box-sizing: border-box; /* Ensure padding and border are included in dimensions */
+        flex: 0 0 calc(25% - 20px);
+    }
+    
+    .author-card img {
+        max-width: 30px;
+        max-height: 30px;
+        min-width: 30px;
+        min-height: 30px;
+    }
+
+    .author-card h2 {
+        @apply text-xs; /* Adjust font size */
+    }
+
+    .author-card p {
+        font-size: 11px; /* Adjust font size */
+    }
+
 }

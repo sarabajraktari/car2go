@@ -1,0 +1,433 @@
+.theme-toggle-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: var(--toggle-bg-light, #e2e8f0); /* Customizable colors */
+    color: var(--toggle-icon-light, #1a202c);           /* Icon color light mode */
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .theme-toggle-button:hover {
+    background-color: var(--toggle-bg-light-hover, #cbd5e1);
+  }
+  
+  .theme-toggle-button.dark {
+    background-color: var(--toggle-bg-dark, #2d3748);
+    color: var(--toggle-icon-dark, #fbd38d);
+  }
+  
+  .theme-toggle-button.dark:hover {
+    background-color: var(--toggle-bg-dark-hover, #4a5568);
+  }
+  
+  .theme-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  #icon-sun {
+    display: block;
+  }
+  
+  #icon-moon {
+    display: none;
+  }
+  
+  /* Show correct icons based on the theme */
+  .dark #icon-sun {
+    display: none;
+  }
+  
+  .dark #icon-moon {
+    display: block;
+  }
+  
+
+body.dark .car-rental-banner {
+    background-color: #000000; 
+    color: #ffffff; 
+}
+
+body.dark .car-rental-banner a {
+    color: #ffffff; 
+}
+
+body.dark .car-rental-banner .icon {
+    background-color: #ffffff; 
+    color: #000000;
+}
+
+body.dark #cartypes {
+    background-color: black; 
+    color: #f1f1f1; 
+}
+
+body.dark header {
+    background-color: black; 
+}
+
+body.dark nav a {
+    color: white; 
+    font-weight: 600;
+    line-height: 1.5rem;
+}
+
+body.dark .cards-container {
+    background-color: black;
+}
+
+body.dark .cards-container h2{
+    color: white;
+}
+
+body.dark .cards-container p{
+    color: white;
+}
+
+body.dark .card-item {
+    background-color: black;
+    border: 1px solid white;
+}
+
+body.dark .card-item h4{
+    color: white;
+}
+
+body.dark .icons-items{
+    color: white;
+}
+
+body.dark .card-item span{
+    color: white;
+}
+
+body.dark #add-numbers-module .title {
+    color: white;
+    // margin-bottom: 20px;
+}
+
+body.dark #faq-module .faq-item{ 
+    background-color: black;
+    color: white;
+}
+
+body.dark #faq-module .faq-title h2{ 
+    margin-bottom: -30px;
+}
+
+body.dark #faq-module .faq-question{ 
+    color: white;
+}
+
+body.dark #faq-module .faq-answer{ 
+    color: white;
+}
+
+body.dark #how-it-works-module {
+    background-color: black; 
+    color: white;
+}
+
+body.dark #how-it-works-module .module-title {
+    color: white;
+}
+
+body.dark .module-banner {
+    background-color: black;
+}
+
+body.dark .module-addnumbers {
+    background-color: black;
+}
+
+body.dark .module-faq {
+    background-color: black;
+}
+
+body.dark .module-howitworks {
+    background-color: black;
+}
+
+body.dark .module-cartypes {
+    background-color: black;
+}
+
+body.dark .module-default {
+    background-color: black; 
+}
+
+body.dark hr {
+  display: none;
+}
+
+body.dark .module-title h2{
+    color: white;
+}
+
+body.dark .module-title p{
+    color: white;
+}
+
+body.dark .faq-question:hover{
+    background-color: #222222;
+}
+
+body.dark .test {
+    border: 1px solid white;
+}
+
+body.dark .test:hover {
+    background-color: #222222;
+}
+
+body.dark .theme-colors {
+    background-color: black;
+}
+
+body.dark #title_and_description p{
+    color: #f8f8f8;
+}
+
+body.dark .see-more-button-container a{
+    background-color: white;
+    color: black;
+}
+
+body.dark .browse-all-cards{
+    background-color: white;
+    color: black;
+    font-weight: 600;
+}
+
+body.dark #mobile-menu .gallery-submenu{
+    background-color: black;
+}
+
+body.dark .big-gallery{
+    background-color: black;
+}
+
+
+body.dark .our-team{
+    background-color: black;
+}
+
+body.dark .contacth2{
+    color: white;
+}
+
+body.dark #submit-button{
+    background-color: white;
+    color: black;
+}
+
+body.dark .wpcf7-response-output{
+    color: white;
+}
+
+body.dark .contact-us{
+    margin-bottom: 30px;
+
+}
+
+body.dark .contact-us img{
+    margin-left: -30px;
+
+}
+
+body.dark .main-content{
+    background-color: black;
+}
+
+body.dark .car-card {
+    background-color: black;
+    border: 1px solid white;
+}
+
+body.dark .car-card h2{
+    color: white;
+}
+
+body.dark .car-card p{
+    color: white;
+}
+
+body.dark .car-card span{
+    color: white;
+}
+
+body.dark .car-card h4{
+    color: white;
+}
+
+body.dark{
+    background-color: black;
+}
+
+body.dark .footer{
+    color: white;
+    font-weight: 600;
+}
+
+body.dark .car-title{
+    color: white;
+}
+
+body.dark .car-description{
+    color: white;
+}
+
+body.dark .team-member{
+    border: 1px solid white;
+    background-color: black;
+}
+
+body.dark .team-member h2{
+    color: white;
+}
+
+body.dark .team-member p{
+    color: white;
+}
+
+body.dark .shigjeta{
+    color: white;
+}
+
+body.dark .gallery-submenu{
+    background-color: #222222;
+}
+
+body.dark #mobile-menu ul li a{
+    font-weight: 600;
+}
+
+body.dark #theme-toggle{
+    background-color: white;
+}
+
+body.dark #search-form {
+    background-color: black;
+}
+
+body.dark #search-form button{
+    border: 1px solid white;
+}
+
+body.dark .footer a{
+    color: white; 
+    font-weight: 600;
+}
+
+
+body.dark #mobile-menu ul li a{
+    margin-left: 7px;
+}
+
+body.dark .shigjeta-mobile{
+    margin-right: 7px;
+}
+
+body.dark #directionLink a{
+    background-color: white;
+    color: black;
+    font-weight: 600;
+}
+
+body.dark .map h3{
+    color:white;
+}
+
+
+body.dark .car-specification-text{
+    color: white;
+}
+
+body.dark #car-details-sidebar {
+    background-color: #222222;
+    color: #f1f1f1;
+}
+
+body.dark #car-details-title {
+    color: white;
+}
+
+body.dark #car-item {
+    background-color: #222222;
+    border: 1px solid #ffffff;
+}
+
+body.dark #car-item-title {
+    color: white;
+}
+
+body.dark #car-item-link {
+    color: #f1f1f1;
+}
+
+body.dark #car-rental-details p {
+    color: #f1f1f1;
+}
+
+body.dark #rental-price {
+    color: white;
+}
+
+body.dark #additional-fees p {
+    color: #f1f1f1;
+}
+
+body.dark #subtotal-container {
+    color: white;
+}
+
+body.dark #car-rental-main {
+    background-color: #000000;
+    color: #f1f1f1;
+}
+
+body.dark #rental-service-title {
+    color: #f1f1f1;
+}
+
+body.dark #rental-service-description {
+    color: #f1f1f1;
+}
+
+body.dark #booking-time-section {
+    background-color: #222222;
+    border: 1px solid #ffffff;
+}
+
+body.dark #booking-time-title {
+    color: white;
+}
+
+body.dark #fee-calculator-container {
+    background-color: #222222;
+}
+
+body.dark button {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.dark button:hover {
+    background-color: #555555;
+}
+
+body.dark #fee-calculator label {
+    color: white;  
+}
+
+body.dark #start-date, 
+body.dark #end-date {
+    background-color: #2d2d2d; 
+    color: white;              
+    border: 1px solid #4a4a4a; 
+}

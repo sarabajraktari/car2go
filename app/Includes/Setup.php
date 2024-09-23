@@ -7,7 +7,8 @@ use Internship\Menus\Header;
 use Internship\Menus\Footer;
 use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
-
+use Internship\PostTypes\TaxonomyData;
+use Internship\PostTypes\RentNow;
 
 class Setup {
     public static $loader;
@@ -16,9 +17,9 @@ class Setup {
     public static function renderPage($template = 'views/page.twig', $context = []) {
         self::addToTwig();
 
-        // Kontrollo nëse është një faqe 404
+        // 404 Check
         if (is_404()) {
-            $template = 'templates/404.twig'; // Përdor shabllonin 404 nëse është faqe 404
+            $template = 'templates/404.twig'; // Use 404 template
         }
 
         $modules = [];
@@ -59,6 +60,34 @@ class Setup {
             $authorData = Author::getSingleAuthorData($authorSlug);
         }
 
+        $isSingleRentNowPage = false;
+        $rentNowData = null;
+
+        if (is_singular('rent_now')) {
+            $isSingleRentNowPage = true;
+            $rentNowSlug = get_post_field('post_name', get_post());
+            $rentNowData = RentNow::getSingleRentNowData($rentNowSlug);
+        }
+
+        // Fetch filter values from query parameters
+        $search_query = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
+        $selected_brand = isset($_GET['brand']) ? sanitize_text_field($_GET['brand']) : '';
+        $selected_city = isset($_GET['city']) ? sanitize_text_field($_GET['city']) : '';
+
+        // Get filtered cars
+        $cars = Car::getFilteredCarsData($selected_brand, $selected_city, $search_query);
+
+        // Get taxonomy data for filters
+        $brands = TaxonomyData::getTaxonomyData('brand');
+        $cities = TaxonomyData::getTaxonomyData('city');
+
+        if (is_page('cars')) {
+           $context['show_search_bar'] = true; 
+           $context['brands'] = get_field('brands'); 
+           $context['cities'] = get_field('cities'); 
+       } else {
+           $context['show_search_bar'] = false; 
+       }
 
         $headerData = Header::getData(); 
         $footerData = Footer::getData();
@@ -70,6 +99,14 @@ class Setup {
             'is_single_car_page' => $isSingleCarPage,
             'author' => $authorData,
             'is_author_page' => $Author,
+            'cars' => $cars,
+            'brands' => $brands,
+            'cities' => $cities,
+            'search_query' => $search_query,
+            'selected_brand' => $selected_brand,
+            'selected_city' => $selected_city,
+            'rent_now' => $rentNowData,
+            'is_single_rent_now_page' => $isSingleRentNowPage
         ]));
     }
 

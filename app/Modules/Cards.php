@@ -4,6 +4,7 @@ namespace Internship\Modules;
 
 use Internship\Includes\Setup;
 use Internship\Interfaces\ModuleInterface;
+use Internship\PostTypes\RentNow;
 
 class Cards implements ModuleInterface {
 
@@ -13,13 +14,13 @@ class Cards implements ModuleInterface {
         if (!isset($modules[$key])) {
             return [];
         }
-        
+
         // Get the specific module's data using the key
         $flexibleContent = $modules[$key];
-    
+
         // Fetch the selected post type from the ACF field
-        $post_type = $flexibleContent['select_post_types']; 
-    
+        $post_type = $flexibleContent['select_post_types'];
+
         if (!$post_type) {
             return [];
         }
@@ -28,8 +29,6 @@ class Cards implements ModuleInterface {
         $item_number = $flexibleContent['item_number'];
         $redirect_link = $flexibleContent['redirect_link'];
         $title_and_description = $flexibleContent['title_and_description'];
-        
-
         $posts = [];
 
         // Check the selected post type and fetch data accordingly
@@ -44,13 +43,18 @@ class Cards implements ModuleInterface {
                 while ($query->have_posts()) {
                     $query->the_post();
                     $carDetails = get_field('car_details', get_the_ID());
+
+                     // Fetch Rent Now URL using the helper method
+                     $rentNowUrl = RentNow::getRentNowUrlForCar(get_the_ID());
                     
                     $posts[] = [
                         'title'       => get_the_title(),
                         'description' => get_post_field('post_content', get_the_ID()),
                         'thumbnail'   => get_the_post_thumbnail_url(get_the_ID(), 'full'),
                         'link'        => get_permalink(), 
+                        'rent_now_url' => $rentNowUrl, // Rent Now post permalink
                         'rent_details' => $carDetails['rent_details'],
+                        'post_type'   => get_post_type(), // Shtojmë llojin e postimit
                     ];
                 }
                 wp_reset_postdata();
@@ -58,7 +62,7 @@ class Cards implements ModuleInterface {
         } else if ($post_type === 'Authors') {
             $query = new \WP_Query([
                 'post_type' => 'authors',
-                'posts_per_page' => -1, 
+                'posts_per_page' => -1,
             ]);
 
             if ($query->have_posts()) {
@@ -68,7 +72,8 @@ class Cards implements ModuleInterface {
                         'title'       => get_the_title(),
                         'description' => get_post_field('post_content', get_the_ID()),
                         'thumbnail'   => get_the_post_thumbnail_url(get_the_ID(), 'full'),
-                        'link'        => get_permalink(), 
+                        'link'        => get_permalink(),
+                        'post_type'   => get_post_type(), // Shtojmë llojin e postimit
                     ];
                 }
                 wp_reset_postdata();

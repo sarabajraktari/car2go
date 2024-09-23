@@ -1246,6 +1246,7 @@
                         "min": "",
                         "max": ""
                     },
+<<<<<<< HEAD:app/acf-json/modules_list.json
                     "layout_66e154565ff21": {
                         "key": "layout_66e154565ff21",
                         "name": "login",
@@ -1256,9 +1257,21 @@
                                 "key": "field_66e154575ff22",
                                 "label": "Users",
                                 "name": "users",
+=======
+                    "layout_66d953cf9c2bc": {
+                        "key": "layout_66d953cf9c2bc",
+                        "name": "comingsoon",
+                        "label": "ComingSoon",
+                        "display": "block",
+                        "sub_fields": [
+                            {
+                                "key": "field_66d953d89c2be",
+                                "label": "Coming Soon",
+                                "name": "coming_soon",
+>>>>>>> 965c8ea24d21c9fd092a58f9f80f69dd9086d694:app/acf-json/modules-list.json
                                 "aria-label": "",
-                                "type": "repeater",
-                                "instructions": "",
+                                "type": "true_false",
+                                "instructions": "Coming Soon Page toggle",
                                 "required": 0,
                                 "conditional_logic": 0,
                                 "wrapper": {
@@ -1266,6 +1279,7 @@
                                     "class": "",
                                     "id": ""
                                 },
+<<<<<<< HEAD:app/acf-json/modules_list.json
                                 "layout": "block",
                                 "min": 0,
                                 "max": 0,
@@ -1525,6 +1539,8 @@
                                     "class": "",
                                     "id": ""
                                 },
+=======
+>>>>>>> 965c8ea24d21c9fd092a58f9f80f69dd9086d694:app/acf-json/modules-list.json
                                 "message": "",
                                 "default_value": 0,
                                 "ui_on_text": "On",
