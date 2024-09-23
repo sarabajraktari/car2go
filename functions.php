@@ -320,7 +320,6 @@ function get_car_suggestions() {
         $args['tax_query'] = $tax_query;
     }
 
-    // Exact match or matches at the beginning of words using REGEXP
     $exact_match_posts = $wpdb->get_results(
         $wpdb->prepare(
             "

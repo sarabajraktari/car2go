@@ -47,13 +47,15 @@ class Car {
     public static function getFilteredCarsData($brand_slug = '', $city_slug = '', $search_query = '') {
         global $wpdb;
     
-        $search_query_normalized = str_replace(['-', ' '], ' ', $search_query);
+        // Normalize the search query by replacing hyphens with spaces
+        $search_query_normalized = str_replace('-', ' ', $search_query);
     
         $args = [
             'post_type' => 'cars',
             'posts_per_page' => -1,
         ];
     
+        // Taxonomy query
         $tax_query = ['relation' => 'AND'];
     
         if (!empty($brand_slug)) {
@@ -78,26 +80,29 @@ class Car {
             $args['tax_query'] = $tax_query;
         }
     
+        // Perform search by normalizing both post titles and the search query (replacing hyphens with spaces)
         $exact_match_posts = $wpdb->get_results(
             $wpdb->prepare(
                 "
                 SELECT ID
                 FROM $wpdb->posts
-                WHERE post_title LIKE %s
+                WHERE REPLACE(post_title, '-', ' ') LIKE %s
                 AND post_type = 'cars'
                 AND post_status = 'publish'
                 ",
-                '%' . $wpdb->esc_like($search_query) . '%'
+                '%' . $wpdb->esc_like($search_query_normalized) . '%'
             )
         );
     
         if (empty($exact_match_posts)) {
-            return []; 
+            return [];
         }
     
+        // Collect exact IDs from the query results
         $exact_ids = wp_list_pluck($exact_match_posts, 'ID');
         $args['post__in'] = $exact_ids;
     
+        // Fetch cars matching the exact titles and taxonomies
         $query = new \WP_Query($args);
     
         if (!$query->have_posts()) {
@@ -122,5 +127,6 @@ class Car {
         wp_reset_postdata();
         return $cars;
     }
+    
     
 }
