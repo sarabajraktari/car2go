@@ -8,7 +8,7 @@ use Internship\Menus\Footer;
 use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
 use Internship\PostTypes\TaxonomyData;
-
+use Internship\PostTypes\RentNow;
 
 class Setup {
     public static $loader;
@@ -17,9 +17,9 @@ class Setup {
     public static function renderPage($template = 'views/page.twig', $context = []) {
         self::addToTwig();
 
-        // Kontrollo nëse është një faqe 404
+        // 404 Check
         if (is_404()) {
-            $template = 'templates/404.twig'; // Përdor shabllonin 404 nëse është faqe 404
+            $template = 'templates/404.twig'; // Use 404 template
         }
 
         $brands = TaxonomyData::getTaxonomyData('brand');
@@ -63,6 +63,15 @@ class Setup {
             $authorData = Author::getSingleAuthorData($authorSlug);
         }
 
+        $isSingleRentNowPage = false;
+        $rentNowData = null;
+
+        if (is_singular('rent_now')) {
+            $isSingleRentNowPage = true;
+            $rentNowSlug = get_post_field('post_name', get_post());
+            $rentNowData = RentNow::getSingleRentNowData($rentNowSlug);
+        }
+
         $headerData = Header::getData(); 
         $footerData = Footer::getData();
 
@@ -77,6 +86,8 @@ class Setup {
             #'cars' => $cars,
             'brands' => $brands,
             'cities' => $cities,
+            'rent_now' => $rentNowData,
+            'is_single_rent_now_page' => $isSingleRentNowPage
         ]));
     }
 

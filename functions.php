@@ -17,6 +17,7 @@ function enqueue_theme_assets() {
     wp_enqueue_style('front_style', get_stylesheet_directory_uri() . '/assets/dist/css/front.css', [], wp_get_theme(get_template())->Version);
     wp_enqueue_script('front_script', get_stylesheet_directory_uri() . '/assets/dist/js/front.js', [], wp_get_theme(get_template())->Version, true);
     wp_enqueue_script('front_admin_script', get_stylesheet_directory_uri() . '/assets/dist/js/admin/app.js', [], wp_get_theme(get_template())->Version, true);
+    wp_enqueue_script('sidebar_script', get_stylesheet_directory_uri() . '/assets/js/modules/SideBar.js', [], wp_get_theme(get_template())->Version, true); 
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
@@ -365,3 +366,81 @@ function get_car_suggestions() {
     echo json_encode($suggestions);
     wp_die();
 }
+
+add_action( 'init', function() {
+    register_post_type( 'rent_now', array(
+        'labels' => array(
+            'name' => 'Rent Now',
+            'singular_name' => 'Rent Now',
+            'menu_name' => 'Rent Now',
+            'all_items' => 'All Rent Now Posts',
+            'edit_item' => 'Edit Rent Now',
+            'view_item' => 'View Rent Now',
+            'view_items' => 'View Rent Now',
+            'add_new_item' => 'Add New Rent Now',
+            'new_item' => 'New Rent Now',
+            'parent_item_colon' => 'Parent Rent Now:',
+            'search_items' => 'Search Rent Now',
+            'not_found' => 'No rent now posts found',
+            'not_found_in_trash' => 'No rent now posts found in Trash',
+            'archives' => 'Rent Now Archives',
+            'attributes' => 'Rent Now Attributes',
+            'insert_into_item' => 'Insert into Rent Now',
+            'uploaded_to_this_item' => 'Uploaded to this Rent Now',
+            'filter_items_list' => 'Filter Rent Now list',
+            'filter_by_date' => 'Filter Rent Now by date',
+            'items_list_navigation' => 'Rent Now list navigation',
+            'items_list' => 'Rent Now list',
+            'item_published' => 'Rent Now post published.',
+            'item_published_privately' => 'Rent Now post published privately.',
+            'item_reverted_to_draft' => 'Rent Now post reverted to draft.',
+            'item_scheduled' => 'Rent Now post scheduled.',
+            'item_updated' => 'Rent Now post updated.',
+            'item_link' => 'Rent Now Link',
+            'item_link_description' => 'A link to a Rent Now post.',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'menu_position' => 31,
+        'menu_icon' => 'dashicons-admin-network',
+        'supports' => array(
+            'title',
+            'revisions',
+        ),
+        'delete_with_user' => false,
+    ));
+});
+
+function create_rent_now_post_when_car_published( $post_id ) {
+    if ( get_post_type( $post_id ) == 'cars' && get_post_status( $post_id ) == 'publish' ) {
+        
+        // Check if a related Rent Now post already exists
+        $existing_rent_now = new WP_Query(array(
+            'post_type' => 'rent_now',
+            'meta_key' => 'related_car',
+            'meta_value' => $post_id,
+        ));
+
+        if ($existing_rent_now->have_posts()) {
+            return; // Rent Now post already exists, no need to create another
+        }
+
+        $car_title = get_the_title( $post_id );
+        $car_slug = sanitize_title( $car_title ); 
+
+        $rent_now_post = array(
+            'post_title'    => $car_title, // Use the car's title directly, without prefix
+            'post_content'  => 'Rent this car now!',
+            'post_status'   => 'publish',
+            'post_type'     => 'rent_now',
+            'post_name'     => $car_slug, // Explicitly set the post slug to match the car's slug
+        );
+
+        // Insert the new post into the database
+        $rent_now_post_id = wp_insert_post( $rent_now_post );
+
+        // Link the "rent now" post to the related car using ACF
+        update_field( 'related_car', $post_id, $rent_now_post_id );
+    }
+}
+add_action( 'save_post', 'create_rent_now_post_when_car_published' );

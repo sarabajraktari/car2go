@@ -1,6 +1,7 @@
 <?php
 
 namespace Internship\PostTypes;
+use Internship\PostTypes\RentNow;
 
 class Car {
 
@@ -38,6 +39,10 @@ class Car {
                 ];
             }, $carDetails['specifications']) : [],
             'iframe' => self::getFieldValue($carDetails['iframe']),
+
+            'latitude' => $carDetails['car_location_lat'] ?? null,
+            'longitude' => $carDetails['car_location_lng'] ?? null,
+        
         ];
 
         wp_reset_postdata();
@@ -114,17 +119,24 @@ class Car {
             $query->the_post();
             $carID = get_the_ID();
             $carDetails = get_field('car_details', $carID);
-    
+
+            $rentNowUrl = RentNow::getRentNowUrlForCar($carID);
+
             $cars[] = [
                 'title' => get_the_title($carID),
                 'description' => get_post_field('post_content', $carID),
+                'thumbnail'   => get_the_post_thumbnail_url($carID, 'full'),
                 'car_image' => get_the_post_thumbnail_url($carID, 'full'),
-                'link' => get_permalink($carID),
+                'link' => get_permalink(),
+                'rent_now_url' => $rentNowUrl,
                 'rent_details' => self::getFieldValue($carDetails['rent_details']),
+                'post_type'   => get_post_type(),
             ];
+
+            
         }
-    
         wp_reset_postdata();
+
         return $cars;
     }
     

@@ -6,6 +6,8 @@ use Internship\Includes\Setup;
 use Internship\Interfaces\ModuleInterface;
 use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
+use Internship\PostTypes\RentNow;
+
 
 class Cards implements ModuleInterface {
 
@@ -19,6 +21,7 @@ class Cards implements ModuleInterface {
         $flexibleContent = $modules[$key];
 
         $post_type = $flexibleContent['select_post_types'];
+        error_log(print_r($post_type, true));
 
         if (!$post_type) {
             return [];
