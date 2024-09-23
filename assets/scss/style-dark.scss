@@ -347,3 +347,87 @@ body.dark .map h3{
 body.dark .car-specification-text{
     color: white;
 }
+
+body.dark #car-details-sidebar {
+    background-color: #222222;
+    color: #f1f1f1;
+}
+
+body.dark #car-details-title {
+    color: white;
+}
+
+body.dark #car-item {
+    background-color: #222222;
+    border: 1px solid #ffffff;
+}
+
+body.dark #car-item-title {
+    color: white;
+}
+
+body.dark #car-item-link {
+    color: #f1f1f1;
+}
+
+body.dark #car-rental-details p {
+    color: #f1f1f1;
+}
+
+body.dark #rental-price {
+    color: white;
+}
+
+body.dark #additional-fees p {
+    color: #f1f1f1;
+}
+
+body.dark #subtotal-container {
+    color: white;
+}
+
+body.dark #car-rental-main {
+    background-color: #000000;
+    color: #f1f1f1;
+}
+
+body.dark #rental-service-title {
+    color: #f1f1f1;
+}
+
+body.dark #rental-service-description {
+    color: #f1f1f1;
+}
+
+body.dark #booking-time-section {
+    background-color: #222222;
+    border: 1px solid #ffffff;
+}
+
+body.dark #booking-time-title {
+    color: white;
+}
+
+body.dark #fee-calculator-container {
+    background-color: #222222;
+}
+
+body.dark button {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.dark button:hover {
+    background-color: #555555;
+}
+
+body.dark #fee-calculator label {
+    color: white;  
+}
+
+body.dark #start-date, 
+body.dark #end-date {
+    background-color: #2d2d2d; 
+    color: white;              
+    border: 1px solid #4a4a4a; 
+}

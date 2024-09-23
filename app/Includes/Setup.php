@@ -8,7 +8,7 @@ use Internship\Menus\Footer;
 use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
 use Internship\PostTypes\TaxonomyData;
-
+use Internship\PostTypes\RentNow;
 
 class Setup {
     public static $loader;
@@ -17,9 +17,9 @@ class Setup {
     public static function renderPage($template = 'views/page.twig', $context = []) {
         self::addToTwig();
 
-        // Kontrollo nëse është një faqe 404
+        // 404 Check
         if (is_404()) {
-            $template = 'templates/404.twig'; // Përdor shabllonin 404 nëse është faqe 404
+            $template = 'templates/404.twig'; // Use 404 template
         }
 
         $modules = [];
@@ -60,6 +60,15 @@ class Setup {
             $authorData = Author::getSingleAuthorData($authorSlug);
         }
 
+        $isSingleRentNowPage = false;
+        $rentNowData = null;
+
+        if (is_singular('rent_now')) {
+            $isSingleRentNowPage = true;
+            $rentNowSlug = get_post_field('post_name', get_post());
+            $rentNowData = RentNow::getSingleRentNowData($rentNowSlug);
+        }
+
         // Fetch filter values from query parameters
         $search_query = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
         $selected_brand = isset($_GET['brand']) ? sanitize_text_field($_GET['brand']) : '';
@@ -96,6 +105,8 @@ class Setup {
             'search_query' => $search_query,
             'selected_brand' => $selected_brand,
             'selected_city' => $selected_city,
+            'rent_now' => $rentNowData,
+            'is_single_rent_now_page' => $isSingleRentNowPage
         ]));
     }
 

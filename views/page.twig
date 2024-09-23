@@ -16,5 +16,8 @@
              {% include 'templates/SearchBar.twig' with {'brands': brands, 'cities': cities} %}
         {% endif %} 
         
+    {% if is_single_rent_now_page %}
+        {{ include("templates/RentNow.twig", { rent_now: rent_now }) }}
+    {% endif %}
 
 {% endblock %}
