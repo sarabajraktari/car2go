@@ -7,4 +7,3 @@ import './modules/load-more.js';
 import './modules/scroll-to-top.js';
 import './modules/SeacrchBar.js';
 import './theme-toggle.js';
-import './modules/search-suggestion.js';

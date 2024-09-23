@@ -26,7 +26,7 @@
 
 
       <!-- Car Specifications --> 
-<div class="text-center text-black font-bold text-4xl pb-4">Car Specifications</div>
+<div class="car-specification-text text-center text-black font-bold text-4xl pb-4">Car Specifications</div>
 {% if car.specifications is not empty %}
 <div class="">
     <div class="car-specifications">
@@ -67,3 +67,60 @@
     </div>
 {% endif %}
 
+<!-- Map Section -->
+<br><br>
+<div class="map w-full max-w-4xl mx-auto mt-8 p-4 z-10 relative">
+    <h3 class="text-center text-black font-bold text-3xl md:text-4xl pb-4">Car Location</h3>
+    <div id="carMap" class="w-full h-[300px] md:h-[500px] mt-4 rounded-lg shadow-lg"></div>
+    <div id="directionLink" class="text-center mt-4 hidden">
+        <a href="#" id="getDirections" target="_blank" class="bg-gray-200 text-black font-semibold py-2 px-4 rounded">Get Directions</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var carLat = {{ car.latitude|default(0) }};
+    var carLng = {{ car.longitude|default(0) }};
+    
+    if (carLat && carLng) {
+        var map = L.map('carMap').setView([carLat, carLng], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var carMarker = L.marker([carLat, carLng]).addTo(map)
+            .bindPopup('<b>Car Location</b><br>{{ car.title }}')
+            .openPopup();
+
+        map.locate({ setView: true, maxZoom: 16 });
+
+        function onLocationFound(e) {
+            var userMarker = L.marker(e.latlng).addTo(map)
+                .bindPopup('<b>Your Location</b>')
+                .openPopup();
+
+            map.fitBounds([e.latlng, [carLat, carLng]]);
+
+           
+            var directionUrl = `https://www.openstreetmap.org/directions?mlat=${e.latlng.lat}&mlon=${e.latlng.lng}#map=13/${e.latlng.lat}/${e.latlng.lng}/${carLat}/${carLng}`;
+
+            
+            var directionLink = document.getElementById('directionLink');
+            var getDirectionsButton = document.getElementById('getDirections');
+            getDirectionsButton.href = `https://www.openstreetmap.org/directions?from=${e.latlng.lat},${e.latlng.lng}&to=${carLat},${carLng}&mlat=${e.latlng.lat}&mlon=${e.latlng.lng}`;
+            directionLink.classList.remove('hidden');
+        }
+
+        map.on('locationfound', onLocationFound);
+
+        function onLocationError(e) {
+            alert('Could not find your location. Please enable location services.');
+        }
+
+        map.on('locationerror', onLocationError);
+    } else {
+        alert('Location data is missing.');
+    }
+});
+</script>
