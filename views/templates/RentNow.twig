@@ -1,28 +1,30 @@
-<div class="container mx-auto flex flex-wrap">
+<div id="car-rental-container" class="container mx-auto flex flex-wrap">
 
-    <aside class="w-full md:w-1/4 bg-gray-100 p-6 mt-6 mb-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold mb-4">Car Details</h2>
+    <aside id="car-details-sidebar" class="w-full md:w-1/4 bg-gray-100 p-6 mt-6 mb-6 rounded-lg shadow-lg">
+        <h2 id="car-details-title" class="text-2xl font-bold mb-4">Car Details</h2>
 
         {% set car = rent_now.related_car %}
         {% set refundable_percent = 5 %}
 
-        <div class="car-item border border-gray-200 rounded-lg p-4 shadow-lg">
+        <div id="car-item" class="car-item border border-gray-200 rounded-lg p-4 shadow-lg">
             <div class="flex items-start">
                 <img src="{{ car.car_image }}" alt="{{ car.title }}" class="w-24 h-20 rounded-md object-cover mr-4">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800">{{ car.title }}</h3>
-                    <a href="{{ car.car_link }}" class="text-gray-800 text-sm mt-1 inline-block">View Car Details</a>
+                    <h3 id="car-item-title" class="text-lg font-semibold text-gray-800">{{ car.title }}</h3>
+                    <a id="car-item-link" href="{{ car.car_link }}" class="text-gray-800 text-sm mt-1 inline-block">View Car Details</a>
                 </div>
             </div>
 
-            <div class="mt-4">
+            <div id="car-rental-details" class="mt-4">
                 <div class="border-t border-gray-300 pt-4">
                     <p class="text-sm">Rental Charges Rate (1 day) <br>
                         <span class="text-gray-500">(This does not include fuel)</span>
                     </p>
-                    <p class="text-lg font-semibold text-gray-700">+ ${{ car.rent_details.price }}</p>
+                    <p id="rental-price" class="text-lg font-semibold text-gray-700">+ ${{ car.rent_details.price }} 
+                        <span id="total-price" class="hidden">{{ car.rent_details.price }}</span>
+                    </p>
                 </div>
-                <div class="mt-2">
+                <div id="additional-fees" class="mt-2">
                     <p class="text-gray-700">Door delivery & Pickup: <span class="float-right">+ $60</span></p>
                     <p class="text-gray-700">Trip Protection Fees: <span class="float-right">+ $25</span></p>
                     <p class="text-gray-700">Convenience Fees: <span class="float-right">+ $2</span></p>
@@ -31,7 +33,7 @@
                         <span class="float-right" id="refundable-deposit">+ ${{ (car.rent_details.price + 60 + 25 + 2 + 2) * (refundable_percent / 100) }}</span>
                     </p>
                 </div>
-                <div class="mt-4 border-t border-gray-300 pt-4">
+                <div id="subtotal-container" class="mt-4 border-t border-gray-300 pt-4">
                     <p class="text-gray-700 font-semibold">Subtotal: 
                         <span class="float-right" id="subtotal">+ ${{ car.rent_details.price + 60 + 25 + 2 + 2 + ((car.rent_details.price + 60 + 25 + 2 + 2) * (refundable_percent / 100)) }}</span>
                     </p>
@@ -40,47 +42,40 @@
         </div>
     </aside>
 
-    <main class="flex-1 p-6">
-        <h1 class="text-3xl font-bold">Welcome to the Car Rental Service</h1>
-        <p class="mt-4 mb-4 text-lg text-gray-700">
+    <main id="car-rental-main" class="flex-1 p-6">
+        <h1 id="rental-service-title" class="Rental-service text-3xl font-bold">Welcome to the Car Rental Service</h1>
+        <p id="rental-service-description" class="Rental-service mt-4 mb-4 text-lg text-gray-700">
             Here you can view all the details about the car available for rent. Use the sidebar to see rental prices and fees.
         </p>
 
-    <section class="mt-10 bg-gray-100 p-6 pt-10 md:pt-6 border border-gray-300 rounded-lg shadow-lg mb-6">
-    <h2 class="text-2xl font-semibold mb-4">Booking Time</h2>
+        <section id="booking-time-section" class="mt-10 bg-gray-100 p-6 pt-10 md:pt-6 border border-gray-300 rounded-lg shadow-lg mb-6">
+            <h2 id="booking-time-title" class="text-2xl font-semibold mb-4">Booking Time</h2>
 
+            <div id="fee-calculator-container" class="bg-gray-100 p-4 md:p-6 border border-gray-300 rounded-lg shadow-lg mb-6">
+                <form id="fee-calculator" class="flex flex-col space-y-4">
+                    <div class="flex flex-col md:flex-row md:space-x-4">
+                        <div class="w-full">
+                            <label for="start-date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                            <input type="date" id="start-date" name="start-date" 
+                                   class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
 
-    <div class="bg-gray-100 p-4 md:p-6 border border-gray-300 rounded-lg shadow-lg mb-6">
-       <form id="fee-calculator" class="flex flex-col space-y-4">
-         <div class="flex flex-col md:flex-row md:space-x-4">
-            <div class="w-full">
-                 <label for="start-date" class="block text-sm font-medium text-gray-700">Start Date</label>
-                <input type="date" id="start-date" name="start-date" 
-                       class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <div class="w-full">
+                            <label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
+                            <input type="date" id="end-date" name="end-date" 
+                                   class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+                </form>
             </div>
 
-            <div class="w-full">
-                <label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
-                <input type="date" id="end-date" name="end-date" 
-                       class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            </div>
-        </div>
-    </form>
-     </div>
-  <button type="button" onclick="calculateTotal()" 
+            <button type="button" onclick="calculateTotal()" 
                     class="bg-black text-white py-2 px-4 rounded-lg shadow-md hover:bg-gray-900 transition">
                 Calculate
             </button>
-
-            <div class="mt-4">
-                <p class="text-lg font-semibold text-gray-800">Total Rental Price: 
-                    <span id="total-price">+ ${{ car.rent_details.price }}</span>
-                </p>
-                <p class="text-sm text-gray-500">(Note: Refundable deposit is fixed at 5%)</p>
-            </div>
         </section>
     </main>
-   </div>
+</div>
 
 <script>
     const carPrice = {{ car.rent_details.price }};

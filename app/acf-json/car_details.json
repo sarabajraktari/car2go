@@ -313,6 +313,46 @@
                             "id": ""
                         },
                         "return_format": "array"
+                    },
+                    {
+                        "key": "field_66eabe2b0d5bf",
+                        "label": "Car Location Latitude",
+                        "name": "car_location_lat",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_66eabe920d5c0",
+                        "label": "Car Location Longitude",
+                        "name": "car_location_lng",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
                     }
                 ]
             }
