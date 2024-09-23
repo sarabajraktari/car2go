@@ -34,6 +34,9 @@ class Car {
                     ];
                 }, $carDetails['specifications']) : [],
                 'iframe' => $carDetails['iframe'] ?? null,
+
+                'latitude' => $carDetails['car_location_lat'] ?? null,
+                'longitude' => $carDetails['car_location_lng'] ?? null,
             ];
 
             wp_reset_postdata(); 
