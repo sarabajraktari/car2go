@@ -4,6 +4,7 @@ namespace Internship\Modules;
 
 use Internship\Includes\Setup;
 use Internship\Interfaces\ModuleInterface;
+use Internship\PostTypes\RentNow;
 
 class Cards implements ModuleInterface {
 
@@ -42,12 +43,16 @@ class Cards implements ModuleInterface {
                 while ($query->have_posts()) {
                     $query->the_post();
                     $carDetails = get_field('car_details', get_the_ID());
+
+                     // Fetch Rent Now URL using the helper method
+                     $rentNowUrl = RentNow::getRentNowUrlForCar(get_the_ID());
                     
                     $posts[] = [
                         'title'       => get_the_title(),
                         'description' => get_post_field('post_content', get_the_ID()),
                         'thumbnail'   => get_the_post_thumbnail_url(get_the_ID(), 'full'),
                         'link'        => get_permalink(), 
+                        'rent_now_url' => $rentNowUrl, // Rent Now post permalink
                         'rent_details' => $carDetails['rent_details'],
                         'post_type'   => get_post_type(), // Shtojmë llojin e postimit
                     ];
