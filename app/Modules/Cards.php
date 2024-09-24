@@ -4,7 +4,10 @@ namespace Internship\Modules;
 
 use Internship\Includes\Setup;
 use Internship\Interfaces\ModuleInterface;
+use Internship\PostTypes\Car;
+use Internship\PostTypes\Author;
 use Internship\PostTypes\RentNow;
+
 
 class Cards implements ModuleInterface {
 
@@ -15,11 +18,10 @@ class Cards implements ModuleInterface {
             return [];
         }
 
-        // Get the specific module's data using the key
         $flexibleContent = $modules[$key];
 
-        // Fetch the selected post type from the ACF field
         $post_type = $flexibleContent['select_post_types'];
+        error_log(print_r($post_type, true));
 
         if (!$post_type) {
             return [];
@@ -29,64 +31,59 @@ class Cards implements ModuleInterface {
         $item_number = $flexibleContent['item_number'];
         $redirect_link = $flexibleContent['redirect_link'];
         $title_and_description = $flexibleContent['title_and_description'];
+        $search_form = $flexibleContent['search_form'];
         $posts = [];
 
-        // Check the selected post type and fetch data accordingly
+        $search_query = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
+        $selected_brand = isset($_GET['brand']) ? sanitize_text_field($_GET['brand']) : '';
+        $selected_city = isset($_GET['city']) ? sanitize_text_field($_GET['city']) : '';
+
         if ($post_type === 'Cars') {
-
-            $query = new \WP_Query([
-                'post_type' => 'cars',
-                'posts_per_page' => -1,
-            ]);
-
-            if ($query->have_posts()) {
-                while ($query->have_posts()) {
-                    $query->the_post();
-                    $carDetails = get_field('car_details', get_the_ID());
-
-                     // Fetch Rent Now URL using the helper method
-                     $rentNowUrl = RentNow::getRentNowUrlForCar(get_the_ID());
-                    
-                    $posts[] = [
-                        'title'       => get_the_title(),
-                        'description' => get_post_field('post_content', get_the_ID()),
-                        'thumbnail'   => get_the_post_thumbnail_url(get_the_ID(), 'full'),
-                        'link'        => get_permalink(), 
-                        'rent_now_url' => $rentNowUrl, // Rent Now post permalink
-                        'rent_details' => $carDetails['rent_details'],
-                        'post_type'   => get_post_type(), // Shtojmë llojin e postimit
-                    ];
-                }
-                wp_reset_postdata();
-            }
+            $posts = Car::getFilteredCarsData($selected_brand, $selected_city, $search_query);
         } else if ($post_type === 'Authors') {
-            $query = new \WP_Query([
-                'post_type' => 'authors',
-                'posts_per_page' => -1,
-            ]);
-
-            if ($query->have_posts()) {
-                while ($query->have_posts()) {
-                    $query->the_post();
-                    $posts[] = [
-                        'title'       => get_the_title(),
-                        'description' => get_post_field('post_content', get_the_ID()),
-                        'thumbnail'   => get_the_post_thumbnail_url(get_the_ID(), 'full'),
-                        'link'        => get_permalink(),
-                        'post_type'   => get_post_type(), // Shtojmë llojin e postimit
-                    ];
-                }
-                wp_reset_postdata();
-            }
+            $posts = self::getAuthorsData();
         }
-        
+
         return [
             'posts' => $posts,
             'enable_load_more' => $enable_load_more,
             'item_number' => $item_number,
             'redirect_link' => $redirect_link,
             'title_and_description' => $title_and_description,
+            'search_form' => $search_form,
+            'search_query' => $search_query,
+            'selected_brand' => $selected_brand,
+            'selected_city' => $selected_city,
+            'post_type' => $post_type 
         ];
+    }
+
+    public static function getAuthorsData() {
+        $query = new \WP_Query([
+            'post_type' => 'authors',
+            'posts_per_page' => -1,
+        ]);
+
+        $authors = [];
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                $authorID = get_the_ID();
+                $authorDetails = get_field('authors', $authorID);
+
+                $authors[] = [
+                    'title' => get_the_title($authorID),
+                    'description' => get_post_field('post_content', get_the_ID()),
+                    'thumbnail' => get_the_post_thumbnail_url($authorID, 'full'),
+                    'author_location' => $authorDetails['author_location'],
+                    'link' => get_permalink($authorID),
+                    'post_type' => 'authors',
+                ];
+            }
+            wp_reset_postdata();
+        }
+
+        return $authors;
     }
 
     public static function render($key, $data) {
@@ -96,6 +93,11 @@ class Cards implements ModuleInterface {
             'item_number' => $data['item_number'],
             'redirect_link' => $data['redirect_link'],
             'title_and_description' => $data['title_and_description'],
+            'search_form' => $data['search_form'],
+            'search_query' => $data['search_query'],
+            'selected_brand' => $data['selected_brand'],
+            'selected_city' => $data['selected_city'],
+            'post_type' => $data['post_type'],
         ]);
     }
 }
