@@ -7,7 +7,7 @@
 }
 
 .toggle-replies:checked ~ .replies-list {
-    max-height: 1000px; /* Adjust based on your content length */
+    max-height: 1000px; 
     opacity: 1;
     visibility: visible;
     @apply mt-4;

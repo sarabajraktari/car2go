@@ -1,6 +1,9 @@
 <?php
 
+
 require_once 'vendor/autoload.php';
+
+
 
 
 function remove_author_permalink($post_link, $post) {
@@ -12,14 +15,16 @@ function remove_author_permalink($post_link, $post) {
 add_filter('post_type_link', 'remove_author_permalink', 10, 2);
 
 
+
 //! Register SCSS and JS scripts.
 function enqueue_theme_assets() {
     wp_enqueue_style('front_style', get_stylesheet_directory_uri() . '/assets/dist/css/front.css', [], wp_get_theme(get_template())->Version);
     wp_enqueue_script('front_script', get_stylesheet_directory_uri() . '/assets/dist/js/front.js', [], wp_get_theme(get_template())->Version, true);
     wp_enqueue_script('front_admin_script', get_stylesheet_directory_uri() . '/assets/dist/js/admin/app.js', [], wp_get_theme(get_template())->Version, true);
-    wp_enqueue_script('sidebar_script', get_stylesheet_directory_uri() . '/assets/js/modules/SideBar.js', [], wp_get_theme(get_template())->Version, true); 
+    wp_enqueue_script('sidebar_script', get_stylesheet_directory_uri() . '/assets/js/modules/SideBar.js', [], wp_get_theme(get_template())->Version, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
+
 
 
 function enqueue_custom_scripts() {
@@ -28,17 +33,29 @@ function enqueue_custom_scripts() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
 
+
 function enqueue_splide_assets() {
     // Enqueue Splide CSS
     wp_enqueue_style('splide-css', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/css/splide.min.css');
-    
+   
     // Enqueue Splide JS
     wp_enqueue_script('splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/js/splide.min.js', array(), '3.6.9', true);
-    
+   
     // Enqueue your custom JS to initialize Splide
     wp_enqueue_script('custom-splide-js', get_template_directory_uri() . '/assets/js/modules/custom-splide.js', array('splide-js'), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_splide_assets');
+
+
+function enqueue_comment_ajax_script() {
+    wp_enqueue_script('ajax-comment-script', get_template_directory_uri() . '/assets/js/modules/comments-section.js', array('jquery'), null, true);
+   
+    wp_localize_script('ajax-comment-script', 'ajax_comments', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('submit_comment_nonce') 
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_comment_ajax_script');
 
 
 // Remove the editor from the 'post' post type
@@ -47,17 +64,20 @@ function remove_editor_from_post() {
 }
 add_action('init', 'remove_editor_from_post');
 
+
 // Remove the editor from the 'page' post type
 function remove_editor_from_page() {
     remove_post_type_support('page', 'editor');
 }
 add_action('init', 'remove_editor_from_page');
 
+
 function my_theme_setup() {
     // Enable support for Post Thumbnails on posts and pages
     add_theme_support('post-thumbnails');
 }
 add_action('after_setup_theme', 'my_theme_setup');
+
 
 
 //! Check if acf field plugin is active
@@ -68,10 +88,12 @@ if (!is_plugin_active('advanced-custom-fields-pro/acf.php')) {
     }
 }
 
+
 add_filter('acf/settings/save_json', function($path) {
     $path = get_template_directory() . '/acf-json';
     return $path;
 });
+
 
 add_filter('acf/settings/load_json', function($paths) {
     $paths[] = get_template_directory() . '/acf-json';
@@ -79,17 +101,28 @@ add_filter('acf/settings/load_json', function($paths) {
 });
 
 
+
 add_filter('timber/context', function($context) {
     $context['home_url'] = home_url();
 });
 
 
-// Register navigation menus
+// Register navigation menus -> edited this part over here
 add_action('after_setup_theme', function () {
     register_nav_menus([
         'header-menu' => __('Header Menu', 'my-theme'),
     ]);
 });
+
+
+add_filter('wp_insert_post_data', function($data, $postarr) {
+    if ($data['post_type'] == 'cars' && empty($postarr['ID'])) {
+        // Enable comments by default for new posts of type 'cars'
+        $data['comment_status'] = 'open';
+    }
+    return $data;
+}, 10, 2);
+
 
 // Add menu to Timber context
 add_filter('timber/context', function ($context) {
@@ -99,6 +132,7 @@ add_filter('timber/context', function ($context) {
     return $context;
 });
 
+
 if (function_exists('acf_add_options_page')) {
     acf_add_options_page(array(
         'page_title' => 'Header Settings',
@@ -106,10 +140,11 @@ if (function_exists('acf_add_options_page')) {
         'menu_slug' => 'header-settings',
         'capability' => 'edit_posts',
         'redirect' => false,
-		'position' => 10,  
+        'position' => 10,  
         'icon_url' => 'dashicons-admin-customizer',
     ));
 }
+
 
 add_filter('timber/context', function($context) {
     $context['header'] = [
@@ -120,6 +155,7 @@ add_filter('timber/context', function($context) {
     ];
     return $context;
 });
+
 if (function_exists('acf_add_options_page')) {
     acf_add_options_page(array(
         'page_title' => 'Footer Settings',
@@ -134,50 +170,52 @@ if (function_exists('acf_add_options_page')) {
 
 
 add_action( 'init', function() {
-	register_post_type( 'cars', array(
-	'labels' => array(
-		'name' => 'Cars',
-		'singular_name' => 'Cars',
-		'menu_name' => 'Cars',
-		'all_items' => 'All Cars',
-		'edit_item' => 'Edit Car',
-		'view_item' => 'View Car',
-		'view_items' => 'View Cars',
-		'add_new_item' => 'Add New Car',
-		'new_item' => 'New Car',
-		'parent_item_colon' => 'Parent Cars:',
-		'search_items' => 'Search Cars',
-		'not_found' => 'No cars found',
-		'not_found_in_trash' => 'No cars found in Trash',
-		'archives' => 'Cars Archives',
-		'attributes' => 'Cars Attributes',
-		'insert_into_item' => 'Insert into cars',
-		'uploaded_to_this_item' => 'Uploaded to this cars',
-		'filter_items_list' => 'Filter cars list',
-		'filter_by_date' => 'Filter cars by date',
-		'items_list_navigation' => 'Cars list navigation',
-		'items_list' => 'Cars list',
-		'item_published' => 'Cars published.',
-		'item_published_privately' => 'Cars published privately.',
-		'item_reverted_to_draft' => 'Cars reverted to draft.',
-		'item_scheduled' => 'Cars scheduled.',
-		'item_updated' => 'Cars updated.',
-		'item_link' => 'Cars Link',
-		'item_link_description' => 'A link to a cars.',
-	),
-	'public' => true,
-	'show_in_rest' => true,
-	'menu_position' => 30,
-	'menu_icon' => 'dashicons-car',
-	'supports' => array(
+    register_post_type( 'cars', array(
+    'labels' => array(
+        'name' => 'Cars',
+        'singular_name' => 'Cars',
+        'menu_name' => 'Cars',
+        'all_items' => 'All Cars',
+        'edit_item' => 'Edit Car',
+        'view_item' => 'View Car',
+        'view_items' => 'View Cars',
+        'add_new_item' => 'Add New Car',
+        'new_item' => 'New Car',
+        'parent_item_colon' => 'Parent Cars:',
+        'search_items' => 'Search Cars',
+        'not_found' => 'No cars found',
+        'not_found_in_trash' => 'No cars found in Trash',
+        'archives' => 'Cars Archives',
+        'attributes' => 'Cars Attributes',
+        'insert_into_item' => 'Insert into cars',
+        'uploaded_to_this_item' => 'Uploaded to this cars',
+        'filter_items_list' => 'Filter cars list',
+        'filter_by_date' => 'Filter cars by date',
+        'items_list_navigation' => 'Cars list navigation',
+        'items_list' => 'Cars list',
+        'item_published' => 'Cars published.',
+        'item_published_privately' => 'Cars published privately.',
+        'item_reverted_to_draft' => 'Cars reverted to draft.',
+        'item_scheduled' => 'Cars scheduled.',
+        'item_updated' => 'Cars updated.',
+        'item_link' => 'Cars Link',
+        'item_link_description' => 'A link to a cars.',
+    ),
+    'public' => true,
+    'show_in_rest' => true,
+    'menu_position' => 30,
+    'menu_icon' => 'dashicons-car',
+    'supports' => array(
             0 => 'title',
             1 => 'editor',
             2 => 'thumbnail',
+            3 => 'comments',
             4 => 'revisions'
         ),
-	'delete_with_user' => false,
+    'delete_with_user' => false,
 ) );
 } );
+
 
     // Register the Brand taxonomy
     register_taxonomy( 'car_brand', 'cars', array(
@@ -204,6 +242,7 @@ add_action( 'init', function() {
         'show_admin_column' => true,
         'rewrite' => array( 'slug' => 'brand' ),
     ));
+
 
     // Register the Cities taxonomy
     register_taxonomy( 'car_city', 'cars', array(
@@ -232,75 +271,83 @@ add_action( 'init', function() {
     ));
 
 
+
+
 // author post type
 
+
 add_action( 'init', function() {
-	register_post_type( 'authors', array(
-	'labels' => array(
-		'name' => 'Authors',
-		'singular_name' => 'Author',
-		'menu_name' => 'Authors',
-		'all_items' => 'All Authors',
-		'edit_item' => 'Edit Author',
-		'view_item' => 'View Author',
-		'view_items' => 'View Authors',
-		'add_new_item' => 'Add New Author',
-		'new_item' => 'New Author',
-		'parent_item_colon' => 'Parent Author:',
-		'search_items' => 'Search Authors',
-		'not_found' => 'No authors found',
-		'not_found_in_trash' => 'No authors found in Trash',
-		'archives' => 'Author Archives',
-		'attributes' => 'Author Attributes',
-		'insert_into_item' => 'Insert into author',
-		'uploaded_to_this_item' => 'Uploaded to this author',
-		'filter_items_list' => 'Filter authors list',
-		'filter_by_date' => 'Filter authors by date',
-		'items_list_navigation' => 'Authors list navigation',
-		'items_list' => 'Authors list',
-		'item_published' => 'Author published.',
-		'item_published_privately' => 'Author published privately.',
-		'item_reverted_to_draft' => 'Author reverted to draft.',
-		'item_scheduled' => 'Author scheduled.',
-		'item_updated' => 'Author updated.',
-		'item_link' => 'Author Link',
-		'item_link_description' => 'A link to a author.',
-	),
-	'public' => true,
-	'show_in_rest' => true,
-	'menu_position' => 30,
-	'menu_icon' => 'dashicons-admin-users',
-	'supports' => array(
+    register_post_type( 'authors', array(
+    'labels' => array(
+        'name' => 'Authors',
+        'singular_name' => 'Author',
+        'menu_name' => 'Authors',
+        'all_items' => 'All Authors',
+        'edit_item' => 'Edit Author',
+        'view_item' => 'View Author',
+        'view_items' => 'View Authors',
+        'add_new_item' => 'Add New Author',
+        'new_item' => 'New Author',
+        'parent_item_colon' => 'Parent Author:',
+        'search_items' => 'Search Authors',
+        'not_found' => 'No authors found',
+        'not_found_in_trash' => 'No authors found in Trash',
+        'archives' => 'Author Archives',
+        'attributes' => 'Author Attributes',
+        'insert_into_item' => 'Insert into author',
+        'uploaded_to_this_item' => 'Uploaded to this author',
+        'filter_items_list' => 'Filter authors list',
+        'filter_by_date' => 'Filter authors by date',
+        'items_list_navigation' => 'Authors list navigation',
+        'items_list' => 'Authors list',
+        'item_published' => 'Author published.',
+        'item_published_privately' => 'Author published privately.',
+        'item_reverted_to_draft' => 'Author reverted to draft.',
+        'item_scheduled' => 'Author scheduled.',
+        'item_updated' => 'Author updated.',
+        'item_link' => 'Author Link',
+        'item_link_description' => 'A link to a author.',
+    ),
+    'public' => true,
+    'show_in_rest' => true,
+    'menu_position' => 30,
+    'menu_icon' => 'dashicons-admin-users',
+    'supports' => array(
             0 => 'title',
             1 => 'editor',
             2 => 'thumbnail',
             4 => 'revisions'
         ),
-	'delete_with_user' => false,
+    'delete_with_user' => false,
 ) );
 } );
+
 
 add_action('wp_ajax_get_car_suggestions', 'get_car_suggestions');
 add_action('wp_ajax_nopriv_get_car_suggestions', 'get_car_suggestions');
 
+
 function get_car_suggestions() {
     global $wpdb;
+
 
     $search_query = sanitize_text_field($_GET['query']);
     $selected_brand = isset($_GET['brand_slug']) ? sanitize_text_field($_GET['brand_slug']) : '';
     $selected_city = isset($_GET['city_slug']) ? sanitize_text_field($_GET['city_slug']) : '';
-    
+   
     $search_query_normalized = str_replace(['-', ' '], ' ', $search_query);
+
 
     $args = array(
         'post_type' => 'cars',
-        'posts_per_page' => 5, 
+        'posts_per_page' => 5,
         'post_status' => 'publish',
         's' => '',
     );
 
+
     $tax_query = array('relation' => 'AND');
-    
+   
     if (!empty($selected_brand)) {
         $tax_query[] = array(
             'taxonomy' => 'car_brand',
@@ -308,6 +355,7 @@ function get_car_suggestions() {
             'terms'    => $selected_brand,
         );
     }
+
 
     if (!empty($selected_city)) {
         $tax_query[] = array(
@@ -317,9 +365,11 @@ function get_car_suggestions() {
         );
     }
 
+
     if (count($tax_query) > 1) {
         $args['tax_query'] = $tax_query;
     }
+
 
     $exact_match_posts = $wpdb->get_results(
         $wpdb->prepare(
@@ -334,16 +384,19 @@ function get_car_suggestions() {
         )
     );
 
+
     $suggestions = [];
+
 
     if ($exact_match_posts) {
         foreach ($exact_match_posts as $post) {
+
 
             if (!empty($selected_brand)) {
                 $post_id = $post->ID;
                 $post_brands = wp_get_post_terms($post_id, 'car_brand', array('fields' => 'slugs'));
                 if (!in_array($selected_brand, $post_brands)) {
-                    continue; 
+                    continue;
                 }
             }
             if (!empty($selected_city)) {
@@ -354,6 +407,7 @@ function get_car_suggestions() {
                 }
             }
 
+
             $suggestions[] = [
                 'title' => $post->post_title,
                 'link' => get_permalink($post->ID),
@@ -361,11 +415,13 @@ function get_car_suggestions() {
         }
     }
 
+
     wp_reset_postdata();
-    
+   
     echo json_encode($suggestions);
     wp_die();
 }
+
 
 add_action( 'init', function() {
     register_post_type( 'rent_now', array(
@@ -411,9 +467,10 @@ add_action( 'init', function() {
     ));
 });
 
+
 function create_rent_now_post_when_car_published( $post_id ) {
     if ( get_post_type( $post_id ) == 'cars' && get_post_status( $post_id ) == 'publish' ) {
-        
+       
         // Check if a related Rent Now post already exists
         $existing_rent_now = new WP_Query(array(
             'post_type' => 'rent_now',
@@ -421,12 +478,15 @@ function create_rent_now_post_when_car_published( $post_id ) {
             'meta_value' => $post_id,
         ));
 
+
         if ($existing_rent_now->have_posts()) {
             return; // Rent Now post already exists, no need to create another
         }
 
+
         $car_title = get_the_title( $post_id );
-        $car_slug = sanitize_title( $car_title ); 
+        $car_slug = sanitize_title( $car_title );
+
 
         $rent_now_post = array(
             'post_title'    => $car_title, // Use the car's title directly, without prefix
@@ -436,11 +496,98 @@ function create_rent_now_post_when_car_published( $post_id ) {
             'post_name'     => $car_slug, // Explicitly set the post slug to match the car's slug
         );
 
+
         // Insert the new post into the database
         $rent_now_post_id = wp_insert_post( $rent_now_post );
+
 
         // Link the "rent now" post to the related car using ACF
         update_field( 'related_car', $post_id, $rent_now_post_id );
     }
 }
 add_action( 'save_post', 'create_rent_now_post_when_car_published' );
+
+function handle_submit_comment() {
+    error_log('Handling comment submission via AJAX...');
+    
+    if (!wp_verify_nonce($_POST['nonce'], 'submit_comment_nonce')) {
+        error_log('Invalid nonce.');
+        wp_send_json_error(['message' => 'Invalid nonce']);
+    }
+
+    $current_user = wp_get_current_user();
+
+    $comment_data = [
+        'comment_post_ID' => absint($_POST['comment_post_ID']),
+        'comment_content' => sanitize_text_field($_POST['comment']),
+        'comment_author' => $current_user->display_name,
+        'comment_author_email' => $current_user->user_email,
+        'user_id' => $current_user->ID,
+        'comment_parent' => isset($_POST['comment_parent']) ? absint($_POST['comment_parent']) : 0
+    ];
+
+    $comment_id = wp_insert_comment($comment_data);
+
+    if ($comment_id) {
+        $comment = get_comment($comment_id);
+        $comment->avatar = get_avatar($comment->comment_author_email, 64);
+        $comment->is_approved = ($comment->comment_approved == '1');
+        
+        ob_start();
+        ?>
+        <li class="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
+            <div class="flex space-x-4">
+                <div class="flex-shrink-0">
+                    <?= $comment->avatar; ?>
+                </div>
+                <div>
+                    <div class="font-bold"><?= esc_html($comment->comment_author); ?></div>
+                    <div class="text-sm text-gray-600"><?= esc_html($comment->comment_date); ?></div>
+                    <?php if (!$comment->is_approved) : ?>
+                        <div class="text-sm text-red-500"><em>Your comment is awaiting approval.</em></div>
+                    <?php endif; ?>
+                    <div class="mt-2 text-gray-800"><?= esc_html($comment->comment_content); ?></div>
+                </div>
+            </div>
+        </li>
+        <?php
+        $comment_html = ob_get_clean();
+
+        wp_send_json_success(['comment' => $comment_html]);
+    } else {
+        error_log('Comment insertion failed.');
+        wp_send_json_error(['message' => 'Comment submission failed']);
+    }
+}
+
+
+add_action('wp_ajax_submit_comment', 'handle_submit_comment');
+add_action('wp_ajax_nopriv_submit_comment', 'handle_submit_comment');
+
+add_filter('nonce_life', function() {
+    return 24 * 60 * 60; // 24 hours
+});
+
+function enable_comments_for_existing_cars_posts() {
+
+    $cars_posts = get_posts([
+        'post_type' => 'cars',
+        'post_status' => 'publish',
+        'posts_per_page' => -1, 
+    ]);
+
+
+    foreach ($cars_posts as $post) {
+        if ($post->comment_status != 'open') {
+            wp_update_post([
+                'ID' => $post->ID,
+                'comment_status' => 'open',
+            ]);
+        }
+    }
+}
+
+add_action('admin_init', 'enable_comments_for_existing_cars_posts');
+
+
+

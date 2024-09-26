@@ -47,12 +47,55 @@ class Setup {
 
         $isSingleCarPage = false;
         $carData = null;
+        
+        $commentsOpen = false; 
+        $comments = []; 
+        $grouped_comments = []; 
     
         if (is_singular('cars')) { 
             $isSingleCarPage = true;
             $carSlug = get_post_field('post_name', get_post());
-            $carData = Car::getSingleCarData($carSlug); 
-        } 
+            $carData = Car::getSingleCarData($carSlug);
+        
+
+            $commentsOpen = comments_open();
+            $comments = get_comments(['post_id' => get_the_ID(), 'status' => 'approve', 'order' => 'ASC']);
+        
+
+            $grouped_comments = [];
+        
+            foreach ($comments as &$comment) {
+
+                $comment->avatar = get_avatar($comment->comment_author_email, 64);
+                $comment->reply_link = get_comment_reply_link([
+                    'depth' => 1,
+                    'max_depth' => 5
+                ], $comment->comment_ID);
+        
+                $comment->is_approved = ($comment->comment_approved == '1');
+        
+
+                if ($comment->comment_parent == 0) {
+
+                    $grouped_comments[$comment->comment_ID] = ['comment' => $comment, 'replies' => []];
+                } else {
+
+                    if (isset($grouped_comments[$comment->comment_parent])) {
+                        $grouped_comments[$comment->comment_parent]['replies'][] = $comment;
+                    } else {
+                        // In case parent is not found (edge case)
+                        $grouped_comments[$comment->comment_parent] = ['comment' => null, 'replies' => [$comment]];
+                    }
+                }
+            }
+        }
+        
+        $current_user = wp_get_current_user();
+        $is_user_logged_in = is_user_logged_in();
+
+        $login_url = wp_login_url();
+        $register_url = wp_registration_url();
+            
 
         $Author = false;
         $authorData = null;
@@ -87,7 +130,18 @@ class Setup {
             'brands' => $brands,
             'cities' => $cities,
             'rent_now' => $rentNowData,
-            'is_single_rent_now_page' => $isSingleRentNowPage
+            'is_single_rent_now_page' => $isSingleRentNowPage,
+            'comments_open' => $commentsOpen,
+            'comments' => $comments, 
+            'grouped_comments' => $grouped_comments, 
+            'is_user_logged_in' => $is_user_logged_in,
+            'user' => [
+                'ID' => $current_user->ID,
+                'display_name' => $current_user->display_name,
+                'user_email' => $current_user->user_email,
+            ],
+            'login_url' => $login_url,
+            'register_url' => $register_url,
         ]));
     }
 
@@ -97,7 +151,7 @@ class Setup {
     }
 
     public static function addToTwig() {
-        self::$loader = new \Twig\Loader\FilesystemLoader(THEME . '/views');
+        self::$loader = new \Twig\Loader\FilesystemLoader(paths: THEME . '/views');
         self::$twig = new \Twig\Environment(self::$loader, [
             'allow_callables' => true,
         ]);
@@ -156,6 +210,26 @@ class Setup {
         self::$twig->addFunction(new \Twig\TwigFunction('url_contains', function ($url, $substring) {
             return strpos($url, $substring) !== false;
         }));
+
+        self::$twig->addFunction(new \Twig\TwigFunction('comment_form', function () {
+            ob_start();
+            comment_form([
+                'class_form' => 'space-y-4 p-6 bg-gray-50 rounded-lg shadow-md',
+                'title_reply' => '',
+                'submit_button' => '<button class="%1$s-button-c">Post your Comment</button>',
+                'comment_field' => '<div class="mb-4"><label for="comment" class="block text-sm font-medium text-gray-700">Your Comment</label><textarea id="comment" name="comment" class="comment-text-area-c" rows="6" required></textarea></div>',
+                'fields' => [
+                    'author' => '<div class="mb-4"><label for="author" class="block text-sm font-medium text-gray-700">Name</label><input type="text" id="author" name="author" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
+                    'email' => '<div class="mb-4"><label for="email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
+                ],
+                'must_log_in' => '<p class="must-log-in mb-4 text-sm text-red-500">You must be <a href="' . esc_url(wp_login_url()) . '" class="text-indigo-600 hover:text-indigo-700">logged in</a> to post a comment.</p>',
+                'logged_in_as' => '<p class="logged-in-as mb-4 text-sm text-gray-700">You are logged in as <a href="' . esc_url(admin_url('profile.php')) . '" class="text-indigo-600 hover:text-indigo-700">' . wp_get_current_user()->display_name . '</a>. <a href="' . esc_url(wp_logout_url()) . '" class="text-red-500 hover:text-red-600">Log out?</a></p>',
+                'comment_notes_before' => '<p class="comment-notes-before text-sm text-gray-500">Required fields are marked <span class="text-red-500">*</span></p>',
+            
+            ]);
+            return ob_get_clean();
+        }, ['is_safe' => ['html']]));
+
 
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {
             $moduleClass = 'Internship\\Modules\\' . $module['type'];
