@@ -151,7 +151,7 @@ class Setup {
     }
 
     public static function addToTwig() {
-        self::$loader = new \Twig\Loader\FilesystemLoader(paths: THEME . '/views');
+        self::$loader = new \Twig\Loader\FilesystemLoader(THEME . '/views');
         self::$twig = new \Twig\Environment(self::$loader, [
             'allow_callables' => true,
         ]);
