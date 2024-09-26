@@ -8,7 +8,18 @@ use Internship\Interfaces\ModuleInterface;
 class SignIn implements ModuleInterface {
 
     public static function getData($key) {
+        // Get flexible content
         $flexibleContent = get_field('modules_list')[$key];
+
+        // Initialize background image URL
+        $background_image_url = '';
+        if (isset($flexibleContent['backround_image'])) { // Note the typo: backround_image (from your data)
+            $background_image_url = $flexibleContent['backround_image']['url'];
+        }
+
+        // Initialize error and success messages
+        $error = null;
+        $success = null;
 
         // Check if the form was submitted
         if (isset($_POST['add_user_form'])) {
@@ -62,10 +73,12 @@ class SignIn implements ModuleInterface {
             }
         }
 
+        // Return data to be used in the Twig template
         return [
             'users' => $flexibleContent['users'],
-            'error' => $error ?? null,
-            'success' => $success ?? null,
+            'background_image' => $background_image_url, // Correct background image URL
+            'error' => $error,
+            'success' => $success,
         ];
     }
 

@@ -10,6 +10,12 @@ class LogIn implements ModuleInterface {
     public static function getData($key) {
         $flexibleContent = get_field('modules_list')[$key];
 
+        // Initialize background image URL
+        $background_image_url = '';
+        if (isset($flexibleContent['backround_image'])) { // Note: Keep the field name correct based on ACF
+            $background_image_url = $flexibleContent['backround_image']['url'];
+        }
+
         // Check if the user is logged in
         $is_logged_in = is_user_logged_in();
 
@@ -50,13 +56,14 @@ class LogIn implements ModuleInterface {
         }
 
         return [
-            'is_logged_in' => is_user_logged_in(),
-            'logout_url'   => wp_logout_url(home_url()), // Redirect to homepage after logout
-            'error'        => $error ?? null,
+            'is_logged_in'   => $is_logged_in,
+            'logout_url'     => wp_logout_url(home_url()), // Redirect to homepage after logout
+            'background_image' => $background_image_url,   // Include the background image URL
+            'error'          => $error ?? null,
         ];
     }
 
-    public static function render($key, $data) { //! Render Module
+    public static function render($key, $data) {
         Setup::view('modules/LogIn.twig', [
             'data' => $data,
         ]);
