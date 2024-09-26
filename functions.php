@@ -2,11 +2,22 @@
 
 require_once 'vendor/autoload.php';
 
+
+function remove_author_permalink($post_link, $post) {
+    if ($post->post_type == 'authors') {
+        return ''; // Returning an empty string removes the permalink.
+    }
+    return $post_link;
+}
+add_filter('post_type_link', 'remove_author_permalink', 10, 2);
+
+
 //! Register SCSS and JS scripts.
 function enqueue_theme_assets() {
     wp_enqueue_style('front_style', get_stylesheet_directory_uri() . '/assets/dist/css/front.css', [], wp_get_theme(get_template())->Version);
     wp_enqueue_script('front_script', get_stylesheet_directory_uri() . '/assets/dist/js/front.js', [], wp_get_theme(get_template())->Version, true);
     wp_enqueue_script('front_admin_script', get_stylesheet_directory_uri() . '/assets/dist/js/admin/app.js', [], wp_get_theme(get_template())->Version, true);
+    wp_enqueue_script('sidebar_script', get_stylesheet_directory_uri() . '/assets/js/modules/SideBar.js', [], wp_get_theme(get_template())->Version, true); 
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
@@ -167,37 +178,60 @@ add_action( 'init', function() {
 	'delete_with_user' => false,
 ) );
 } );
-// Register Custom Taxonomy for Cars
-add_action( 'init', function() {
-	register_taxonomy( 'car', array( 'cars' ), array(
-		'labels' => array(
-			'name' => 'Cars',
-			'singular_name' => 'Car',
-			'menu_name' => 'Cars',
-			'all_items' => 'All Cars',
-			'edit_item' => 'Edit Car',
-			'view_item' => 'View Car',
-			'update_item' => 'Update Car',
-			'add_new_item' => 'Add New Car',
-			'new_item_name' => 'New Car Name',
-			'search_items' => 'Search Cars',
-			'popular_items' => 'Popular Cars',
-			'separate_items_with_commas' => 'Separate cars with commas',
-			'add_or_remove_items' => 'Add or remove cars',
-			'choose_from_most_used' => 'Choose from the most used cars',
-			'not_found' => 'No cars found',
-			'no_terms' => 'No cars',
-			'items_list_navigation' => 'Cars list navigation',
-			'items_list' => 'Cars list',
-			'back_to_items' => '← Go to cars',
-			'item_link' => 'Car Link',
-			'item_link_description' => 'A link to a car',
-		),
-		'public' => true,
-		'show_in_menu' => true,
-		'show_in_rest' => true,
-	) );
-} );
+
+    // Register the Brand taxonomy
+    register_taxonomy( 'car_brand', 'cars', array(
+        'labels' => array(
+            'name' => 'Brands',
+            'singular_name' => 'Brand',
+            'menu_name' => 'Car Brands',
+            'all_items' => 'All Brands',
+            'edit_item' => 'Edit Brand',
+            'view_item' => 'View Brand',
+            'update_item' => 'Update Brand',
+            'add_new_item' => 'Add New Brand',
+            'new_item_name' => 'New Brand Name',
+            'search_items' => 'Search Brands',
+            'popular_items' => 'Popular Brands',
+            'separate_items_with_commas' => 'Separate brands with commas',
+            'add_or_remove_items' => 'Add or remove brands',
+            'choose_from_most_used' => 'Choose from the most used brands',
+            'not_found' => 'No brands found',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'hierarchical' => true,
+        'show_admin_column' => true,
+        'rewrite' => array( 'slug' => 'brand' ),
+    ));
+
+    // Register the Cities taxonomy
+    register_taxonomy( 'car_city', 'cars', array(
+        'labels' => array(
+            'name' => 'Cities',
+            'singular_name' => 'City',
+            'menu_name' => 'Cities',
+            'all_items' => 'All Cities',
+            'edit_item' => 'Edit City',
+            'view_item' => 'View City',
+            'update_item' => 'Update City',
+            'add_new_item' => 'Add New City',
+            'new_item_name' => 'New City Name',
+            'search_items' => 'Search Cities',
+            'popular_items' => 'Popular Cities',
+            'separate_items_with_commas' => 'Separate cities with commas',
+            'add_or_remove_items' => 'Add or remove cities',
+            'choose_from_most_used' => 'Choose from the most used cities',
+            'not_found' => 'No cities found',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'hierarchical' => false,
+        'show_admin_column' => true,
+        'rewrite' => array( 'slug' => 'city' ),
+    ));
+
+
 // author post type
 
 add_action( 'init', function() {
@@ -245,3 +279,168 @@ add_action( 'init', function() {
 	'delete_with_user' => false,
 ) );
 } );
+
+add_action('wp_ajax_get_car_suggestions', 'get_car_suggestions');
+add_action('wp_ajax_nopriv_get_car_suggestions', 'get_car_suggestions');
+
+function get_car_suggestions() {
+    global $wpdb;
+
+    $search_query = sanitize_text_field($_GET['query']);
+    $selected_brand = isset($_GET['brand_slug']) ? sanitize_text_field($_GET['brand_slug']) : '';
+    $selected_city = isset($_GET['city_slug']) ? sanitize_text_field($_GET['city_slug']) : '';
+    
+    $search_query_normalized = str_replace(['-', ' '], ' ', $search_query);
+
+    $args = array(
+        'post_type' => 'cars',
+        'posts_per_page' => 5, 
+        'post_status' => 'publish',
+        's' => '',
+    );
+
+    $tax_query = array('relation' => 'AND');
+    
+    if (!empty($selected_brand)) {
+        $tax_query[] = array(
+            'taxonomy' => 'car_brand',
+            'field'    => 'slug',
+            'terms'    => $selected_brand,
+        );
+    }
+
+    if (!empty($selected_city)) {
+        $tax_query[] = array(
+            'taxonomy' => 'car_city',
+            'field'    => 'slug',
+            'terms'    => $selected_city,
+        );
+    }
+
+    if (count($tax_query) > 1) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    $exact_match_posts = $wpdb->get_results(
+        $wpdb->prepare(
+            "
+            SELECT ID, post_title
+            FROM $wpdb->posts
+            WHERE post_title REGEXP %s
+            AND post_type = 'cars'
+            AND post_status = 'publish'
+            ",
+            '(^|\s)' . $wpdb->esc_like($search_query_normalized)
+        )
+    );
+
+    $suggestions = [];
+
+    if ($exact_match_posts) {
+        foreach ($exact_match_posts as $post) {
+
+            if (!empty($selected_brand)) {
+                $post_id = $post->ID;
+                $post_brands = wp_get_post_terms($post_id, 'car_brand', array('fields' => 'slugs'));
+                if (!in_array($selected_brand, $post_brands)) {
+                    continue; 
+                }
+            }
+            if (!empty($selected_city)) {
+                $post_id = $post->ID;
+                $post_cities = wp_get_post_terms($post_id, 'car_city', array('fields' => 'slugs'));
+                if (!in_array($selected_city, $post_cities)) {
+                    continue;
+                }
+            }
+
+            $suggestions[] = [
+                'title' => $post->post_title,
+                'link' => get_permalink($post->ID),
+            ];
+        }
+    }
+
+    wp_reset_postdata();
+    
+    echo json_encode($suggestions);
+    wp_die();
+}
+
+add_action( 'init', function() {
+    register_post_type( 'rent_now', array(
+        'labels' => array(
+            'name' => 'Rent Now',
+            'singular_name' => 'Rent Now',
+            'menu_name' => 'Rent Now',
+            'all_items' => 'All Rent Now Posts',
+            'edit_item' => 'Edit Rent Now',
+            'view_item' => 'View Rent Now',
+            'view_items' => 'View Rent Now',
+            'add_new_item' => 'Add New Rent Now',
+            'new_item' => 'New Rent Now',
+            'parent_item_colon' => 'Parent Rent Now:',
+            'search_items' => 'Search Rent Now',
+            'not_found' => 'No rent now posts found',
+            'not_found_in_trash' => 'No rent now posts found in Trash',
+            'archives' => 'Rent Now Archives',
+            'attributes' => 'Rent Now Attributes',
+            'insert_into_item' => 'Insert into Rent Now',
+            'uploaded_to_this_item' => 'Uploaded to this Rent Now',
+            'filter_items_list' => 'Filter Rent Now list',
+            'filter_by_date' => 'Filter Rent Now by date',
+            'items_list_navigation' => 'Rent Now list navigation',
+            'items_list' => 'Rent Now list',
+            'item_published' => 'Rent Now post published.',
+            'item_published_privately' => 'Rent Now post published privately.',
+            'item_reverted_to_draft' => 'Rent Now post reverted to draft.',
+            'item_scheduled' => 'Rent Now post scheduled.',
+            'item_updated' => 'Rent Now post updated.',
+            'item_link' => 'Rent Now Link',
+            'item_link_description' => 'A link to a Rent Now post.',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'menu_position' => 31,
+        'menu_icon' => 'dashicons-admin-network',
+        'supports' => array(
+            'title',
+            'revisions',
+        ),
+        'delete_with_user' => false,
+    ));
+});
+
+function create_rent_now_post_when_car_published( $post_id ) {
+    if ( get_post_type( $post_id ) == 'cars' && get_post_status( $post_id ) == 'publish' ) {
+        
+        // Check if a related Rent Now post already exists
+        $existing_rent_now = new WP_Query(array(
+            'post_type' => 'rent_now',
+            'meta_key' => 'related_car',
+            'meta_value' => $post_id,
+        ));
+
+        if ($existing_rent_now->have_posts()) {
+            return; // Rent Now post already exists, no need to create another
+        }
+
+        $car_title = get_the_title( $post_id );
+        $car_slug = sanitize_title( $car_title ); 
+
+        $rent_now_post = array(
+            'post_title'    => $car_title, // Use the car's title directly, without prefix
+            'post_content'  => 'Rent this car now!',
+            'post_status'   => 'publish',
+            'post_type'     => 'rent_now',
+            'post_name'     => $car_slug, // Explicitly set the post slug to match the car's slug
+        );
+
+        // Insert the new post into the database
+        $rent_now_post_id = wp_insert_post( $rent_now_post );
+
+        // Link the "rent now" post to the related car using ACF
+        update_field( 'related_car', $post_id, $rent_now_post_id );
+    }
+}
+add_action( 'save_post', 'create_rent_now_post_when_car_published' );

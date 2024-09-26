@@ -26,8 +26,8 @@ module.exports = {
         },
       },
       animation: {
-        'slide-in': 'slideIn 1s ease-out forwards',
-        slideInFromRightMiddle: 'slideInFromRightMiddle 1.4s ease-out forwards',
+        'slide-in': 'slideIn 700ms ease-out forwards',
+        slideInFromRightMiddle: 'slideInFromRightMiddle 700ms ease-out forwards',
       },
       maxWidth: {
         '5.5xl': '67rem',

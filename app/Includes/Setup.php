@@ -7,7 +7,8 @@ use Internship\Menus\Header;
 use Internship\Menus\Footer;
 use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
-
+use Internship\PostTypes\TaxonomyData;
+use Internship\PostTypes\RentNow;
 
 class Setup {
     public static $loader;
@@ -16,10 +17,13 @@ class Setup {
     public static function renderPage($template = 'views/page.twig', $context = []) {
         self::addToTwig();
 
-        // Kontrollo nëse është një faqe 404
+        // 404 Check
         if (is_404()) {
-            $template = 'templates/404.twig'; // Përdor shabllonin 404 nëse është faqe 404
+            $template = 'templates/404.twig'; // Use 404 template
         }
+
+        $brands = TaxonomyData::getTaxonomyData('brand');
+        $cities = TaxonomyData::getTaxonomyData('city');
 
         $modules = [];
         $flexible_content = get_field('modules_list');
@@ -59,9 +63,18 @@ class Setup {
             $authorData = Author::getSingleAuthorData($authorSlug);
         }
 
+        $isSingleRentNowPage = false;
+        $rentNowData = null;
+
+        if (is_singular('rent_now')) {
+            $isSingleRentNowPage = true;
+            $rentNowSlug = get_post_field('post_name', get_post());
+            $rentNowData = RentNow::getSingleRentNowData($rentNowSlug);
+        }
 
         $headerData = Header::getData(); 
         $footerData = Footer::getData();
+
         echo self::$twig->render($template, array_merge($context, [
             'modules' => $modules,
             'header' => $headerData,
@@ -70,6 +83,11 @@ class Setup {
             'is_single_car_page' => $isSingleCarPage,
             'author' => $authorData,
             'is_author_page' => $Author,
+            #'cars' => $cars,
+            'brands' => $brands,
+            'cities' => $cities,
+            'rent_now' => $rentNowData,
+            'is_single_rent_now_page' => $isSingleRentNowPage
         ]));
     }
 
@@ -83,6 +101,12 @@ class Setup {
         self::$twig = new \Twig\Environment(self::$loader, [
             'allow_callables' => true,
         ]);
+
+        $brands = TaxonomyData::getTaxonomyData('brand');
+        $cities = TaxonomyData::getTaxonomyData('city');
+
+        self::$twig->addGlobal('brands', $brands);
+        self::$twig->addGlobal('cities', $cities);
 
         self::$twig->addFunction(new \Twig\TwigFunction('wp_head', function () {
             return wp_head();
@@ -116,6 +140,21 @@ class Setup {
 
         self::$twig->addFunction(new \Twig\TwigFunction('is_front_page', function () {
             return is_front_page();
+        }));
+
+        self::$twig->addFunction(new \Twig\TwigFunction('get_permalink', function ($post_id = null) {
+            if ($post_id) {
+
+                return get_permalink($post_id);
+            } else {
+
+                $current_url = (is_ssl() ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                return $current_url;
+            }
+        }));
+
+        self::$twig->addFunction(new \Twig\TwigFunction('url_contains', function ($url, $substring) {
+            return strpos($url, $substring) !== false;
         }));
 
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {

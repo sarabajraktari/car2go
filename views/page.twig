@@ -10,7 +10,10 @@
 
         {% if is_author_page %}
            {{ include("templates/author.twig", { author: author  }) }}
-        {% endif %}   
-        
+        {% endif %}  
+
+        {% if is_single_rent_now_page %}
+            {{ include("templates/RentNow.twig", { rent_now: rent_now }) }}
+        {% endif %}
 
 {% endblock %}

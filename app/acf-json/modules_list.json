@@ -1068,6 +1068,26 @@
                                 "placeholder": ""
                             },
                             {
+                                "key": "field_66e2fdc4d5e6a",
+                                "label": "Search Form",
+                                "name": "search_form",
+                                "aria-label": "",
+                                "type": "true_false",
+                                "instructions": "Enable Search Form",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "message": "",
+                                "default_value": 0,
+                                "ui_on_text": "On",
+                                "ui_off_text": "Off",
+                                "ui": 1
+                            },
+                            {
                                 "key": "field_66d0a1c9f54c1",
                                 "label": "Enable Load More",
                                 "name": "enable_load_more",
@@ -1241,265 +1261,6 @@
                                         "parent_repeater": "field_66d179d874cc6"
                                     }
                                 ]
-                            }
-                        ],
-                        "min": "",
-                        "max": ""
-                    },
-                    "layout_66e154565ff21": {
-                        "key": "layout_66e154565ff21",
-                        "name": "login",
-                        "label": "LogIn",
-                        "display": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_66e154575ff22",
-                                "label": "Users",
-                                "name": "users",
-                                "aria-label": "",
-                                "type": "repeater",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "layout": "block",
-                                "min": 0,
-                                "max": 0,
-                                "collapsed": "",
-                                "button_label": "Add Row",
-                                "rows_per_page": 20,
-                                "sub_fields": [
-                                    {
-                                        "key": "field_66e154575ff23",
-                                        "label": "user name",
-                                        "name": "user_name",
-                                        "aria-label": "",
-                                        "type": "text",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "maxlength": "",
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "parent_repeater": "field_66e154575ff22"
-                                    },
-                                    {
-                                        "key": "field_66e154575ff24",
-                                        "label": "user password",
-                                        "name": "user_password",
-                                        "aria-label": "",
-                                        "type": "password",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "parent_repeater": "field_66e154575ff22"
-                                    }
-                                ]
-                            },
-                            {
-                                "key": "field_66e17f0727d3c",
-                                "label": "Backround image",
-                                "name": "backround_image",
-                                "aria-label": "",
-                                "type": "image",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "return_format": "url",
-                                "library": "all",
-                                "min_width": "",
-                                "min_height": "",
-                                "min_size": "",
-                                "max_width": "",
-                                "max_height": "",
-                                "max_size": "",
-                                "mime_types": "",
-                                "preview_size": "medium"
-                            }
-                        ],
-                        "min": "",
-                        "max": ""
-                    },
-                    "layout_66e93e09cd992": {
-                        "key": "layout_66e93e09cd992",
-                        "name": "SignIn",
-                        "label": "SignIn",
-                        "display": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_66e93e09cd993",
-                                "label": "Users",
-                                "name": "users",
-                                "aria-label": "",
-                                "type": "repeater",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "layout": "block",
-                                "min": 0,
-                                "max": 0,
-                                "collapsed": "",
-                                "button_label": "Add Row",
-                                "rows_per_page": 20,
-                                "sub_fields": [
-                                    {
-                                        "key": "field_66e93e53cd997",
-                                        "label": "Username",
-                                        "name": "username",
-                                        "aria-label": "",
-                                        "type": "text",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "maxlength": "",
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "parent_repeater": "field_66e93e09cd993"
-                                    },
-                                    {
-                                        "key": "field_66e93e65cd998",
-                                        "label": "email",
-                                        "name": "email",
-                                        "aria-label": "",
-                                        "type": "text",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "maxlength": "",
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "parent_repeater": "field_66e93e09cd993"
-                                    },
-                                    {
-                                        "key": "field_66e93e73cd999",
-                                        "label": "firstname",
-                                        "name": "firstname",
-                                        "aria-label": "",
-                                        "type": "text",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "maxlength": "",
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "parent_repeater": "field_66e93e09cd993"
-                                    },
-                                    {
-                                        "key": "field_66e93e7dcd99a",
-                                        "label": "lastname",
-                                        "name": "lastname",
-                                        "aria-label": "",
-                                        "type": "text",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "maxlength": "",
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "parent_repeater": "field_66e93e09cd993"
-                                    },
-                                    {
-                                        "key": "field_66e93e95cd99b",
-                                        "label": "password",
-                                        "name": "password",
-                                        "aria-label": "",
-                                        "type": "password",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "parent_repeater": "field_66e93e09cd993"
-                                    }
-                                ]
-                            },
-                            {
-                                "key": "field_66e93e09cd996",
-                                "label": "Backround image",
-                                "name": "backround_image",
-                                "aria-label": "",
-                                "type": "image",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "return_format": "url",
-                                "library": "all",
-                                "min_width": "",
-                                "min_height": "",
-                                "min_size": "",
-                                "max_width": "",
-                                "max_height": "",
-                                "max_size": "",
-                                "mime_types": "",
-                                "preview_size": "medium"
                             }
                         ],
                         "min": "",

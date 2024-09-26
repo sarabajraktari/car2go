@@ -207,22 +207,6 @@
                         ]
                     },
                     {
-                        "key": "field_66d05c7675cd6",
-                        "label": "Iframe",
-                        "name": "iframe",
-                        "aria-label": "",
-                        "type": "link",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "return_format": "array"
-                    },
-                    {
                         "key": "field_66d5735187bf4",
                         "label": "Specifications",
                         "name": "specifications",
@@ -313,6 +297,62 @@
                                 "parent_repeater": "field_66d5735187bf4"
                             }
                         ]
+                    },
+                    {
+                        "key": "field_66d05c7675cd6",
+                        "label": "Iframe",
+                        "name": "iframe",
+                        "aria-label": "",
+                        "type": "link",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array"
+                    },
+                    {
+                        "key": "field_66eabe2b0d5bf",
+                        "label": "Car Location Latitude",
+                        "name": "car_location_lat",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_66eabe920d5c0",
+                        "label": "Car Location Longitude",
+                        "name": "car_location_lng",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
                     }
                 ]
             }

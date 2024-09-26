@@ -1,15 +1,7 @@
-{% set blackBackground = ['Banner','Addnumbers','Faq'] %}
-<div>
+{% set blackBackground = ['banner', 'addnumbers', 'faq', 'howitworks', 'cartypes'] %} 
+<div class="theme-colors">
     {% for module in modules %}
-        <div class="w-full {{ module.type|lower }}-module 
-            {% if module.type in blackBackground %}
-                bg-black
-            {% elseif module.type in ['Howitworks', 'Gallery'] %}
-                bg-gray-100
-            {% else %}
-                bg-white
-            {% endif %}
-        ">
+        <div class="w-full module-{{ module.type|lower }}">
             {{ renderModule(module, module.key) }}
         </div>
     {% endfor %}
