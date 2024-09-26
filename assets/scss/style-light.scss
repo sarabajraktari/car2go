@@ -210,3 +210,28 @@ body.light #mobile-menu ul li a{
 body.light .shigjeta-mobile{
     margin-right: 7px;
 }
+
+body.light .signup-button{
+    background: #e8e8e8;
+    border: 1px solid black;
+    color: black;
+}
+
+body.light .signup-button:hover{
+    background: black;
+    border: 1px solid black;
+    color: white;
+}
+    
+
+body.light .trp-language-switcher-container {
+    background: #e8e8e8 !important;
+    margin-top: 50px;
+    margin-left: 1250px;
+    border: 1px solid black !important;
+    border-radius: 10px !important;
+   position: fixed !important; /* This makes the element stay in place */
+    top: 0; /* Adjust this value as needed for the vertical position */
+    right: 0; /* Adjust this value as needed for the horizontal position */
+    z-index: 1000; /* Ensures it stays above other content */
+}

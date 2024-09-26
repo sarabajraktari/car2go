@@ -431,3 +431,15 @@ body.dark #end-date {
     color: white;              
     border: 1px solid #4a4a4a; 
 }
+
+body.dark .trp-language-switcher-container {
+    background: black !important;
+    margin-top: 50px;
+    margin-left: 1250px;
+    border: 1px solid white !important;
+    border-radius: 10px !important;
+    position: fixed !important;  /*Force fixed positioning */
+    /*top: 20px;  Adjust to fine-tune vertical position */
+    /*left: 50px;  Adjust to fine-tune horizontal position */
+    /*z-index: 1000 !important;  Ensure it stays on top */
+}
