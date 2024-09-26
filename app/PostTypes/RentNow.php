@@ -44,6 +44,10 @@ class RentNow {
                     'rent_details' => $carDetails['rent_details'] ?? null,  
                     'iframe' => $carDetails['iframe'] ?? null,
                     'car_link' => get_permalink($carID),
+
+                    // Add latitude and longitude here
+                    'latitude' => $carDetails['car_location_lat'] ?? null,
+                    'longitude' => $carDetails['car_location_lng'] ?? null,
                 ];
             }
 
