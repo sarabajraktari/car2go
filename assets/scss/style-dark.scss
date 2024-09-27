@@ -467,3 +467,21 @@ background-color: black;
 cursor: pointer;
 }
 
+
+
+body.dark #text1{
+    color: #e2e8f0;
+}
+
+body.dark #signin,
+body.dark #first_name,
+body.dark #last_name,
+    body.dark #username,
+    body.dark #email,
+    body.dark #password{
+    background-color: #000000;
+    color: white;
+    border-width: 1px;
+    border-style: solid;
+    border-color: white;
+}
