@@ -1,0 +1,70 @@
+ <h3 class="text-xl font-semibold mt-8">Comments</h3>
+    
+   <ul id="comment-list" class="space-y-4">
+        {% for parent_comment in grouped_comments %}
+            <!-- Parent Comment -->
+            {% if parent_comment.comment is not null %}
+            <li class="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        {{ parent_comment.comment.avatar|raw }}
+                    </div>
+                    <div>
+                        <div class="font-bold">{{ parent_comment.comment.comment_author }}</div>
+                        {% if not parent_comment.comment.comment_approved %}
+                            <p>This comment is pending approval</p>
+                        {%endif%}
+                        <div class="text-sm text-gray-600">{{ parent_comment.comment.comment_date }}</div>
+                        
+                        {% if not parent_comment.comment.is_approved %}
+                            <div class="text-sm text-red-500"><em>Your comment is awaiting approval.</em></div>
+                        {% endif %}
+                        {#<div class="mt-2 text-gray-800"><b>Comment:</b></div>#}
+                        <div class="mt-2 text-gray-800">{{ parent_comment.comment.comment_content|raw }}</div>
+                        
+                        <div class="flex mt-2 text-blue-500">
+                            {{ parent_comment.comment.reply_link|raw }} <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="10px" height="10" viewBox="0 -3.5 24 24" id="meteor-icon-kit__regular-reply" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.41421 6L5.70711 8.2929C6.09763 8.6834 6.09763 9.3166 5.70711 9.7071C5.31658 10.0976 4.68342 10.0976 4.29289 9.7071L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289L4.29289 0.29289C4.68342 -0.09763 5.31658 -0.09763 5.70711 0.29289C6.09763 0.68342 6.09763 1.31658 5.70711 1.70711L3.41421 4H14C19.5228 4 24 8.4772 24 14V16.0312C24 16.5835 23.5523 17.0312 23 17.0312C22.4477 17.0312 22 16.5835 22 16.0312V14C22 9.5817 18.4183 6 14 6H3.41421z" fill="#758CA3"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Replies (if any) -->
+                {% if parent_comment.replies is not empty %}
+                    <div class="mt-4">
+                        <input type="checkbox" id="toggle-replies-{{ parent_comment.comment.comment_ID }}" class="toggle-replies hidden">
+                        <label for="toggle-replies-{{ parent_comment.comment.comment_ID }}" class="toggle-label text-blue-500 cursor-pointer">
+                        
+                        </label>
+                        </br>
+                        <ul class="replies-list max-h-0 opacity-0 invisible transition-all duration-500 ease-in-out pl-8 space-y-4">
+                            {% for reply in parent_comment.replies %}
+                                <li class="p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
+                                    <div class="flex space-x-4">
+                                        <div class="flex-shrink-0">
+                                            {{ reply.avatar|raw }}
+                                        </div>
+                                        <div>
+                                            <div class="font-bold">{{ reply.comment_author }}</div>
+                                            <div class="text-sm text-gray-600">{{ reply.comment_date }}</div>
+
+                                            {% if not reply.is_approved %}
+                                                <div class="text-sm text-red-500"><em>Your comment is awaiting approval.</em></div>
+                                            {% endif %}
+                                            <div class="mt-2 text-gray-800"><b>Replied:</b></div>
+                                            <div class="mt-2 text-gray-800">{{ reply.comment_content|raw }}</div>
+
+                                            <div class="mt-2 text-blue-500">
+                                                {{ parent_comment.comment.reply_link|raw }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>

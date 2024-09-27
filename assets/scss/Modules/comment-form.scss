@@ -1,0 +1,41 @@
+.submit-button-c {
+    background-color: #ececec; 
+    padding: 0.5rem 1rem; 
+    border-radius: 0.25rem;
+
+    transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button-c:hover {
+    background-color: #e3e3e3; 
+}
+
+
+.comment-text-area-c{
+    margin-top: 0.25rem;
+    display: block; 
+    width: 100%; 
+    border: 1px solid #d1d5db; 
+    border-radius: 0.375rem; 
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
+    font-size: 0.875rem; 
+    padding: 0.5rem; 
+    
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+}
+
+.comment-text-area-c:focus{
+    outline: none;
+    border-color: #6366f1; 
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); 
+}
+
+.must-log-in-c{
+        color: #4f46e5; 
+        transition: color 0.2s ease-in-out; 
+
+}
+
+.must-log-in-c{
+    color: #4338ca; 
+}

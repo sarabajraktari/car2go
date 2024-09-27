@@ -8,3 +8,4 @@ import './modules/scroll-to-top.js';
 import './modules/SeacrchBar.js';
 import './theme-toggle.js';
 import './modules/search-suggestion.js';
+import './modules/comments-section.js';
