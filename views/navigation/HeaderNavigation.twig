@@ -6,7 +6,7 @@
             </a>
         </div>
 
-        <nav class="hidden md:flex ml-auto">
+        <nav class="flex-grow hidden md:flex justify-center">
             <ul class="flex space-x-6">
                 {% for page in data.header_pages %}
                     <li class="relative group">
@@ -34,7 +34,7 @@
             </ul>
         </nav>
 
-        <div class="md:hidden">
+        <div class="md:hidden flex items-center ml-auto">
             <button id="mobile-menu-button" class="text-white focus:outline-none">
                 <svg class="close w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -52,7 +52,7 @@
                             {{ page.page_name }}
                         </a>
                         {% if page.sub_menu %}
-                            <button class="toggle-submenu focus:outline-none text-white">
+                            <button class="toggle-submenu">
                                 <svg class="shigjeta-mobile w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
