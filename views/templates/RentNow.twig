@@ -103,26 +103,5 @@
 const carLatitude = {{ latitude|default(0) }};
 const carLongitude = {{ longitude|default(0) }};
 
-if (carLatitude !== 0 && carLongitude !== 0) {
-const map = L.map('map').setView([
-carLatitude, carLongitude
-], 13);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; OpenStreetMap contributors'}).addTo(map);
-
-const carMarker = L.marker([carLatitude, carLongitude]).addTo(map).bindPopup(`<b>Car Location</b><br>{{ car.title }}`).openPopup();
-
-} else {
-console.error('Car Latitude and Longitude are missing.');
-}
-
-function viewLargerMap() {
-if (carLatitude !== 0 && carLongitude !== 0) {
-const mapUrl = `https://www.openstreetmap.org/?mlat=${carLatitude}&mlon=${carLongitude}&zoom=12&marker=${carLatitude},${carLongitude}`;
-
-window.open(mapUrl, '_blank');
-} else {
-console.error('Car Latitude and Longitude are missing.');
-}
-}
+const cartitle = "{{car.title}}";
 </script>
