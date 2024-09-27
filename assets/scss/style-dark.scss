@@ -240,9 +240,9 @@ body.dark .contact-us img{
 
 }
 
-body.dark .main-content{
-    background-color: black;
-}
+// body.dark .main-content{
+//     background-color: black;
+// }
 
 body.dark .car-card {
     background-color: black;
@@ -440,6 +440,34 @@ body.dark #view-larger-map-btn {
     background-color: #222222;
     color: white;
 }
+
+body.dark .authors {
+    border: 1px solid white;
+}
+
+body.dark .authors:hover {
+    background-color: #2d2d2d;
+}
+
+body.dark #lightbox-prev svg{
+    background-color: black;
+}
+
+body.dark #lightbox-next svg{
+    background-color: black;
+}
+
+body.dark .lightbox-close{
+    background-color: black;
+    color: white;
+}
+
+body.dark .lightbox-close:hover{
+background-color: black;
+cursor: pointer;
+}
+
+
 
 body.dark #text1{
     color: #e2e8f0;
