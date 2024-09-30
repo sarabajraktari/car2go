@@ -32,14 +32,17 @@
                     </li>
                 {% endfor %}
             </ul>
-            <!-- Login/Logout button here, outside the loop -->
-            {% if data.is_logged_in %}
-                <!-- Show logout button if the user is logged in -->
-                <a href="{{ data.logout_url }}" class="text-white hover:text-gray-300 transition duration-200 ml-4">Logout</a>
-            {% else %}
-                <!-- Show login button if the user is not logged in -->
-                <a href="{{ data.login_url }}" class="text-white hover:text-gray-300 transition duration-200 ml-4">Login</a>
-            {% endif %}
+           <!-- Login/Logout button here, outside the loop -->
+<div class="absolute right-0 mr-16">
+    {% if data.is_logged_in %}
+        <!-- Show logout button if the user is logged in -->
+        <a href="{{ data.logout_url }}" class="text-white hover:text-gray-300 transition duration-200">Logout</a>
+    {% else %}
+        <!-- Show login button if the user is not logged in -->
+        <a href="{{ data.login_url }}" class="text-white hover:text-gray-300 transition duration-200">Login</a>
+    {% endif %}
+</div>
+
 
         </nav>
 
