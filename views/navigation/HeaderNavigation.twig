@@ -32,6 +32,18 @@
                     </li>
                 {% endfor %}
             </ul>
+           <!-- Login/Logout button here, outside the loop -->
+<div class="absolute right-0 mr-16">
+    {% if data.is_logged_in %}
+        <!-- Show logout button if the user is logged in -->
+        <a href="{{ data.logout_url }}" class="text-white hover:text-gray-300 transition duration-200">Logout</a>
+    {% else %}
+        <!-- Show login button if the user is not logged in -->
+        <a href="{{ data.login_url }}" class="text-white hover:text-gray-300 transition duration-200">Login</a>
+    {% endif %}
+</div>
+
+
         </nav>
 
         <div class="md:hidden flex items-center ml-auto">
@@ -74,5 +86,12 @@
                 </li>
             {% endfor %}
         </ul>
+        <!-- Login/Logout button in mobile menu -->
+        {% if data.is_logged_in %}
+            <a href="{{ data.logout_url }}" class="block py-4 text-white transition duration-200 w-full text-left" id="loginout">Logout</a>
+        {% else %}
+            <a href="{{ data.login_url }}" class="block py-4 text-white transition duration-200 w-full text-left" id="loginout">Login</a>
+        {% endif %}
+
     </div>
 </header>
