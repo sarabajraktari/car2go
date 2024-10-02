@@ -1,52 +1,29 @@
-.theme-toggle-button {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    outline: none;
+body.dark .theme-toggle-button {
+    position: fixed;
+    bottom: 20px; 
+    left: 20px;   
     border: none;
-    background-color: var(--toggle-bg-light, #e2e8f0); /* Customizable colors */
-    color: var(--toggle-icon-light, #1a202c);           /* Icon color light mode */
-    transition: background-color 0.3s, color 0.3s;
-  }
+    border-radius: 50%; 
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    cursor: pointer;
+    z-index: 1000;
+}
   
-  .theme-toggle-button:hover {
-    background-color: var(--toggle-bg-light-hover, #cbd5e1);
-  }
-  
-  .theme-toggle-button.dark {
-    background-color: var(--toggle-bg-dark, #2d3748);
-    color: var(--toggle-icon-dark, #fbd38d);
-  }
-  
-  .theme-toggle-button.dark:hover {
-    background-color: var(--toggle-bg-dark-hover, #4a5568);
-  }
-  
-  .theme-icon {
+body.dark .theme-icon {
     width: 24px;
     height: 24px;
-    transition: transform 0.3s ease;
-  }
+}
   
-  #icon-sun {
-    display: block;
-  }
-  
-  #icon-moon {
+body.dark #icon-sun {
     display: none;
-  }
+}
   
-  /* Show correct icons based on the theme */
-  .dark #icon-sun {
-    display: none;
-  }
-  
-  .dark #icon-moon {
+body.dark #icon-moon {
     display: block;
-  }
-  
+}
+
+
 
 body.dark .car-rental-banner {
     background-color: #000000; 
@@ -157,9 +134,9 @@ body.dark .module-cartypes {
     background-color: black;
 }
 
-body.dark .module-default {
-    background-color: black; 
-}
+// body.dark .module-default {
+//     background-color: black; 
+// }
 
 body.dark hr {
   display: none;
@@ -501,5 +478,9 @@ body.dark #mobile-menu-button .close{
 
 
 body.dark .toggle-submenu {
+    background-color: black;
+}
+
+body.dark .footer{
     background-color: black;
 }

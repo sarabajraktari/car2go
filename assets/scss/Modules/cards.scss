@@ -46,24 +46,24 @@
 }
 
 .load-all-cards {
-    @apply flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40;
+    @apply flex items-center justify-center px-3 py-4 text-white rounded-full text-base w-40;
 }
 
 .browse-all-cards{
-    @apply flex items-center justify-center px-3 py-4 bg-black text-white rounded-full text-base hover:bg-gray-800 w-40 mt-10;
+    @apply flex items-center justify-center px-3 py-4 text-white rounded-full text-base w-40 mt-10;
 }
 
 .see-more-button-container{
     @apply mt-4 mb-2 lg:mr-4;
 
     a{
-        @apply flex items-center justify-center font-semibold px-2 py-2 bg-black text-white rounded-full text-base hover:bg-gray-800 lg:w-40 w-full;
+        @apply flex items-center justify-center font-semibold px-2 py-2 text-white rounded-full text-base lg:w-40 w-full;
     }
 }
 
 .more-details-button{
     a{
-        @apply mt-4 flex items-center justify-center text-center text-base font-semibold text-black bg-gray-100 rounded-full hover:bg-gray-200 p-2 transition lg:w-40 w-full;
+        @apply mt-4 flex items-center justify-center text-center text-base font-semibold text-black bg-gray-100 rounded-full p-2 transition lg:w-40 w-full;
     }
 }
 
