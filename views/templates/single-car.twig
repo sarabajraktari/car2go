@@ -69,7 +69,7 @@
 
 <!-- Map Section -->
 <br><br>
-<div class="map w-full max-w-4xl mx-auto mt-8 p-4 z-10 relative">
+<div id="mapSection" class="w-full max-w-4xl mx-auto mt-8 p-4 z-10 relative">
     <h3 class="text-center text-black font-bold text-3xl md:text-4xl pb-4">Car Location</h3>
     <div id="carMap" class="w-full h-[300px] md:h-[500px] mt-4 rounded-lg shadow-lg"></div>
     <div id="directionLink" class="text-center mt-4 hidden">
@@ -81,7 +81,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     var carLat = {{ car.latitude|default(0) }};
     var carLng = {{ car.longitude|default(0) }};
-    
+    var mapSection = document.getElementById('mapSection');
+
     if (carLat && carLng) {
         var map = L.map('carMap').setView([carLat, carLng], 13);
 
@@ -102,25 +103,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
             map.fitBounds([e.latlng, [carLat, carLng]]);
 
-           
-            var directionUrl = `https://www.openstreetmap.org/directions?mlat=${e.latlng.lat}&mlon=${e.latlng.lng}#map=13/${e.latlng.lat}/${e.latlng.lng}/${carLat}/${carLng}`;
-
-            
-            var directionLink = document.getElementById('directionLink');
             var getDirectionsButton = document.getElementById('getDirections');
             getDirectionsButton.href = `https://www.openstreetmap.org/directions?from=${e.latlng.lat},${e.latlng.lng}&to=${carLat},${carLng}&mlat=${e.latlng.lat}&mlon=${e.latlng.lng}`;
+
+            var directionLink = document.getElementById('directionLink');
             directionLink.classList.remove('hidden');
         }
 
         map.on('locationfound', onLocationFound);
-
-        function onLocationError(e) {
-            alert('Could not find your location. Please enable location services.');
-        }
-
-        map.on('locationerror', onLocationError);
     } else {
-        alert('Location data is missing.');
+        mapSection.style.display = 'none';  
     }
 });
 </script>
