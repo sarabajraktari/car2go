@@ -9,3 +9,4 @@ import './modules/SeacrchBar.js';
 import './theme-toggle.js';
 import './modules/search-suggestion.js';
 import './modules/comments-section.js';
+import './modules/comments-rating.js';

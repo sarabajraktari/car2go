@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- Comment Form -->
             <div id="comment-form-wrapper">
                 {{ comment_form() }}
+                <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY_HERE_V2"></div>
             </div>
         {% else %}
             <p class="text-red-500">Comments are closed for this post.</p>

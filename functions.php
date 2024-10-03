@@ -46,6 +46,40 @@ function enqueue_splide_assets() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_splide_assets');
 
+function enqueue_comment_scripts() {
+    // Enqueue the comment rating JavaScript file
+    wp_enqueue_script('comments-rating', get_template_directory_uri() . '/assets/js/modules/comments-rating.js', array('jquery'), null, true);
+
+    // Get the current user ID
+    $current_user_id = get_current_user_id();
+
+    // Get all comments and check which ones are liked or disliked by the current user
+    $comments_liked_disliked = [];
+
+    $comments = get_comments(); // This will fetch all comments. You can modify this query to optimize it if necessary.
+
+    foreach ($comments as $comment) {
+        $liked_by = get_comment_meta($comment->comment_ID, 'liked_by', true) ?: [];
+        $disliked_by = get_comment_meta($comment->comment_ID, 'disliked_by', true) ?: [];
+
+        $comments_liked_disliked[$comment->comment_ID] = [
+            'liked' => in_array($current_user_id, $liked_by),
+            'disliked' => in_array($current_user_id, $disliked_by)
+        ];
+    }
+
+    // Pass the AJAX URL, nonce, and liked/disliked status to JavaScript
+    wp_localize_script('comments-rating', 'ajax_comments_rating', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce'   => wp_create_nonce('ajax_comment_rating_nonce'),
+        'comments_status' => $comments_liked_disliked, // Pass the liked/disliked status to the frontend
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_comment_scripts');
+
+
+
+
 
 function enqueue_comment_ajax_script() {
     wp_enqueue_script('ajax-comment-script', get_template_directory_uri() . '/assets/js/modules/comments-section.js', array('jquery'), null, true);
@@ -78,6 +112,19 @@ function my_theme_setup() {
 }
 add_action('after_setup_theme', 'my_theme_setup');
 
+//************************** */
+//Comment Form SPAM Protection
+//************************** */
+
+function enqueue_recaptcha_script() {
+    echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
+}
+add_action('wp_head', 'enqueue_recaptcha_script');
+
+
+//************************** */
+//Comment Form SPAM Protection
+//************************** */
 
 
 //! Check if acf field plugin is active
@@ -509,10 +556,28 @@ add_action( 'save_post', 'create_rent_now_post_when_car_published' );
 
 function handle_submit_comment() {
     error_log('Handling comment submission via AJAX...');
-    
+
+    // Verify the nonce
     if (!wp_verify_nonce($_POST['nonce'], 'submit_comment_nonce')) {
         error_log('Invalid nonce.');
         wp_send_json_error(['message' => 'Invalid nonce']);
+    }
+
+    // reCAPTCHA validation
+    $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
+    $recaptcha_secret = 'YOUR_RECAPTCHA_SECRET_KEY_HERE_V2'; // Add your secret key here
+    $recaptcha_verify = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
+        'body' => array(
+            'secret' => $recaptcha_secret,
+            'response' => $recaptcha_response,
+            'remoteip' => $_SERVER['REMOTE_ADDR']
+        )
+    ));
+    $recaptcha_result = json_decode(wp_remote_retrieve_body($recaptcha_verify), true);
+
+    if (!$recaptcha_result['success']) {
+        wp_send_json_error(['message' => 'reCAPTCHA validation failed. Please try again.']);
+        return;
     }
 
     $current_user = wp_get_current_user();
@@ -523,37 +588,26 @@ function handle_submit_comment() {
         'comment_author' => $current_user->display_name,
         'comment_author_email' => $current_user->user_email,
         'user_id' => $current_user->ID,
-        'comment_parent' => isset($_POST['comment_parent']) ? absint($_POST['comment_parent']) : 0
+        'comment_parent' => isset($_POST['comment_parent']) ? absint($_POST['comment_parent']) : 0,
+        'comment_approved' => 0, 
     ];
 
     $comment_id = wp_insert_comment($comment_data);
 
     if ($comment_id) {
         $comment = get_comment($comment_id);
-        $comment->avatar = get_avatar($comment->comment_author_email, 64);
-        $comment->is_approved = ($comment->comment_approved == '1');
-        
-        ob_start();
-        ?>
-        <li class="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
-            <div class="flex space-x-4">
-                <div class="flex-shrink-0">
-                    <?= $comment->avatar; ?>
-                </div>
-                <div>
-                    <div class="font-bold"><?= esc_html($comment->comment_author); ?></div>
-                    <div class="text-sm text-gray-600"><?= esc_html($comment->comment_date); ?></div>
-                    <?php if (!$comment->is_approved) : ?>
-                        <div class="text-sm text-red-500"><em>Your comment is awaiting approval.</em></div>
-                    <?php endif; ?>
-                    <div class="mt-2 text-gray-800"><?= esc_html($comment->comment_content); ?></div>
-                </div>
-            </div>
-        </li>
-        <?php
-        $comment_html = ob_get_clean();
+        $avatar = get_avatar($comment, 64); 
+        $comment_author = $comment->comment_author;
+        $comment_date = get_comment_date('', $comment_id);
+        $comment_content = $comment->comment_content;
 
-        wp_send_json_success(['comment' => $comment_html]);
+        wp_send_json_success([
+            'message' => 'Your comment has been successfully submitted and is awaiting approval!',
+            'avatar' => $avatar,
+            'comment_author' => $comment_author,
+            'comment_date' => $comment_date,
+            'comment_content' => wpautop($comment_content),
+        ]);
     } else {
         error_log('Comment insertion failed.');
         wp_send_json_error(['message' => 'Comment submission failed']);
@@ -564,9 +618,109 @@ function handle_submit_comment() {
 add_action('wp_ajax_submit_comment', 'handle_submit_comment');
 add_action('wp_ajax_nopriv_submit_comment', 'handle_submit_comment');
 
+function handle_refresh_comments() {
+    check_ajax_referer('submit_comment_nonce', 'nonce'); 
+
+    $post_id = absint($_POST['post_id']); 
+    if (!$post_id) {
+        wp_send_json_error(['message' => 'Invalid post ID']);
+    }
+
+    $context = Timber::context();
+    $context['grouped_comments'] = Timber::get_comments(['post_id' => $post_id]);
+
+    $comments_html = Timber::compile('templates/comments-template.twig', $context);
+
+    wp_send_json_success(['comments_html' => $comments_html]);
+}
+add_action('wp_ajax_refresh_comments', 'handle_refresh_comments');
+add_action('wp_ajax_nopriv_refresh_comments', 'handle_refresh_comments');
+
+
 add_filter('nonce_life', function() {
-    return 24 * 60 * 60; // 24 hours
+    return 24 * 60 * 60; 
 });
+
+function handle_like_comment() {
+    check_ajax_referer('ajax_comment_rating_nonce', 'nonce'); 
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error(['message' => 'You must be logged in to like a comment']);
+    }
+
+    $comment_id = intval($_POST['comment_id']);
+    $user_id = get_current_user_id();
+
+    $likes_count = get_comment_meta($comment_id, 'likes_count', true) ?: 0;
+    $dislikes_count = get_comment_meta($comment_id, 'dislikes_count', true) ?: 0;
+    $liked_by = get_comment_meta($comment_id, 'liked_by', true) ?: []; 
+    $disliked_by = get_comment_meta($comment_id, 'disliked_by', true) ?: []; 
+
+
+    if (in_array($user_id, $liked_by)) {
+
+        $liked_by = array_diff($liked_by, [$user_id]);
+        $likes_count--;
+    } else {
+
+        $liked_by[] = $user_id;
+        $likes_count++;
+
+        if (in_array($user_id, $disliked_by)) {
+            $disliked_by = array_diff($disliked_by, [$user_id]);
+            $dislikes_count--;
+        }
+    }
+
+    update_comment_meta($comment_id, 'liked_by', $liked_by);
+    update_comment_meta($comment_id, 'disliked_by', $disliked_by);
+    update_comment_meta($comment_id, 'likes_count', $likes_count);
+    update_comment_meta($comment_id, 'dislikes_count', $dislikes_count);
+
+    wp_send_json_success(['likes_count' => $likes_count, 'dislikes_count' => $dislikes_count]);
+}
+add_action('wp_ajax_like_comment', 'handle_like_comment');
+add_action('wp_ajax_nopriv_like_comment', 'handle_like_comment');
+
+function handle_dislike_comment() {
+    check_ajax_referer('ajax_comment_rating_nonce', 'nonce'); 
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error(['message' => 'You must be logged in to dislike a comment']);
+    }
+
+    $comment_id = intval($_POST['comment_id']);
+    $user_id = get_current_user_id();
+
+    $likes_count = get_comment_meta($comment_id, 'likes_count', true) ?: 0;
+    $dislikes_count = get_comment_meta($comment_id, 'dislikes_count', true) ?: 0;
+    $liked_by = get_comment_meta($comment_id, 'liked_by', true) ?: []; 
+    $disliked_by = get_comment_meta($comment_id, 'disliked_by', true) ?: []; 
+
+    if (in_array($user_id, $disliked_by)) {
+
+        $disliked_by = array_diff($disliked_by, [$user_id]);
+        $dislikes_count--;
+    } else {
+
+        $disliked_by[] = $user_id;
+        $dislikes_count++;
+
+        if (in_array($user_id, $liked_by)) {
+            $liked_by = array_diff($liked_by, [$user_id]);
+            $likes_count--;
+        }
+    }
+
+    update_comment_meta($comment_id, 'liked_by', $liked_by);
+    update_comment_meta($comment_id, 'disliked_by', $disliked_by);
+    update_comment_meta($comment_id, 'likes_count', $likes_count);
+    update_comment_meta($comment_id, 'dislikes_count', $dislikes_count);
+
+    wp_send_json_success(['likes_count' => $likes_count, 'dislikes_count' => $dislikes_count]);
+}
+add_action('wp_ajax_dislike_comment', 'handle_dislike_comment');
+add_action('wp_ajax_nopriv_dislike_comment', 'handle_dislike_comment');
 
 function enable_comments_for_existing_cars_posts() {
 
@@ -588,6 +742,3 @@ function enable_comments_for_existing_cars_posts() {
 }
 
 add_action('admin_init', 'enable_comments_for_existing_cars_posts');
-
-
-

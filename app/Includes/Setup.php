@@ -59,27 +59,41 @@ class Setup {
         
 
             $commentsOpen = comments_open();
-            $comments = get_comments(['post_id' => get_the_ID(), 'status' => 'approve', 'order' => 'ASC']);
+            $comments = get_comments([
+                'post_id' => get_the_ID(),
+                'status' => 'all', // Fetch all comments, including unapproved
+                'order' => 'ASC'
+            ]);
+            
+            
+
         
 
             $grouped_comments = [];
         
             foreach ($comments as &$comment) {
-
+                // Get avatar for the comment author
                 $comment->avatar = get_avatar($comment->comment_author_email, 64);
+            
+                
                 $comment->reply_link = get_comment_reply_link([
                     'depth' => 1,
-                    'max_depth' => 5
+                    'max_depth' => 5,
+                    'reply_text' => 'Reply'
                 ], $comment->comment_ID);
+                
         
+                // Check if the comment is approved
                 $comment->is_approved = ($comment->comment_approved == '1');
-        
-
+            
+                // Fetch like and dislike counts from comment meta
+                $comment->like_count = get_comment_meta($comment->comment_ID, 'likes_count', true) ?: 0;
+                $comment->dislike_count = get_comment_meta($comment->comment_ID, 'dislikes_count', true) ?: 0;
+            
+                // Group comments by parent and replies
                 if ($comment->comment_parent == 0) {
-
                     $grouped_comments[$comment->comment_ID] = ['comment' => $comment, 'replies' => []];
                 } else {
-
                     if (isset($grouped_comments[$comment->comment_parent])) {
                         $grouped_comments[$comment->comment_parent]['replies'][] = $comment;
                     } else {
@@ -88,10 +102,14 @@ class Setup {
                     }
                 }
             }
+            
+            
         }
         
         $current_user = wp_get_current_user();
         $is_user_logged_in = is_user_logged_in();
+        $actual_user_role = $current_user->roles;
+        error_log('Current User Roles: ' . print_r($actual_user_role, true));
 
         $login_url = wp_login_url();
         $register_url = wp_registration_url();
@@ -142,6 +160,7 @@ class Setup {
             ],
             'login_url' => $login_url,
             'register_url' => $register_url,
+            'actual_user_role' =>$actual_user_role,
         ]));
     }
 
@@ -215,7 +234,6 @@ class Setup {
             ob_start();
             comment_form([
                 'class_form' => 'space-y-4 p-6 bg-gray-50 rounded-lg shadow-md',
-                'title_reply' => '',
                 'submit_button' => '<button class="%1$s-button-c">Post your Comment</button>',
                 'comment_field' => '<div class="mb-4"><label for="comment" class="block text-sm font-medium text-gray-700">Your Comment</label><textarea id="comment" name="comment" class="comment-text-area-c" rows="6" required></textarea></div>',
                 'fields' => [
@@ -229,7 +247,6 @@ class Setup {
             ]);
             return ob_get_clean();
         }, ['is_safe' => ['html']]));
-
 
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {
             $moduleClass = 'Internship\\Modules\\' . $module['type'];

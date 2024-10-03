@@ -1,70 +1,98 @@
- <h3 class="text-xl font-semibold mt-8">Comments</h3>
-    
-   <ul id="comment-list" class="space-y-4">
-        {% for parent_comment in grouped_comments %}
-            <!-- Parent Comment -->
-            {% if parent_comment.comment is not null %}
-            <li class="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
-                <div class="flex space-x-4">
-                    <div class="flex-shrink-0">
-                        {{ parent_comment.comment.avatar|raw }}
-                    </div>
-                    <div>
-                        <div class="font-bold">{{ parent_comment.comment.comment_author }}</div>
-                        {% if not parent_comment.comment.comment_approved %}
-                            <p>This comment is pending approval</p>
-                        {%endif%}
-                        <div class="text-sm text-gray-600">{{ parent_comment.comment.comment_date }}</div>
-                        
-                        {% if not parent_comment.comment.is_approved %}
-                            <div class="text-sm text-red-500"><em>Your comment is awaiting approval.</em></div>
-                        {% endif %}
-                        {#<div class="mt-2 text-gray-800"><b>Comment:</b></div>#}
-                        <div class="mt-2 text-gray-800">{{ parent_comment.comment.comment_content|raw }}</div>
-                        
-                        <div class="flex mt-2 text-blue-500">
-                            {{ parent_comment.comment.reply_link|raw }} <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="10px" height="10" viewBox="0 -3.5 24 24" id="meteor-icon-kit__regular-reply" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.41421 6L5.70711 8.2929C6.09763 8.6834 6.09763 9.3166 5.70711 9.7071C5.31658 10.0976 4.68342 10.0976 4.29289 9.7071L0.292893 5.70711C-0.0976311 5.31658 -0.0976311 4.68342 0.292893 4.29289L4.29289 0.29289C4.68342 -0.09763 5.31658 -0.09763 5.70711 0.29289C6.09763 0.68342 6.09763 1.31658 5.70711 1.70711L3.41421 4H14C19.5228 4 24 8.4772 24 14V16.0312C24 16.5835 23.5523 17.0312 23 17.0312C22.4477 17.0312 22 16.5835 22 16.0312V14C22 9.5817 18.4183 6 14 6H3.41421z" fill="#758CA3"/></svg>
+<h3 class="text-xl font-semibold mt-8">Comments</h3>
+
+<ul id="comment-list" class="space-y-4">
+    {% for parent_comment in grouped_comments %}
+        <!-- Parent Comment -->
+        {% if parent_comment.comment is not null %}
+            <!-- Check if the comment is approved or visible to certain users -->
+            {% if parent_comment.comment.is_approved or (is_user_logged_in and (user.ID == parent_comment.comment.user_id or 'administrator' in actual_user_role or 'editor' in actual_user_role or 'author' in actual_user_role)) %}
+                <!-- Display comment (approved or visible only to the author, admin, editor, or author role) -->
+                <li class="p-4 bg-white border border-gray-200 rounded-lg shadow-md">
+                    <div class="flex space-x-4">
+                        <div class="flex-shrink-0">
+                            {{ parent_comment.comment.avatar|raw }}
+                        </div>
+                        <div>
+                            <div class="font-bold">{{ parent_comment.comment.comment_author }}</div>
+                            <div class="text-sm text-gray-600">{{ parent_comment.comment.comment_date }}</div>
+                            {% if not parent_comment.comment.is_approved %}
+                                <div class="text-sm text-red-500"><em>This comment is awaiting approval.</em></div>
+                            {% endif %}
+                            <div class="mt-2 text-gray-800">{{ parent_comment.comment.comment_content|raw }}</div>
+
+                            <!-- Like, Dislike, and Reply buttons in the same line -->
+                            <div class="flex justify-between items-center mt-2">
+                                <!-- Like and Dislike buttons on the left -->
+                                <div class="flex space-x-4">
+                                    <!-- Like Button -->
+                                    <button class="like-btn" data-comment-id="{{ parent_comment.comment.comment_ID }}">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20.2694 16.265L20.9749 12.1852C21.1511 11.1662 20.3675 10.2342 19.3345 10.2342H14.1534C13.6399 10.2342 13.2489 9.77328 13.332 9.26598L13.9947 5.22142C14.1024 4.56435 14.0716 3.892 13.9044 3.24752C13.7659 2.71364 13.354 2.28495 12.8123 2.11093L12.6673 2.06435C12.3399 1.95918 11.9826 1.98365 11.6739 2.13239C11.3342 2.29611 11.0856 2.59473 10.9935 2.94989L10.5178 4.78374C10.3664 5.36723 10.146 5.93045 9.8617 6.46262C9.44634 7.24017 8.80416 7.86246 8.13663 8.43769L6.69789 9.67749C6.29223 10.0271 6.07919 10.5506 6.12535 11.0844L6.93752 20.4771C7.01201 21.3386 7.73231 22 8.59609 22H13.2447C16.726 22 19.697 19.5744 20.2694 16.265Z" />
+                                        </svg>
+                                        <span class="like-count">{{ parent_comment.comment.like_count }}</span>
+                                    </button>
+
+                                    <!-- Dislike Button -->
+                                    <button class="dislike-btn" data-comment-id="{{ parent_comment.comment.comment_ID }}">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20.2694 8.48505L20.9749 12.5648C21.1511 13.5838 20.3675 14.5158 19.3345 14.5158H14.1534C13.6399 14.5158 13.2489 14.9767 13.332 15.484L13.9947 19.5286C14.1024 20.1857 14.0716 20.858 13.9044 21.5025C13.7659 22.0364 13.354 22.465 12.8123 22.6391L12.6673 22.6856C12.3399 22.7908 11.9826 22.7663 11.6739 22.6176C11.3342 22.4539 11.0856 22.1553 10.9935 21.8001L10.5178 19.9663C10.3664 19.3828 10.146 18.8195 9.8617 18.2874C9.44634 17.5098 8.80416 16.8875 8.13663 16.3123L6.69789 15.0725C6.29223 14.7229 6.07919 14.1994 6.12535 13.6656L6.93752 4.27293C7.01201 3.41139 7.73231 2.75 8.59609 2.75H13.2447C16.726 2.75 19.697 5.17561 20.2694 8.48505Z" />
+                                        </svg>
+                                        <span class="dislike-count">{{ parent_comment.comment.dislike_count }}</span>
+                                    </button>
+                                </div>
+
+                                <!-- Reply Button on the right (conditionally displayed) -->
+                                {% if parent_comment.comment.is_approved and ('administrator' in actual_user_role or 'editor' in actual_user_role or 'author' in actual_user_role) %}
+                                    <div class="flex pl-4 ">
+                                        {{ parent_comment.comment.reply_link|raw }}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Replies (if any) -->
-                {% if parent_comment.replies is not empty %}
-                    <div class="mt-4">
-                        <input type="checkbox" id="toggle-replies-{{ parent_comment.comment.comment_ID }}" class="toggle-replies hidden">
-                        <label for="toggle-replies-{{ parent_comment.comment.comment_ID }}" class="toggle-label text-blue-500 cursor-pointer">
-                        
-                        </label>
-                        </br>
-                        <ul class="replies-list max-h-0 opacity-0 invisible transition-all duration-500 ease-in-out pl-8 space-y-4">
-                            {% for reply in parent_comment.replies %}
-                                <li class="p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
-                                    <div class="flex space-x-4">
-                                        <div class="flex-shrink-0">
-                                            {{ reply.avatar|raw }}
-                                        </div>
-                                        <div>
-                                            <div class="font-bold">{{ reply.comment_author }}</div>
-                                            <div class="text-sm text-gray-600">{{ reply.comment_date }}</div>
-
-                                            {% if not reply.is_approved %}
-                                                <div class="text-sm text-red-500"><em>Your comment is awaiting approval.</em></div>
-                                            {% endif %}
-                                            <div class="mt-2 text-gray-800"><b>Replied:</b></div>
-                                            <div class="mt-2 text-gray-800">{{ reply.comment_content|raw }}</div>
-
+                </li>
+            {% endif %}
+            
+            <!-- Replies (if any) -->
+            {% if parent_comment.replies is not empty or parent_comment.replies.is_approved and is_user_logged_in %}
+                <div class="mt-4">
+                {% if (parent_comment.replies is not empty or parent_comment.replies.is_approved) and (is_user_logged_in and (user.ID == parent_comment.comment.user_id or 'administrator' in actual_user_role or 'editor' in actual_user_role or 'author' in actual_user_role)) %}
+                    <input type="checkbox" id="toggle-replies-{{ parent_comment.comment.comment_ID }}" class="toggle-replies hidden">
+                    <label for="toggle-replies-{{ parent_comment.comment.comment_ID }}" class="toggle-label text-blue-500 cursor-pointer">
+                    {% endif %}
+                    </label>
+                    <ul class="replies-list max-h-0 opacity-0 invisible transition-all duration-500 ease-in-out pl-8 space-y-4">
+                        {% if parent_comment.comment.is_approved or (is_user_logged_in and (user.ID == parent_comment.comment.user_id or 'administrator' in actual_user_role or 'editor' in actual_user_role or 'author' in actual_user_role)) %}
+                        {% for reply in parent_comment.replies %}
+                            {% if reply.is_approved or (is_user_logged_in and (user.ID == parent_comment.comment.user_id or 'administrator' in actual_user_role or 'editor' in actual_user_role or 'author' in actual_user_role)) %}
+                            <!-- Reply -->
+                            <li class="p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
+                                <div class="flex space-x-4">
+                                    <div class="flex-shrink-0">
+                                        {{ reply.avatar|raw }}
+                                    </div>
+                                    <div>
+                                        <div class="font-bold">{{ reply.comment_author }}</div>
+                                        <div class="text-sm text-gray-600">{{ reply.comment_date }}</div>
+                                        {% if not reply.is_approved %}
+                                            <div class="text-sm text-red-500"><em>Your reply is awaiting approval.</em></div>
+                                        {% endif %}
+                                        <div class="mt-2 text-gray-800">{{ reply.comment_content|raw }}</div>
+                                        <!-- Show reply link only if the comment is approved and the user is admin, editor, or author -->
+                                        {% if reply.is_approved and ('administrator' in actual_user_role or 'editor' in actual_user_role or 'author' in actual_user_role) %}
                                             <div class="mt-2 text-blue-500">
                                                 {{ parent_comment.comment.reply_link|raw }}
                                             </div>
-                                        </div>
+                                        {% endif %}
                                     </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
-            </li>
+                                </div>
+                            </li>
+                            {%endif%}
+                        {% endfor %}
+                        {%endif%}
+                    </ul>
+                </div>
             {% endif %}
-        {% endfor %}
-    </ul>
+        {% endif %}
+    {% endfor %}
+</ul>
