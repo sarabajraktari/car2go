@@ -28,6 +28,7 @@ class Register implements ModuleInterface {
             $password = sanitize_text_field($_POST['password']);
             $first_name = sanitize_text_field($_POST['first_name']);
             $last_name = sanitize_text_field($_POST['last_name']);
+            $subscribe_newsletter = isset($_POST['subscribe_newsletter']) ? 1 : 0; 
             
             // Automatically set the role to 'subscriber'
             $role = 'subscriber'; 
@@ -52,6 +53,9 @@ class Register implements ModuleInterface {
                 if (is_wp_error($user_id)) {
                     $error = $user_id->get_error_message();
                 } else {
+
+                    update_user_meta($user_id, 'subscribe_newsletter', $subscribe_newsletter);
+                    
                     // Log the user in after successful registration
                     $creds = [
                         'user_login'    => $username,

@@ -1,7 +1,89 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-require_once 'vendor/autoload.php';
+require 'vendor/autoload.php'; // Load Composer's autoloader
+
+// Function to send email using PHPMailer
+function send_email($to, $subject, $body) {
+    $mail = new PHPMailer(true); // Create a new PHPMailer instance
+
+    try {
+        // Server settings
+        $mail->isSMTP();                                            // Send using SMTP
+        $mail->Host       = 'email';                     // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                 // Enable SMTP authentication
+        $mail->Username   = 'email';                // SMTP username (your Gmail address)
+        $mail->Password   = 'password';                  // SMTP password (the app password you generated)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;      // Enable TLS encryption
+        $mail->Port       = //port;                                  // TCP port to connect to
+
+        // Recipients
+        $mail->setFrom('email', 'Car2Go');          // Set the sender's email and name
+        $mail->addAddress($to);                                   // Add a recipient
+
+        // Content
+        $mail->isHTML(true);                                     // Set email format to HTML
+        $mail->Subject = $subject;                               // Email subject
+        $mail->Body    = $body;                                  // Email body
+
+        // Send the email
+        $mail->send();
+        return true; // Return true on success
+    } catch (Exception $e) {
+        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}"); // Log the error
+        return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; // Return error message
+    }
+}
+
+// Function to notify subscribers
+function notify_subscribers_on_car_update($post_id, $post, $update) {
+    // Prevent infinite loops or accidental triggering
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // Only proceed if the post status is 'publish' (i.e., visible to the public)
+    if ($post->post_status != 'publish') {
+        return;
+    }
+
+    // Avoid running the code when the hook is triggered by a quick edit or bulk action
+    if (wp_is_post_revision($post_id)) {
+        return;
+    }
+
+    // Check if this is a new post or an update
+    $is_new_post = !$update;
+
+    // Set email content
+    if ($is_new_post) {
+        $car_name = $post->post_title;
+        $subject = 'New Car Added';
+        $message = "A new car, <strong>$car_name</strong>, has been added to our inventory! Check it out on our website.";
+    } else {
+        $subject = 'A Car Price Has Been Updated on Car2Go';
+        $message = 'A car’s price has been updated on Car2Go. Check out the new price details on our website!';
+    }
+
+    // Set the headers for HTML content
+    $headers = ['Content-Type: text/html; charset=UTF-8'];
+
+    // Retrieve users who have subscribed for updates
+    $subscribed_users = get_users([
+        'meta_key' => 'subscribe_newsletter',
+        'meta_value' => 1,
+    ]);
+
+    // Send email to each subscribed user
+    foreach ($subscribed_users as $user) {
+        send_email($user->user_email, $subject, $message); // Use PHPMailer to send the email
+    }
+}
+
+// Hook to notify subscribers when a new car is added
+add_action('wp_insert_post', 'notify_subscribers_on_car_update', 10, 3);
 
 
 
