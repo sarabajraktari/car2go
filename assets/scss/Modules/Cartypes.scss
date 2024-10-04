@@ -58,10 +58,7 @@
     }
 
     .see-more-button {
-        @apply inline-block rounded-full p-2.5 px-5 bg-black text-white text-center no-underline;
+        @apply inline-block rounded-full p-2.5 px-5 text-white text-center no-underline;
 
-        &:hover {
-            @apply bg-gray-800;
-        }
     }
 }
