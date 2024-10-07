@@ -27,7 +27,7 @@
 }
 .like-btn, .dislike-btn {
     background: none;
-    border: none;
+    border: round($number: 5);
     cursor: pointer;
     padding: 0;
     display: flex;
@@ -70,18 +70,12 @@
     margin-left: 4px;
 }
 
-.flex.space-x-4.mt-2 {
-    justify-content: space-between;
-}
-
-.comment-reply-link {
-    @apply text-gray-500;
-}
-
-.comment-reply-link:hover {
-    @apply text-gray-600; 
-}
-
-.comment-reply-link:active {
-    @apply text-gray-700; 
+@media (max-width: 768px) {
+    .recaptcha-container {
+      flex-direction: column;
+    }
+  }
+  
+.rc-anchor-pt{
+    left:17px;
 }

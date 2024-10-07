@@ -484,3 +484,135 @@ body.dark .toggle-submenu {
 body.dark .footer{
     background-color: black;
 }
+
+
+
+
+
+body.dark .car-title {
+    color: white;
+}
+
+body.dark .car-description {
+    color: #d1d5db; /* Tailwind's text-gray-300 */
+}
+
+body.dark .car-specification-text {
+    color: white;
+}
+
+body.dark .car-specifications .specification-content h3 {
+    color: white;
+}
+
+body.dark .car-specifications .specification-description {
+    color: #d1d5db; /* Tailwind's text-gray-300 */
+}
+
+body.dark .comments-section {
+    background-color: #1f2937; /* Tailwind's bg-gray-800 */
+}
+
+body.dark .comments-section h2 {
+    color: white;
+}
+
+body.dark .comment-list .parent-comment {
+    background-color: #1f2937; /* Tailwind's bg-gray-800 */
+    border-color: #374151; /* Tailwind's border-gray-600 */
+}
+
+body.dark .comment-list .comment-author {
+    color: white;
+}
+
+body.dark .comment-list .comment-content {
+    color: #d1d5db; /* Tailwind's text-gray-300 */
+}
+
+body.dark .comment-list .comment-date {
+    color: #9ca3af; /* Tailwind's text-gray-400 */
+}
+
+body.dark .replies-list {
+    background-color: #1f2937; /* Tailwind's bg-gray-800 */
+    border-color: #374151; /* Tailwind's border-gray-600 */
+}
+
+body.dark .reply-author,
+body.dark .reply-content {
+    color: #d1d5db; /* Tailwind's text-gray-300 */
+}
+
+
+/////////////COMMENTS DARK THEME///////////////////
+
+
+body.dark .comments-section {
+    background-color: #1f2937; 
+}
+
+body.dark .comment-text-h{
+    color: white;
+}
+
+body.dark .comment-list .parent-comment {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+body.dark .comment-list .comment-author {
+    color: white;
+}
+
+body.dark .comment-list .comment-content {
+    color: #d1d5db; 
+}
+
+body.dark .comment-list .comment-date {
+    color: #9ca3af;
+}
+
+body.dark .replies-list {
+    background-color: black; 
+    
+}
+
+body.dark .comment-reply-title{
+    color: white;
+}
+
+body.dark .logged-in-as{
+    color: white;
+}
+
+body.dark .reply-author,
+body.dark .reply-content {
+    color: #d1d5db;
+}
+
+body.dark .comment-reply-link {
+    @apply text-gray-50;
+}
+
+body.dark .comment-reply-link:hover {
+    @apply text-gray-100; 
+}
+
+body.dark .comment-reply-link:active {
+    @apply text-gray-200; 
+}
+
+body.dark .red-message{
+    @apply bg-red-100 text-red-700;
+}
+
+body.dark .green-message{
+    @apply bg-green-100 text-green-700;
+}
+
+body.dark .comment-text-area-c{
+    color:black;
+}
+
+/////////////COMMENTS DARK THEME///////////////////

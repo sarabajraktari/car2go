@@ -2,18 +2,22 @@ jQuery(document).ready(function ($) {
     $('#commentform').off('submit');
 
     $('#commentform').on('submit', function (e) {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
 
         let form = $(this);
         let formData = form.serialize();
 
         let recaptchaResponse = grecaptcha.getResponse();
 
+        $('#comment-message')
+            .removeClass('red-message green-message')
+            .addClass('hidden');
+
         if (recaptchaResponse.length === 0) {
             $('#comment-message').html('Please solve the reCAPTCHA.')
                 .removeClass('hidden')
-                .addClass('bg-red-100 text-red-700');
-            return; 
+                .addClass('red-message');
+            return;
         }
 
         if ($('#submit').prop('disabled')) {
@@ -26,17 +30,16 @@ jQuery(document).ready(function ($) {
             data: formData + '&g-recaptcha-response=' + recaptchaResponse + '&action=submit_comment&nonce=' + ajax_comments.nonce,
             beforeSend: function () {
                 $('#submit').prop('disabled', true); 
-                $('#comment-message').removeClass('bg-red-100 bg-green-100 text-red-700 text-green-700').addClass('hidden');
+                $('#comment-message').addClass('hidden');
             },
             success: function (response) {
                 if (response.success) {
-
                     $('#comment-message').html(response.data.message)
-                        .removeClass('hidden')
-                        .addClass('bg-green-100 text-green-700');
+                        .removeClass('hidden red-message')
+                        .addClass('green-message');
 
                     $('#commentform')[0].reset();
-                    grecaptcha.reset(); 
+                    grecaptcha.reset();
 
                     reloadCommentsSection();
 
@@ -44,10 +47,9 @@ jQuery(document).ready(function ($) {
                         $('#comment-message').addClass('hidden');
                     }, 10000);
                 } else {
-
                     $('#comment-message').html(response.data.message)
-                        .removeClass('hidden')
-                        .addClass('bg-red-100 text-red-700');
+                        .removeClass('hidden green-message')
+                        .addClass('red-message');
 
                     setTimeout(function () {
                         $('#comment-message').addClass('hidden');
@@ -55,17 +57,15 @@ jQuery(document).ready(function ($) {
                 }
             },
             error: function (xhr, status, error) {
-
                 $('#comment-message').html('There was an error submitting your comment. Please try again.')
-                    .removeClass('hidden')
-                    .addClass('bg-red-100 text-red-700');
+                    .removeClass('hidden green-message')
+                    .addClass('red-message');
 
                 setTimeout(function () {
                     $('#comment-message').addClass('hidden');
                 }, 10000);
             },
             complete: function () {
-
                 setTimeout(function () {
                     $('#submit').prop('disabled', false);
                 }, 5000);
@@ -76,27 +76,22 @@ jQuery(document).ready(function ($) {
     function reloadCommentsSection() {
         let url = window.location.href; 
 
-
         $.ajax({
             url: url, 
             type: 'GET',
             success: function (response) {
-
                 let newComments = $(response).find('#comment-list').html();
-
                 $('#comment-list').html(newComments);
 
                 $(document).trigger('commentsRefreshed');
             },
             error: function (xhr, status, error) {
-                console.error('Error reloading comments:', xhr.status, xhr.statusText);
+                console.error('Error refreshing comments:', error);
             }
         });
     }
 
     function initializeCommentRatings() {
-
-        console.log("Checking initial like/dislike status");
         $.each(ajax_comments_rating.comments_status, function (commentID, status) {
             if (status.liked) {
                 $('.like-btn[data-comment-id="' + commentID + '"]').addClass('active');
@@ -105,7 +100,6 @@ jQuery(document).ready(function ($) {
                 $('.dislike-btn[data-comment-id="' + commentID + '"]').addClass('active');
             }
         });
-
 
         $('.like-btn').off('click');
         $('.dislike-btn').off('click');
@@ -127,7 +121,6 @@ jQuery(document).ready(function ($) {
                 },
                 success: function (response) {
                     if (response.success) {
-
                         likeCountElement.text(response.data.likes_count);
                         dislikeCountElement.text(response.data.dislikes_count);
 
@@ -140,7 +133,7 @@ jQuery(document).ready(function ($) {
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.log('Error in Like AJAX request:', xhr.status, xhr.statusText);
+                    console.error('Error liking comment:', error);
                 }
             });
         });
@@ -162,7 +155,6 @@ jQuery(document).ready(function ($) {
                 },
                 success: function (response) {
                     if (response.success) {
-
                         dislikeCountElement.text(response.data.dislikes_count);
                         likeCountElement.text(response.data.likes_count);
 
@@ -175,7 +167,7 @@ jQuery(document).ready(function ($) {
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.log('Error in Dislike AJAX request:', xhr.status, xhr.statusText);
+                    console.error('Error disliking comment:', error);
                 }
             });
         });
