@@ -126,7 +126,7 @@
                 <p class="text-red-500">Comments are closed for this post.</p>
             {% endif %}
         {% else %}
-            <p>You need to <a href="{{ login_url }}">login</a> or <a href="{{ register_url  }}">register</a> to comment.</p>
+            <p class="comment-text-h">You need to <a href="{{ login_url }}"class="must-log-in-c">login</a> or <a href="{{ register_url  }}" class="must-log-in-c">register</a> to comment.</p>
         {% endif %}
         <div id="comment-message" class="hidden p-4 rounded-lg mb-4 mt-2"></div>
 

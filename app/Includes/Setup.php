@@ -223,14 +223,13 @@ class Setup {
             comment_form([
                 'class_form' => 'p-6 rounded-lg shadow-md border rounded-lg',
                 'submit_button' => '<button class="%1$s-button-c">Post your Comment</button>',
-                'submit_field' => '<div class="form-submit-wrapper flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">%1$s<div class="g-recaptcha mt-4 md:mt-0 mx-auto md:mx-0" data-sitekey="6LeB-lYqAAAAAGlv_cbcO_yZJsR84yhv2mk65DSU"></div>%2$s</div>',
+                'submit_field' => '<div class="form-submit-wrapper flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">%1$s<div class="g-recaptcha mt-4 md:mt-0 mx-auto md:mx-0" data-sitekey="YOUR_RECAPTCHA_SITE_KEY_HERE_V2"></div>%2$s</div>',
                 'comment_field' => '<div class="comment-text-h mb-4"><label for="comment" class="block text-sm font-medium">Your Comment:</label><textarea id="comment" name="comment" class="comment-text-area-c" rows="6" required></textarea></div>',
                 'fields' => [
                     'author' => '<div class="mb-4"><label for="author" class="block text-sm font-medium text-gray-700">Name</label><input type="text" id="author" name="author" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
                     'email' => '<div class="mb-4"><label for="email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
                 ],
-                'must_log_in' => '<p class="must-log-in mb-4 text-sm text-red-500">You must be <a href="' . esc_url(wp_login_url()) . '" class="text-indigo-600 hover:text-indigo-700">logged in</a> to post a comment.</p>',
-                'logged_in_as' => '<p class="logged-in-as mb-4 text-sm text-gray-700">You are logged in as <a href="' . esc_url(admin_url('profile.php')) . '" class="text-indigo-600 hover:text-indigo-700">' . wp_get_current_user()->display_name . '</a>. <a href="' . esc_url(wp_logout_url()) . '" class="text-red-500 hover:text-red-600">Log out?</a></p>',
+                'logged_in_as' => '<p class="logged-in-as mb-4 text-sm">You are logged in as <a href="' . esc_url(admin_url('profile.php')) . '" class="comment-text-b">' . wp_get_current_user()->display_name . '</a>. <a href="' . esc_url(wp_logout_url()) . '" class="comment-text-r">Log out?</a></p>',
                 'comment_notes_before' => '<p class="comment-notes-before text-sm text-gray-500">Required fields are marked <span class="text-red-500">*</span></p>',
             ]);
             return ob_get_clean();
