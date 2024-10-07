@@ -6,27 +6,28 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php'; // Load Composer's autoloader
 
 // Function to send email using PHPMailer
-function send_email($to, $subject, $body) {
+function send_email($to, $subject, $body)
+{
     $mail = new PHPMailer(true); // Create a new PHPMailer instance
 
     try {
         // Server settings
         $mail->isSMTP();                                            // Send using SMTP
-        $mail->Host       = 'email';                     // Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                 // Enable SMTP authentication
-        $mail->Username   = 'email';                // SMTP username (your Gmail address)
-        $mail->Password   = 'password';                  // SMTP password (the app password you generated)
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;      // Enable TLS encryption
-        $mail->Port       = //port;                                  // TCP port to connect to
+        $mail->Host       = 'email';                       // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+        $mail->Username   = 'email';                   // SMTP username (your Gmail address)
+        $mail->Password   = 'password';                     // SMTP password (the app password you generated)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption
+        $mail->Port       = //port;                                    // TCP port to connect to
 
         // Recipients
-        $mail->setFrom('email', 'Car2Go');          // Set the sender's email and name
-        $mail->addAddress($to);                                   // Add a recipient
+        $mail->setFrom('email', 'Car2Go');             // Set the sender's email and name
+        $mail->addAddress($to);                                     // Add a recipient
 
         // Content
-        $mail->isHTML(true);                                     // Set email format to HTML
-        $mail->Subject = $subject;                               // Email subject
-        $mail->Body    = $body;                                  // Email body
+        $mail->isHTML(true);                                        // Set email format to HTML
+        $mail->Subject = $subject;                                  // Email subject
+        $mail->Body    = $body;                                     // Email body
 
         // Send the email
         $mail->send();
@@ -37,14 +38,15 @@ function send_email($to, $subject, $body) {
     }
 }
 
-// Function to notify subscribers
-function notify_subscribers_on_car_update($post_id, $post, $update) {
+// Function to notify subscribers on car price update
+function notify_subscribers_on_car_update($post_id, $post, $update)
+{
     // Prevent infinite loops or accidental triggering
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return;
     }
 
-    // Only proceed if the post status is 'publish' (i.e., visible to the public)
+    // Only proceed if the post status is 'publish'
     if ($post->post_status != 'publish') {
         return;
     }
@@ -54,35 +56,70 @@ function notify_subscribers_on_car_update($post_id, $post, $update) {
         return;
     }
 
-    // Check if this is a new post or an update
-    $is_new_post = !$update;
+    $car_name = $post->post_title;
+    $car_image = get_the_post_thumbnail_url($post_id); // Get car image
 
-    // Set email content
-    if ($is_new_post) {
-        $car_name = $post->post_title;
-        $subject = 'New Car Added';
-        $message = "A new car, <strong>$car_name</strong>, has been added to our inventory! Check it out on our website.";
+    // Define the meta key path for rent_details->price
+    $meta_key_price = 'car_details_rent_details_price';
+
+    if (!$update) {
+        // New post logic
+
+        // Set email content for new car
+        $subject = 'New Car Added: ' . $car_name;
+        $message = "
+            <h1>New Car Added!</h1>
+            <p>A new car, <strong>$car_name</strong>, has been added to our inventory!</p>
+           
+            <p>Check it out on our website!</p>
+        ";
+
+        // Retrieve users who have subscribed for updates
+        $subscribed_users = get_users([
+            'meta_key' => 'subscribe_newsletter',
+            'meta_value' => 1,
+        ]);
+
+        // Send email to each subscribed user
+        foreach ($subscribed_users as $user) {
+            send_email($user->user_email, $subject, $message); // Use PHPMailer to send the email
+        }
     } else {
-        $subject = 'A Car Price Has Been Updated on Car2Go';
-        $message = 'A car’s price has been updated on Car2Go. Check out the new price details on our website!';
-    }
+        // Update post logic
 
-    // Set the headers for HTML content
-    $headers = ['Content-Type: text/html; charset=UTF-8'];
+        // Get previous price (before the update)
+        $previous_price = get_post_meta($post_id, $meta_key_price, true);
+        $current_price = isset($_POST['car_details']['rent_details']['price']) ? $_POST['car_details']['rent_details']['price'] : '';
 
-    // Retrieve users who have subscribed for updates
-    $subscribed_users = get_users([
-        'meta_key' => 'subscribe_newsletter',
-        'meta_value' => 1,
-    ]);
+        // Check if the price has been updated
+        if ($previous_price && $previous_price != $current_price) {
+            // Update the meta field with the new price
+            update_post_meta($post_id, $meta_key_price, $current_price);
 
-    // Send email to each subscribed user
-    foreach ($subscribed_users as $user) {
-        send_email($user->user_email, $subject, $message); // Use PHPMailer to send the email
+            // Set email content for price update
+            $subject = 'Price Update for: ' . $car_name;
+            $message = "
+                <h1>Price Updated!</h1>
+                <p>The price for <strong>$car_name</strong> has been updated!</p>
+             
+                <p>Check out the new price details on our website!</p>
+            ";
+
+            // Retrieve users who have subscribed for updates
+            $subscribed_users = get_users([
+                'meta_key' => 'subscribe_newsletter',
+                'meta_value' => 1,
+            ]);
+
+            // Send email to each subscribed user
+            foreach ($subscribed_users as $user) {
+                send_email($user->user_email, $subject, $message); // Use PHPMailer to send the email
+            }
+        }
     }
 }
 
-// Hook to notify subscribers when a new car is added
+// Hook to notify subscribers when a new car is added or updated
 add_action('wp_insert_post', 'notify_subscribers_on_car_update', 10, 3);
 
 
