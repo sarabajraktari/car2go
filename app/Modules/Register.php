@@ -5,7 +5,7 @@ namespace Internship\Modules;
 use Internship\Includes\Setup;
 use Internship\Interfaces\ModuleInterface;
 
-class SignIn implements ModuleInterface {
+class Register implements ModuleInterface {
 
     public static function getData($key) {
         // Get flexible content
@@ -75,7 +75,6 @@ class SignIn implements ModuleInterface {
 
         // Return data to be used in the Twig template
         return [
-            'users' => $flexibleContent['users'],
             'background_image' => $background_image_url, // Correct background image URL
             'error' => $error,
             'success' => $success,
@@ -83,7 +82,7 @@ class SignIn implements ModuleInterface {
     }
 
     public static function render($key, $data) {
-        Setup::view('modules/SignIn.twig', [
+        Setup::view('modules/Register.twig', [
             'data' => $data,
         ]);
     }
