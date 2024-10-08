@@ -1,25 +1,29 @@
-.theme-toggle-button {
+body.light .theme-toggle-button {
     position: fixed;
     bottom: 20px; 
     left: 20px;   
-    background-color: #f1f1f1; 
     border: none;
     border-radius: 50%; 
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
     cursor: pointer;
     z-index: 1000;
-  }
+}
   
-  .theme-toggle-button:hover {
-    background-color: #ddd; 
-  }
-  
-  .theme-icon {
-    fill: #000; 
+body.light .theme-icon {
     width: 24px;
     height: 24px;
-  }
+}
+
+body.light #icon-sun {
+    display: block;
+}
+  
+body.light #icon-moon {
+    display: none;
+}
+
+
 
 
 body.light .car-rental-banner {
@@ -127,9 +131,9 @@ body.light .module-faq {
     background-color: #f8f8f8;
 }
 
-body.light .module-default {
-    background-color: white;
-}
+// body.light .module-default {
+//     background-color: white;
+// }
 
 body.light .module-cards hr{
     background-color: #ccc; 
