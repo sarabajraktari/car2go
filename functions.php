@@ -3,75 +3,63 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php'; // Load Composer's autoloader
+require 'vendor/autoload.php'; 
 
-// Function to send email using PHPMailer
 function send_email($to, $subject, $body)
 {
-    $mail = new PHPMailer(true); // Create a new PHPMailer instance
+    $mail = new PHPMailer(true); 
 
     try {
-        // Server settings
-        $mail->isSMTP();                                            // Send using SMTP
-        $mail->Host       = 'email';                       // Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-        $mail->Username   = 'email';                   // SMTP username (your Gmail address)
-        $mail->Password   = 'password';                     // SMTP password (the app password you generated)
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption
-        $mail->Port       = //port;                                    // TCP port to connect to
+    
+        $mail->isSMTP();                                            
+        $mail->Host       = 'email';                      
+        $mail->SMTPAuth   = true;                                   
+        $mail->Username   = 'email';                   
+        $mail->Password   = 'password';                     
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;        
+        $mail->Port       = //port;                                    
 
-        // Recipients
-        $mail->setFrom('email', 'Car2Go');             // Set the sender's email and name
-        $mail->addAddress($to);                                     // Add a recipient
+        $mail->setFrom('email', 'Car2Go');            
+        $mail->addAddress($to);                                     
 
-        // Content
-        $mail->isHTML(true);                                        // Set email format to HTML
-        $mail->Subject = $subject;                                  // Email subject
-        $mail->Body    = $body;                                     // Email body
+       
+        $mail->isHTML(true);                                      
+        $mail->Subject = $subject;                                  
+        $mail->Body    = $body;                                     
 
-        // Send the email
+       
         $mail->send();
-        return true; // Return true on success
+        return true; 
     } catch (Exception $e) {
-        error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}"); // Log the error
-        return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; // Return error message
+        return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; 
     }
 }
 
-// Function to notify subscribers on car price update
 function notify_subscribers_on_car_update($post_id, $post, $update)
 {
-    // Prevent infinite loops or accidental triggering
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return;
     }
 
-    // Only proceed if the post status is 'publish'
     if ($post->post_status != 'publish') {
         return;
     }
 
-    // Avoid running the code when the hook is triggered by a quick edit or bulk action
     if (wp_is_post_revision($post_id)) {
         return;
     }
 
     $car_name = $post->post_title;
-    $car_image = get_the_post_thumbnail_url($post_id, 'full'); // Get car image
-    error_log("Car Image URL: $car_image"); // This will log the URL in your error log
+    $car_image = get_the_post_thumbnail_url($post_id, 'full'); 
+    error_log("Car Image URL: $car_image"); 
 
-    // Ensure you're fetching the permalink for the 'cars' post type
     $car_link = get_post_type($post_id) === 'cars' ? get_permalink($post_id) : '';
 
-
-    // Path to the logo
-    $logo_url = 'https://i.imgur.com/khWMeKf.png'; // Adjust if necessary
+    $logo_url = 'https://i.imgur.com/khWMeKf.png'; 
 
 
     if (!$update) {
-        // New post logic
-
-        // Set email content for new car
+  
         $subject = 'New Car Added: ' . $car_name;
 
         $message = "
@@ -100,22 +88,16 @@ function notify_subscribers_on_car_update($post_id, $post, $update)
         </div>
     ";
 
-        // Retrieve users who have subscribed for updates
         $subscribed_users = get_users([
             'meta_key' => 'subscribe_newsletter',
             'meta_value' => 1,
         ]);
 
-        // Send email to each subscribed user
         foreach ($subscribed_users as $user) {
-            send_email($user->user_email, $subject, $message); // Use PHPMailer to send the email
+            send_email($user->user_email, $subject, $message); 
         }
     } else {
-        // Update post logic
-
-
-
-        // Set email content for price update
+        
         $subject = 'Price Update for: ' . $car_name;
         $message = "
             <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;'>
@@ -143,21 +125,17 @@ function notify_subscribers_on_car_update($post_id, $post, $update)
             </div>
             ";
 
-        // Retrieve users who have subscribed for updates
         $subscribed_users = get_users([
             'meta_key' => 'subscribe_newsletter',
             'meta_value' => 1,
         ]);
 
-        // Send email to each subscribed user
         foreach ($subscribed_users as $user) {
-            send_email($user->user_email, $subject, $message); // Use PHPMailer to send the email
+            send_email($user->user_email, $subject, $message); 
         }
     }
 }
 
-
-// Hook to notify subscribers when a new car is added or updated
 add_action('wp_insert_post', 'notify_subscribers_on_car_update', 10, 3);
 
 
