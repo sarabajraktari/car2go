@@ -1,117 +1,121 @@
 <div class="relative flex flex-col p-4 space-y-6 items-center w-full md:w-4/5 mx-auto">
     <!-- Title and Description -->
-    <div class="car-title text-center font-bold text-4xl ">{{ car.title }}</div>
-    <div class="car-description text-center text-base font-semibold max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[16px] lg:max-w-[60%]">{{ car.description|raw }}</div>
+    <div class="car-title text-center text-black font-bold text-4xl ">{{ car.title }}</div>
+    <div class="car-description text-center text-base font-semibold text-gray-600 max-w-[90%] mx-auto sm:max-w-[50%] sm:text-[16px] lg:max-w-[60%]">{{ car.description|raw }}</div>
 
     <div class="relative flex flex-col md:flex-row items-center md:p-8 md:space-x-[-5rem] space-y-8 md:space-y-0 w-full">
         <!-- Features Section -->
         <div class="relative z-10 w-full md:w-1/4 space-y-2">
             {% for feature in car.car_features %}
-                <div class="flex items-start p-4 border rounded-lg shadow-md space-x-4">
-                    <div class="p-4 rounded-xl flex-shrink-0">
+                <div class="flex items-start p-4 bg-white border border-gray-200 rounded-lg shadow-md space-x-4">
+                    <div class="bg-gray-100 p-4 rounded-xl flex-shrink-0">
                         <img src="{{ feature.icon.url }}" class="w-8 h-8">
                     </div>
-                    <div class="text-lg pt-4">{{ feature.features }}</div>
+                    <div class="text-gray-800 text-lg pt-4">{{ feature.features }}</div>
                 </div>
             {% endfor %}
         </div>
 
-        <!-- Car Image Section -->
-        <div class="relative w-full md:w-4/5 flex justify-center">
-            <div class="rounded-lg w-full flex justify-center">
-                <img src="{{ car.car_image }}" class="w-full h-auto object-contain md:w-4/5 rounded-xl animate-slideInFromRightMiddle">
-            </div>
-        </div>
-    </div>
+      <!-- Car Image Section -->
+      <div class="relative w-full md:w-4/5 flex justify-center">
+        <div class="md:bg-gray-100 bg-transparent rounded-lg md:p-5 md:shadow-md w-full flex justify-center">
+        <img src="{{ car.car_image }}" class="w-full h-auto object-contain md:w-4/5 rounded-xl animate-slideInFromRightMiddle">
+       </div>
+      </div>
+</div>
 
-    <!-- Car Specifications --> 
-    <div class="car-specification-text text-center font-bold text-4xl pb-4">Car Specifications</div>
-    {% if car.specifications is not empty %}
-        <div class="car-specifications">
-            {% for spec in car.specifications %}
-                <div class="specification">
-                    {% if spec.image %}
-                        <div class="specification-image">
-                            <img src="{{ spec.image.url }}" alt="{{ spec.title }}">
-                        </div>
-                    {% endif %}
-                    <div class="specification-content">
-                        <h3>{{ spec.title }}</h3>
-                        <div class="specification-description">
-                            {{ spec.description|raw }}
-                        </div>
-                    </div>
+
+      <!-- Car Specifications --> 
+<div class="car-specification-text text-center text-black font-bold text-4xl pb-4">Car Specifications</div>
+{% if car.specifications is not empty %}
+<div class="">
+    <div class="car-specifications">
+        {% for spec in car.specifications %}
+        <div class="specification">
+            {% if spec.image %}
+            <div class="specification-image">
+                <img src="{{ spec.image.url }}" alt="{{ spec.title }}">
+            </div>
+            {% endif %}
+            <div class="specification-content">
+                <h3>{{ spec.title }}</h3>
+                <div class="specification-description">
+                    {{ spec.description|raw }}
                 </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    <!-- Iframe Video Section -->
-    {% if car.iframe %}
-        <div class="w-full max-w-4xl mx-auto mt-8">
-            <div class="relative pb-[56.25%] overflow-hidden rounded-lg shadow-lg">
-                <iframe 
-                    src="{{ car.iframe.url }}?autoplay=1&mute=1&loop=1&controls=1" 
-                    class="absolute top-0 left-0 w-full h-full"
-                    title="YouTube video player"
-                    frameborder="0" 
-                    allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture" 
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen>
-                </iframe>
             </div>
         </div>
-    {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 
-    <!-- Map Section -->
-    <br><br>
-    <div id="mapSection" class="w-full max-w-4xl mx-auto mt-8 p-4 z-10 relative">
-        <h3 class="text-center font-bold text-3xl md:text-4xl pb-4">Car Location</h3>
-        <div id="carMap" class="w-full h-[300px] md:h-[500px] mt-4 rounded-lg shadow-lg"></div>
-        <div id="directionLink" class="text-center mt-4 hidden">
-            <a href="#" id="getDirections" target="_blank" class="font-semibold py-2 px-4 rounded">Get Directions</a>
+
+<!-- Iframe Video Section -->
+{% if car.iframe %}
+    <div class="w-full max-w-4xl mx-auto mt-8">
+        <div class="relative pb-[56.25%] overflow-hidden rounded-lg shadow-lg">
+            <iframe 
+                src="{{ car.iframe.url }}?autoplay=1&mute=1&loop=1&controls=1" 
+                class="absolute top-0 left-0 w-full h-full"
+                title="YouTube video player"
+                frameborder="0" 
+                allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture" 
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
         </div>
     </div>
+{% endif %}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var carLat = {{ car.latitude|default(0) }};
-            var carLng = {{ car.longitude|default(0) }};
-            var mapSection = document.getElementById('mapSection');
+<!-- Map Section -->
+<br><br>
+<div id="mapSection" class="w-full max-w-4xl mx-auto mt-8 p-4 z-10 relative">
+    <h3 class="text-center text-black font-bold text-3xl md:text-4xl pb-4">Car Location</h3>
+    <div id="carMap" class="w-full h-[300px] md:h-[500px] mt-4 rounded-lg shadow-lg"></div>
+    <div id="directionLink" class="text-center mt-4 hidden">
+        <a href="#" id="getDirections" target="_blank" class="bg-gray-200 text-black font-semibold py-2 px-4 rounded">Get Directions</a>
+    </div>
+</div>
 
-            if (carLat && carLng) {
-                var map = L.map('carMap').setView([carLat, carLng], 13);
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var carLat = {{ car.latitude|default(0) }};
+    var carLng = {{ car.longitude|default(0) }};
+    var mapSection = document.getElementById('mapSection');
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(map);
+    if (carLat && carLng) {
+        var map = L.map('carMap').setView([carLat, carLng], 13);
 
-                var carMarker = L.marker([carLat, carLng]).addTo(map)
-                    .bindPopup('<b>Car Location</b><br>{{ car.title }}')
-                    .openPopup();
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-                map.locate({ setView: true, maxZoom: 16 });
+        var carMarker = L.marker([carLat, carLng]).addTo(map)
+            .bindPopup('<b>Car Location</b><br>{{ car.title }}')
+            .openPopup();
 
-                function onLocationFound(e) {
-                    var userMarker = L.marker(e.latlng).addTo(map)
-                        .bindPopup('<b>Your Location</b>')
-                        .openPopup();
+        map.locate({ setView: true, maxZoom: 16 });
 
-                    map.fitBounds([e.latlng, [carLat, carLng]]);
+        function onLocationFound(e) {
+            var userMarker = L.marker(e.latlng).addTo(map)
+                .bindPopup('<b>Your Location</b>')
+                .openPopup();
 
-                    var getDirectionsButton = document.getElementById('getDirections');
-                    getDirectionsButton.href = `https://www.openstreetmap.org/directions?from=${e.latlng.lat},${e.latlng.lng}&to=${carLat},${carLng}&mlat=${e.latlng.lat}&mlon=${e.latlng.lng}`;
+            map.fitBounds([e.latlng, [carLat, carLng]]);
 
-                    var directionLink = document.getElementById('directionLink');
-                    directionLink.classList.remove('hidden');
-                }
+            var getDirectionsButton = document.getElementById('getDirections');
+            getDirectionsButton.href = `https://www.openstreetmap.org/directions?from=${e.latlng.lat},${e.latlng.lng}&to=${carLat},${carLng}&mlat=${e.latlng.lat}&mlon=${e.latlng.lng}`;
 
-                map.on('locationfound', onLocationFound);
-            } else {
-                mapSection.style.display = 'none';  
-            }
-        });
-    </script>
+            var directionLink = document.getElementById('directionLink');
+            directionLink.classList.remove('hidden');
+        }
+
+        map.on('locationfound', onLocationFound);
+    } else {
+        mapSection.style.display = 'none';  
+    }
+});
+</script>
 
     <!-- Comments Section -->
     <div id="comments-section" class="w-full max-w-4xl mx-auto my-8 p-6 rounded-lg shadow-lg border rounded-lg">
