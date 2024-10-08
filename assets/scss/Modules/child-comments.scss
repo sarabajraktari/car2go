@@ -1,0 +1,81 @@
+.toggle-replies:checked ~ .toggle-label::before {
+    content: "Hide replies";
+}
+
+.toggle-replies:not(:checked) ~ .toggle-label::before {
+    content: "Show replies";
+}
+
+.toggle-replies:checked ~ .replies-list {
+    max-height: 1000px; 
+    opacity: 1;
+    visibility: visible;
+    @apply mt-4;
+}
+
+.replies-list {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.comment-votes {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.like-btn, .dislike-btn {
+    background: none;
+    border: round($number: 5);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.like-btn svg, .dislike-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: none; 
+    stroke: gray; 
+    stroke-width: 1.5;
+    transition: fill 0.3s ease, stroke 0.3s ease; 
+}
+
+.like-btn span, .dislike-btn span {
+    margin-left: 8px;
+    color: gray; 
+}
+
+.like-btn:hover svg, .dislike-btn:hover svg {
+    fill: gray; 
+    stroke: gray; 
+}
+
+.like-btn.active svg, .dislike-btn.active svg {
+    fill: gray; 
+}
+
+
+.like-btn.active span, .dislike-btn.active span {
+    color: black; 
+}
+
+.like-btn, .dislike-btn {
+
+}
+
+.like-count, .dislike-count {
+    margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+    .recaptcha-container {
+      flex-direction: column;
+    }
+  }
+  
+.rc-anchor-pt{
+    left:17px;
+}
