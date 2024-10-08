@@ -1,4 +1,4 @@
-<header class="bg-black  w-full sticky top-0 z-50 border-b border-gray-400">
+<header class="w-full sticky top-0 z-50 border-b border-gray-400">
     <div class="container p-4 mx-auto max-w-screen-xl flex items-center justify-between">
         <div class="flex-shrink-0">
             <a href="/" class="flex items-center w-full h-full">
@@ -10,10 +10,10 @@
             <ul class="flex space-x-6">
                 {% for page in data.header_pages %}
                     <li class="relative group">
-                        <a href="{{ page.page_url.url }}" class="text-white transition duration-200 flex items-center">
+                        <a href="{{ page.page_url.url }}" class="transition duration-200 flex items-center font-semibold">
                             {{ page.page_name }}
                             {% if page.sub_menu %}
-                                <svg class="shigjeta w-4 h-4 ml-1 text-gray-400 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="shigjeta w-4 h-4 ml-1 transition duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             {% endif %}
@@ -22,7 +22,7 @@
                             <ul class="gallery-submenu absolute left-0 mb-3 hidden group-hover:block rounded-lg w-40 transition duration-200">
                                 {% for sub_page in page.sub_menu %}
                                     <li>
-                                        <a href="{{ sub_page.sub_page_url }}" class="block py-2 px-4 text-white transition duration-200 rounded-lg">
+                                        <a href="{{ sub_page.sub_page_url }}" class="block py-2 px-4 transition duration-200 rounded-lg">
                                             {{ sub_page.sub_page_name }}
                                         </a>
                                     </li>
@@ -36,10 +36,10 @@
 <div class="absolute right-0 mr-16">
     {% if data.is_logged_in %}
         <!-- Show logout button if the user is logged in -->
-        <a href="{{ data.logout_url }}" class="text-white hover:text-gray-300 transition duration-200">Logout</a>
+        <a href="{{ data.logout_url }}">Logout</a>
     {% else %}
         <!-- Show login button if the user is not logged in -->
-        <a href="{{ data.login_url }}" class="text-white hover:text-gray-300 transition duration-200">Login</a>
+        <a href="{{ data.login_url }}">Login</a>
     {% endif %}
 </div>
 
@@ -47,7 +47,7 @@
         </nav>
 
         <div class="md:hidden flex items-center ml-auto">
-            <button id="mobile-menu-button" class="text-white focus:outline-none">
+            <button id="mobile-menu-button" class="focus:outline-none">
                 <svg class="close w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
