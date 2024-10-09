@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
     <!-- Comments Section -->
-    <div id="comments-section" class="w-full max-w-4xl mx-auto my-8 p-6 rounded-lg shadow-lg border rounded-lg">
+    <div id="comments-section" class="w-full max-w-4xl mx-auto my-8 p-6 ">
         <h2 class="comment-text-h text-2xl font-semibold mb-6">Leave a Comment</h2>
         {% if is_user_logged_in %}
             {% if comments_open %}
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p class="text-red-500">Comments are closed for this post.</p>
             {% endif %}
         {% else %}
-            <p class="comment-text-h">You need to <a href="{{ login_url }}"class="must-log-in-c">login</a> or <a href="{{ register_url  }}" class="must-log-in-c">register</a> to comment.</p>
+            <p class="comment-text-h">You need to <a href="../../log-in"class="must-log-in-c">login</a> or <a href="../../register" class="must-log-in-c">register</a> to comment.</p>
         {% endif %}
         <div id="comment-message" class="hidden p-4 rounded-lg mb-4 mt-2"></div>
 

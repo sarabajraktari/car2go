@@ -221,7 +221,7 @@ class Setup {
         self::$twig->addFunction(new \Twig\TwigFunction('comment_form', function () {
             ob_start();
             comment_form([
-                'class_form' => 'p-6 rounded-lg shadow-md border rounded-lg',
+                'class_form' => 'p-6 ',
                 'submit_button' => '<button class="%1$s-button-c">Post your Comment</button>',
                 'submit_field' => '<div class="form-submit-wrapper flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">%1$s<div class="g-recaptcha mt-4 md:mt-0 mx-auto md:mx-0" data-sitekey="YOUR_RECAPTCHA_SITE_KEY_HERE_V2"></div>%2$s</div>',
                 'comment_field' => '<div class="comment-text-h mb-4"><label for="comment" class="block text-sm font-medium">Your Comment:</label><textarea id="comment" name="comment" class="comment-text-area-c" rows="6" required></textarea></div>',
