@@ -57,33 +57,37 @@ class Setup {
             $carSlug = get_post_field('post_name', get_post());
             $carData = Car::getSingleCarData($carSlug);
         
-
             $commentsOpen = comments_open();
-            $comments = get_comments(['post_id' => get_the_ID(), 'status' => 'approve', 'order' => 'ASC']);
-        
-
-            $grouped_comments = [];
+            $comments = get_comments([
+                'post_id' => get_the_ID(),
+                'status' => 'all',
+            ]);
         
             foreach ($comments as &$comment) {
-
                 $comment->avatar = get_avatar($comment->comment_author_email, 64);
                 $comment->reply_link = get_comment_reply_link([
                     'depth' => 1,
-                    'max_depth' => 5
+                    'max_depth' => 5,
+                    'reply_text' => 'Reply'
                 ], $comment->comment_ID);
-        
+                
                 $comment->is_approved = ($comment->comment_approved == '1');
+                $comment->like_count = get_comment_meta($comment->comment_ID, 'likes_count', true) ?: 0;
+                $comment->dislike_count = get_comment_meta($comment->comment_ID, 'dislikes_count', true) ?: 0;
+            }
         
-
+            usort($comments, function($a, $b) {
+                return $b->like_count - $a->like_count;
+            });
+        
+            $grouped_comments = [];
+            foreach ($comments as &$comment) {
                 if ($comment->comment_parent == 0) {
-
                     $grouped_comments[$comment->comment_ID] = ['comment' => $comment, 'replies' => []];
                 } else {
-
                     if (isset($grouped_comments[$comment->comment_parent])) {
                         $grouped_comments[$comment->comment_parent]['replies'][] = $comment;
                     } else {
-                        // In case parent is not found (edge case)
                         $grouped_comments[$comment->comment_parent] = ['comment' => null, 'replies' => [$comment]];
                     }
                 }
@@ -92,6 +96,8 @@ class Setup {
         
         $current_user = wp_get_current_user();
         $is_user_logged_in = is_user_logged_in();
+        $actual_user_role = $current_user->roles;
+        error_log('Current User Roles: ' . print_r($actual_user_role, true));
 
         $login_url = wp_login_url();
         $register_url = wp_registration_url();
@@ -142,6 +148,7 @@ class Setup {
             ],
             'login_url' => $login_url,
             'register_url' => $register_url,
+            'actual_user_role' =>$actual_user_role,
         ]));
     }
 
@@ -214,23 +221,20 @@ class Setup {
         self::$twig->addFunction(new \Twig\TwigFunction('comment_form', function () {
             ob_start();
             comment_form([
-                'class_form' => 'space-y-4 p-6 bg-gray-50 rounded-lg shadow-md',
-                'title_reply' => '',
+                'class_form' => 'p-6 rounded-lg shadow-md border rounded-lg',
                 'submit_button' => '<button class="%1$s-button-c">Post your Comment</button>',
-                'comment_field' => '<div class="mb-4"><label for="comment" class="block text-sm font-medium text-gray-700">Your Comment</label><textarea id="comment" name="comment" class="comment-text-area-c" rows="6" required></textarea></div>',
+                'submit_field' => '<div class="form-submit-wrapper flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">%1$s<div class="g-recaptcha mt-4 md:mt-0 mx-auto md:mx-0" data-sitekey="YOUR_RECAPTCHA_SITE_KEY_HERE_V2"></div>%2$s</div>',
+                'comment_field' => '<div class="comment-text-h mb-4"><label for="comment" class="block text-sm font-medium">Your Comment:</label><textarea id="comment" name="comment" class="comment-text-area-c" rows="6" required></textarea></div>',
                 'fields' => [
                     'author' => '<div class="mb-4"><label for="author" class="block text-sm font-medium text-gray-700">Name</label><input type="text" id="author" name="author" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
                     'email' => '<div class="mb-4"><label for="email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
                 ],
-                'must_log_in' => '<p class="must-log-in mb-4 text-sm text-red-500">You must be <a href="' . esc_url(wp_login_url()) . '" class="text-indigo-600 hover:text-indigo-700">logged in</a> to post a comment.</p>',
-                'logged_in_as' => '<p class="logged-in-as mb-4 text-sm text-gray-700">You are logged in as <a href="' . esc_url(admin_url('profile.php')) . '" class="text-indigo-600 hover:text-indigo-700">' . wp_get_current_user()->display_name . '</a>. <a href="' . esc_url(wp_logout_url()) . '" class="text-red-500 hover:text-red-600">Log out?</a></p>',
+                'logged_in_as' => '<p class="logged-in-as mb-4 text-sm">You are logged in as <a href="' . esc_url(admin_url('profile.php')) . '" class="comment-text-b">' . wp_get_current_user()->display_name . '</a>. <a href="' . esc_url(wp_logout_url()) . '" class="comment-text-r">Log out?</a></p>',
                 'comment_notes_before' => '<p class="comment-notes-before text-sm text-gray-500">Required fields are marked <span class="text-red-500">*</span></p>',
-            
             ]);
             return ob_get_clean();
-        }, ['is_safe' => ['html']]));
-
-
+        }, ['is_safe' => ['html']] ));
+        
         self::$twig->addFunction(new \Twig\TwigFunction('renderModule', function ($module, $key) {
             $moduleClass = 'Internship\\Modules\\' . $module['type'];
             $moduleClass::render($key, $module['data']);
