@@ -74,7 +74,6 @@ function notify_subscribers_on_car_update($post_id, $post, $update)
                 <p style='font-size: 18px; color: #333;'>Hello,</p>
                 <p style='font-size: 16px; color: #555;'>We are excited to inform you that a new car, <strong>$car_name</strong>, has been added to our inventory.</p>
                 <div style='text-align: center; margin: 20px 0;'>
-                    <img src='$car_image' alt='Image of $car_name' style='max-width: 100%; height: auto; border-radius: 10px;' />
                 </div>
                 <p style='font-size: 16px; color: #555;'>Explore this car and more on our website.</p>
                 <div style='text-align: center; margin: 20px 0;'>
@@ -111,7 +110,6 @@ function notify_subscribers_on_car_update($post_id, $post, $update)
                     <p style='font-size: 18px; color: #333;'>Hello,</p>
                     <p style='font-size: 16px; color: #555;'>The price for <strong>$car_name</strong> has been updated.</p>
                       <div style='text-align: center; margin: 20px 0;'>
-                    <img src='$car_image' alt='Image of $car_name' style='max-width: 100%; height: auto; border-radius: 10px;' />
                 </div>
                     <p style='font-size: 16px; color: #555;'>Check out the details on our website.</p>
                     <div style='text-align: center; margin: 20px 0;'>
