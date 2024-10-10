@@ -222,7 +222,7 @@ class Setup {
             ob_start();
             comment_form([
                 'submit_button' => '<button class="%1$s-button-c">Post your Comment</button>',
-                'submit_field' => '<div class="form-submit-wrapper flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">%1$s<div class="g-recaptcha mt-4 md:mt-0 mx-auto md:mx-0" data-sitekey="6LeB-lYqAAAAAGlv_cbcO_yZJsR84yhv2mk65DSU"></div>%2$s</div>',
+                'submit_field' => '<div class="form-submit-wrapper flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">%1$s<div class="g-recaptcha mt-4 md:mt-0 mx-auto md:mx-0" data-sitekey="YOUR_RECAPTCHA_SITE_KEY_HERE_V2"></div>%2$s</div>',
                 'comment_field' => '<div class="comment-text-h mb-4"><label for="comment" class="block text-sm font-medium">Your Comment:</label><textarea id="comment" name="comment" class="comment-text-area-c" rows="6" required></textarea></div>',
                 'fields' => [
                     'author' => '<div class="mb-4"><label for="author" class="block text-sm font-medium text-gray-700">Name</label><input type="text" id="author" name="author" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
