@@ -125,6 +125,7 @@
                                 "collapsed": "",
                                 "button_label": "Add Row",
                                 "rows_per_page": 20,
+                                "parent_repeater": "field_66bb59f98c121",
                                 "sub_fields": [
                                     {
                                         "key": "field_66bf20ec24a17",
@@ -165,10 +166,29 @@
                                         "placeholder": "",
                                         "parent_repeater": "field_66bf20c324a16"
                                     }
-                                ],
-                                "parent_repeater": "field_66bb59f98c121"
+                                ]
                             }
                         ]
+                    },
+                    {
+                        "key": "field_6708086b865cf",
+                        "label": "Language Switcher",
+                        "name": "language_switcher",
+                        "aria-label": "",
+                        "type": "wysiwyg",
+                        "instructions": "Please add language switcher short code,\r\ndefault: [language-switcher]",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "[language-switcher]",
+                        "tabs": "all",
+                        "toolbar": "full",
+                        "media_upload": 1,
+                        "delay": 0
                     }
                 ]
             }
@@ -192,3 +212,4 @@
         "description": "",
         "show_in_rest": 0
     }
+]

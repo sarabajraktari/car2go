@@ -6,6 +6,10 @@
             </a>
         </div>
 
+    <div class="absolute right-0 mr-16 sm:-mr-8 sm:w-80">
+        {{ data.language_switcher|raw }}
+    </div>
+
         <nav class="flex-grow hidden md:flex justify-center">
             <ul class="flex space-x-6">
                 {% for page in data.header_pages %}
@@ -32,6 +36,8 @@
                     </li>
                 {% endfor %}
             </ul>
+
+
            <!-- Login/Logout button here, outside the loop -->
 <div class="absolute right-0 mr-16">
     {% if data.is_logged_in %}
