@@ -11,12 +11,6 @@ class Register implements ModuleInterface {
         // Get flexible content
         $flexibleContent = get_field('modules_list')[$key];
 
-        // Initialize background image URL
-        $background_image_url = '';
-        if (isset($flexibleContent['backround_image'])) { // Note the typo: backround_image (from your data)
-            $background_image_url = $flexibleContent['backround_image']['url'];
-        }
-
         // Initialize error and success messages
         $error = null;
         $success = null;
@@ -79,7 +73,6 @@ class Register implements ModuleInterface {
 
         // Return data to be used in the Twig template
         return [
-            'background_image' => $background_image_url, // Correct background image URL
             'error' => $error,
             'success' => $success,
         ];
