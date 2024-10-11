@@ -241,7 +241,7 @@ class Setup {
                     'author' => '<div class="mb-4"><label for="author" class="block text-sm font-medium text-gray-700">Name</label><input type="text" id="author" name="author" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
                     'email' => '<div class="mb-4"><label for="email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>',
                 ],
-                'logged_in_as' => '<p class="logged-in-as mb-4 text-sm">You are logged in as <a href="' . esc_url(admin_url('profile.php')) . '" class="comment-text-b">' . wp_get_current_user()->display_name . '</a>. <a href="' . esc_url(wp_logout_url()) . '" class="comment-text-r">Log out?</a></p>',
+                'logged_in_as' => '<p class="logged-in-as mb-4 text-sm">You are logged in as <a href="' . esc_url(admin_url('profile.php')) . '" class="comment-text-b">' . wp_get_current_user()->display_name . '</a>. <a href="' . esc_url(wp_logout_url(home_url())) . '" class="comment-text-r">Log out?</a></p>',
                 'comment_notes_before' => '<p class="comment-notes-before text-sm text-gray-500">Required fields are marked <span class="text-red-500">*</span></p>',
             ]);
             return ob_get_clean();
