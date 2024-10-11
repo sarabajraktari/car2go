@@ -78,10 +78,37 @@
          </div>
       </div>
       {% endfor %}
-      
    </div>
    {% endif %}
    {% endif %}
+      <div class="pagination-wrapper item-center">
+    {% if enable_pagination %}
+        <div class="pagination flex justify-center items-center gap-2 py-4 mx-auto">
+            {% if current_page > 1 %}
+                <a href="{{ redirect_link }}?paged={{ current_page - 1 }}" 
+                   class="prev px-4 py-2 text-black bg-gray-600 hover:bg-gray-700 rounded-md transition duration-300">
+                    Previous
+                </a>
+            {% endif %}
+
+            {% for i in 1..max_num_pages %}
+                <a href="{{ redirect_link }}?paged={{ i }}" 
+                   class="page-number px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-red-500 hover:text-white transition 
+                   duration-300 {% if i == current_page %}bg-gray-800 text-white pointer-events-none{% endif %}">
+                    {{ i }}
+                </a>
+            {% endfor %}
+
+            {% if current_page < max_num_pages %}
+                <a href="{{ redirect_link }}?paged={{ current_page + 1 }}" 
+                   class="next px-4 py-2 text-black bg-gray-600 hover:bg-gray-700 rounded-md transition duration-300">
+                    Next
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
    <!-- Authors Section as Owl Carousel -->
    <!-- Authors Section as Owl Carousel with Additional Container -->
    {% if post_type == 'Authors' %}

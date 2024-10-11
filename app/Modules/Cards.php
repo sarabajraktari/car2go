@@ -6,8 +6,6 @@ use Internship\Includes\Setup;
 use Internship\Interfaces\ModuleInterface;
 use Internship\PostTypes\Car;
 use Internship\PostTypes\Author;
-use Internship\PostTypes\RentNow;
-
 
 class Cards implements ModuleInterface {
 
@@ -33,19 +31,19 @@ class Cards implements ModuleInterface {
         $title_and_description = $flexibleContent['title_and_description'];
         $search_form = $flexibleContent['search_form'];
         $posts = [];
+        $enable_pagination = $flexibleContent['enable_pagination'] ?? false;
 
+        // Handle search and filter queries
         $search_query = isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '';
         $selected_brand = isset($_GET['brand']) ? sanitize_text_field($_GET['brand']) : '';
         $selected_city = isset($_GET['city']) ? sanitize_text_field($_GET['city']) : '';
 
-        if ($post_type === 'Cars') {
-            $posts = Car::getFilteredCarsData($selected_brand, $selected_city, $search_query);
-        } else if ($post_type === 'Authors') {
-            $posts = self::getAuthorsData();
-        }
+        // Pagination logic
+        $paged = get_query_var('paged') ? get_query_var('paged') : 1; // Get current page
+        $posts_data = self::getPaginationData($post_type, $paged, $item_number, $search_query, $selected_brand, $selected_city);
 
         return [
-            'posts' => $posts,
+            'posts' => $posts_data['posts'], // Current posts for the page
             'enable_load_more' => $enable_load_more,
             'item_number' => $item_number,
             'redirect_link' => $redirect_link,
@@ -54,36 +52,49 @@ class Cards implements ModuleInterface {
             'search_query' => $search_query,
             'selected_brand' => $selected_brand,
             'selected_city' => $selected_city,
-            'post_type' => $post_type 
+            'post_type' => $post_type,
+            'enable_pagination' => $enable_pagination,
+            'max_num_pages' => $posts_data['max_num_pages'], // Total pages for pagination
+            'current_page' => $paged // Current page number
         ];
     }
 
-    public static function getAuthorsData() {
-        $query = new \WP_Query([
-            'post_type' => 'authors',
-            'posts_per_page' => -1,
-        ]);
+    public static function getPaginationData($post_type, $paged = 1, $posts_per_page = 10, $search_query = '', $selected_brand = '', $selected_city = '') {
+        $args = [
+            'post_type' => $post_type,
+            'posts_per_page' => $posts_per_page, // Use the passed posts_per_page value
+            'paged' => $paged, // Control pagination using the current page number
+        ];
 
-        $authors = [];
+        // Add search and filter conditions to the query if applicable
+        if ($search_query) {
+            $args['s'] = $search_query; // Search query
+        }
+        // You can add more filters based on selected_brand or selected_city if needed.
+
+        $query = new \WP_Query($args);
+
+        $posts = [];
         if ($query->have_posts()) {
             while ($query->have_posts()) {
                 $query->the_post();
-                $authorID = get_the_ID();
-                $authorDetails = get_field('authors', $authorID);
+                $postID = get_the_ID();
 
-                $authors[] = [
-                    'title' => get_the_title($authorID),
-                    'description' => get_post_field('post_content', get_the_ID()),
-                    'thumbnail' => get_the_post_thumbnail_url($authorID, 'full'),
-                    'author_location' => $authorDetails['author_location'],
-                    'link' => get_permalink($authorID),
-                    'post_type' => 'authors',
+                $posts[] = [
+                    'title' => get_the_title($postID),
+                    'description' => get_post_field('post_content', $postID),
+                    'thumbnail' => get_the_post_thumbnail_url($postID, 'full'),
+                    'link' => get_permalink($postID),
+                    'post_type' => $post_type,
                 ];
             }
             wp_reset_postdata();
         }
 
-        return $authors;
+        return [
+            'posts' => $posts,
+            'max_num_pages' => $query->max_num_pages, // Total number of pages
+        ];
     }
 
     public static function render($key, $data) {
@@ -98,6 +109,9 @@ class Cards implements ModuleInterface {
             'selected_brand' => $data['selected_brand'],
             'selected_city' => $data['selected_city'],
             'post_type' => $data['post_type'],
+            'enable_pagination' => $data['enable_pagination'],
+            'max_num_pages' => $data['max_num_pages'], // Add max_num_pages to the data
+            'current_page' => $data['current_page'], // Add current_page to the data
         ]);
     }
 }
