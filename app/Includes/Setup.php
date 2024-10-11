@@ -50,8 +50,8 @@ class Setup {
         
         $commentsOpen = false; 
         $comments = []; 
-        $grouped_comments = []; 
-    
+        $grouped_comments = [];
+        
         if (is_singular('cars')) { 
             $isSingleCarPage = true;
             $carSlug = get_post_field('post_name', get_post());
@@ -70,14 +70,26 @@ class Setup {
                     'max_depth' => 5,
                     'reply_text' => 'Reply'
                 ], $comment->comment_ID);
-                
+        
                 $comment->is_approved = ($comment->comment_approved == '1');
                 $comment->like_count = get_comment_meta($comment->comment_ID, 'likes_count', true) ?: 0;
                 $comment->dislike_count = get_comment_meta($comment->comment_ID, 'dislikes_count', true) ?: 0;
             }
         
             usort($comments, function($a, $b) {
-                return $b->like_count - $a->like_count;
+                $a_net_score = $a->like_count - $a->dislike_count;
+                $b_net_score = $b->like_count - $b->dislike_count;
+        
+                if ($b_net_score !== $a_net_score) {
+                    return $b_net_score - $a_net_score;
+                }
+        
+
+                if ($b->like_count !== $a->like_count) {
+                    return $b->like_count - $a->like_count;
+                }
+        
+                return $a->dislike_count - $b->dislike_count;
             });
         
             $grouped_comments = [];
@@ -93,6 +105,7 @@ class Setup {
                 }
             }
         }
+        
         
         $current_user = wp_get_current_user();
         $is_user_logged_in = is_user_logged_in();
