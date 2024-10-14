@@ -58,8 +58,10 @@ document.addEventListener('DOMContentLoaded', function () {
           });
       });
   }
-
-
+  // Function to show an alert if add-ons are clicked without picking dates
+  function preventInteraction(e) {
+    e.preventDefault(); // Prevent default checkbox/quantity button behavior
+}
   // Event listeners for add-ons checkboxes (Calculate total on change)
   addonCheckboxes.forEach(function (checkbox) {
       checkbox.addEventListener('change', calculateTotal);
