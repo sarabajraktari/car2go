@@ -923,3 +923,254 @@ function enable_comments_for_existing_cars_posts()
 }
 
 add_action('admin_init', 'enable_comments_for_existing_cars_posts');
+
+function create_rental_table() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'car_rentals'; 
+
+    // Check if the table already exists
+    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE $table_name (
+            id INT(11) NOT NULL AUTO_INCREMENT,
+            car_title VARCHAR(255) NOT NULL,
+            first_name VARCHAR(100) NOT NULL,
+            last_name VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            phone VARCHAR(20) NOT NULL,
+            dob DATE NOT NULL,
+            country VARCHAR(100) NOT NULL,
+            start_date DATE NOT NULL,
+            end_date DATE NOT NULL,
+            add_ons TEXT NOT NULL,
+            total_cost DECIMAL(10, 2) NOT NULL,
+            payment_method VARCHAR(20) NOT NULL,
+            card_number VARCHAR(20) NOT NULL, 
+            is_paid TINYINT(1) DEFAULT 0 NOT NULL, 
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id)
+        ) $charset_collate;";
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+    }
+}
+add_action('after_setup_theme', 'create_rental_table');
+
+
+add_action('rest_api_init', function() {
+    register_rest_route('internship/v1', '/save-booking', array(
+        'methods' => 'POST',
+        'callback' => 'save_booking',
+        'permission_callback' => '__return_true', // Permissions
+    ));
+});
+
+function save_booking(WP_REST_Request $request) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'car_rentals';
+
+    // Get the data from the request
+    $params = $request->get_json_params();
+
+    // Sanitize and extract the data
+    $car_title = sanitize_text_field($params['carTitle']);
+    $first_name = sanitize_text_field($params['firstName']);
+    $last_name = sanitize_text_field($params['lastName']);
+    $email = sanitize_email($params['email']);
+    $phone = sanitize_text_field($params['phone']);
+    $dob = sanitize_text_field($params['dob']['year'] . '-' . $params['dob']['month'] . '-' . $params['dob']['day']);
+    $country = sanitize_text_field($params['country']);
+    $start_date = sanitize_text_field($params['startDate']);
+    $end_date = sanitize_text_field($params['endDate']);
+    $add_ons = json_encode($params['addOns']);
+    $total_cost = floatval($params['totalCost']);
+    $payment_method = sanitize_text_field($params['paymentMethod']);
+    $card_number = sanitize_text_field($params['cardNumber']);
+
+    // Set the default value for is_paid based on the payment method
+    $is_paid = ($payment_method == 'card') ? 1 : 0;
+
+    // Insert the data into the database
+    $wpdb->insert(
+        $table_name,
+        array(
+            'car_title'      => $car_title,
+            'first_name'     => $first_name,
+            'last_name'      => $last_name,
+            'email'          => $email,
+            'phone'          => $phone,
+            'dob'            => $dob,
+            'country'        => $country,
+            'start_date'     => $start_date,
+            'end_date'       => $end_date,
+            'add_ons'        => $add_ons,
+            'total_cost'     => $total_cost,
+            'payment_method' => $payment_method,
+            'card_number'    => $card_number,
+            'is_paid'        => $is_paid  
+        )
+    );
+
+    // Check for errors
+    if ($wpdb->last_error) {
+        return new WP_REST_Response(array('status' => 'error', 'message' => $wpdb->last_error), 500);
+    }
+
+    return new WP_REST_Response(array('status' => 'success', 'message' => 'Booking saved successfully'), 200);
+}
+
+
+function car_rentals_menu() {
+    add_menu_page(
+        'Car Rentals',  
+        'Car Rentals',  
+        'manage_options',  
+        'car-rentals', 
+        'display_car_rentals_page',  
+        'dashicons-media-spreadsheet', 
+        30  
+    );
+}
+add_action('admin_menu', 'car_rentals_menu');
+
+function display_car_rentals_page() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'car_rentals';
+
+    // Fetch the rental records from the database
+    $results = $wpdb->get_results("SELECT * FROM $table_name");
+
+    // Display the records 
+    echo '<div class="wrap">';
+    echo '<h1 class="wp-heading-inline">Car Rentals</h1>';
+    echo '<table class="wp-list-table widefat fixed striped">';
+    echo '<thead>
+            <tr>
+                <th>ID</th>
+                <th>Car Title</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Date of Birth</th>
+                <th>Country</th>
+                <th>Rental Start</th>
+                <th>Rental End</th>
+                <th>Add-ons</th>
+                <th>Total Cost</th>
+                <th>Payment Method</th>
+                <th>Card Number</th>
+                <th>Payment Status</th>
+            </tr>
+          </thead>';
+    echo '<tbody>';
+
+    if (!empty($results)) {
+        foreach ($results as $row) {
+            $add_ons = json_decode($row->add_ons);
+
+            echo '<tr>';
+            echo '<td>' . esc_html($row->id) . '</td>';
+            echo '<td>' . esc_html($row->car_title) . '</td>';
+            echo '<td>' . esc_html($row->first_name) . ' ' . esc_html($row->last_name) . '</td>';
+            echo '<td>' . esc_html($row->email) . '</td>';
+            echo '<td>' . esc_html($row->phone) . '</td>';
+            echo '<td>' . esc_html($row->dob) . '</td>';
+            echo '<td>' . esc_html($row->country) . '</td>';
+            echo '<td>' . esc_html($row->start_date) . '</td>';
+            echo '<td>' . esc_html($row->end_date) . '</td>';
+            echo '<td>';
+            if (!empty($add_ons)) {
+                foreach ($add_ons as $add_on) {
+                    // Check if the add-on has a cost
+                    $cost = isset($add_on->cost) ? '$' . esc_html($add_on->cost) : ''; // Prevent undefined cost error
+                    echo esc_html($add_on->name) . ' ' . $cost . '<br>';
+                }
+            } else {
+                echo 'No add-ons';
+            }
+            echo '</td>';
+            echo '<td>$' . esc_html($row->total_cost) . '</td>';
+            echo '<td>' . esc_html($row->payment_method) . '</td>';
+
+            // Check if the payment method is cash or card
+            if ($row->payment_method === 'cash') {
+             echo '<td>N/A</td>';
+            } else {
+              $masked_card = (strlen($row->card_number) > 4) 
+              ? substr($row->card_number, 0, 4) . str_repeat('*', strlen($row->card_number) - 4)
+                  : $row->card_number;  // If card number is less than 4 digits, show it as is
+             echo '<td>' . esc_html($masked_card) . '</td>';
+                }
+            echo '<td>';
+            if ($row->payment_method == 'cash') {
+                // Checkbox for cash payments
+                $checked = $row->is_paid ? 'checked' : '';
+                echo '<input type="checkbox" class="payment-status" data-id="' . esc_html($row->id) . '" ' . $checked . '> Paid';
+            } else {
+                // Already paid with card
+                echo 'Paid';
+            }
+            echo '</td>';
+
+            echo '</tr>';
+        }
+    } else {
+        echo '<tr><td colspan="13">No car rentals found</td></tr>';
+    }
+
+    echo '</tbody>';
+    echo '</table>';
+    echo '</div>';
+    
+    // Add script to handle checkbox updates via AJAX
+    echo '<script>
+   jQuery(document).ready(function($) {
+    $(".payment-status").on("change", function() {
+        var rentalId = $(this).data("id");
+        var isChecked = $(this).is(":checked") ? 1 : 0;
+
+        $.post(ajaxurl, {
+            action: "update_payment_status",
+            rental_id: rentalId,
+            is_paid: isChecked
+        }, function(response) {
+            console.log(response); // Log the entire response
+            if (response.success && response.data.message) {
+                alert(response.data.message); // Properly access the message
+            } else {
+                alert("An error occurred while updating the payment status.");
+            }
+        });
+    });
+});
+    </script>';
+}
+
+// Handle AJAX request to update payment status
+add_action('wp_ajax_update_payment_status', 'update_payment_status');
+function update_payment_status() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'car_rentals';
+
+    $rental_id = intval($_POST['rental_id']);
+    $is_paid = intval($_POST['is_paid']);
+
+    // Update the 'is_paid' field
+    $updated = $wpdb->update(
+        $table_name,
+        array('is_paid' => $is_paid),
+        array('id' => $rental_id),
+        array('%d'),
+        array('%d')
+    );
+
+    // Check if the update was successful
+    if ($updated === false) {
+        wp_send_json_error(array('message' => 'Failed to update payment status.'));
+    } else {
+        wp_send_json_success(array('message' => 'Payment status updated.'));
+    }
+}
+

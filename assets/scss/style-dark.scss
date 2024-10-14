@@ -326,7 +326,7 @@ body.dark .car-specification-text{
 }
 
 body.dark #car-details-sidebar {
-    background-color: #222222;
+    background-color: #000000;
     color: #f1f1f1;
 }
 
@@ -335,7 +335,7 @@ body.dark #car-details-title {
 }
 
 body.dark #car-item {
-    background-color: #222222;
+    background-color: #000000;
     border: 1px solid #ffffff;
 }
 
@@ -377,7 +377,7 @@ body.dark #rental-service-description {
 }
 
 body.dark #booking-time-section {
-    background-color: #222222;
+    background-color: #000000;
     border: 1px solid #ffffff;
 }
 
@@ -386,7 +386,7 @@ body.dark #booking-time-title {
 }
 
 body.dark #fee-calculator-container {
-    background-color: #222222;
+    background-color: #000000;
 }
 
 body.dark button:not(.like-btn):not(.dislike-btn):not(.submit-button-c) {
@@ -673,4 +673,40 @@ body.dark .submit-button-c:active {
 
 .specification{
     color: black;
+}
+
+body.dark #TopSection h2 {
+    color:white;
+
+}
+body.dark #TopSection p {
+    color:white;
+
+}
+body.dark #add-ons {
+    background-color: black;
+}
+body.dark #add-ons label {
+  color: white;
+}
+body.dark #add-ons span {
+    color: white;
+}
+body.dark #add-ons h2 {
+    color: white;
+}
+body.dark #DriverDetails {
+    background-color: black;
+}
+body.dark #DriverDetails label{
+    color: white;
+}
+body.dark #DriverDetails p{
+    color: white;
+}
+body.dark #DriverDetails a{
+    color: white;
+}
+body.dark #DriverDetails h2{
+    color: white;
 }

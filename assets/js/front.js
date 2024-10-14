@@ -9,4 +9,7 @@ import './modules/SeacrchBar.js';
 import './theme-toggle.js';
 import './modules/search-suggestion.js';
 import './modules/comments-section.js';
-import './modules/comments-rating.js';
+import './modules/DriverDetails.js';
+import './modules/formValidation.js';
+import './modules/Bank.js';
+import './modules/save.js';
