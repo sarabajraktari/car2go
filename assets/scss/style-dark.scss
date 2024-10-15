@@ -326,7 +326,7 @@ body.dark .car-specification-text{
 }
 
 body.dark #car-details-sidebar {
-    background-color: #222222;
+    background-color: #000000;
     color: #f1f1f1;
 }
 
@@ -335,7 +335,7 @@ body.dark #car-details-title {
 }
 
 body.dark #car-item {
-    background-color: #222222;
+    background-color: #000000;
     border: 1px solid #ffffff;
 }
 
@@ -377,7 +377,7 @@ body.dark #rental-service-description {
 }
 
 body.dark #booking-time-section {
-    background-color: #222222;
+    background-color: #000000;
     border: 1px solid #ffffff;
 }
 
@@ -386,7 +386,7 @@ body.dark #booking-time-title {
 }
 
 body.dark #fee-calculator-container {
-    background-color: #222222;
+    background-color: #000000;
 }
 
 body.dark button:not(.like-btn):not(.dislike-btn):not(.submit-button-c) {
@@ -405,9 +405,12 @@ body.dark #fee-calculator label {
 
 body.dark #start-date, 
 body.dark #end-date {
-    background-color: #2d2d2d; 
+    background-color: #000000; 
     color: white;              
     border: 1px solid #4a4a4a; 
+}
+body.dark #fee-calculator-container svg{
+    color: white;
 }
 
 body.dark #map-section{
@@ -415,7 +418,7 @@ body.dark #map-section{
 }
 
 body.dark #view-larger-map-btn {
-    background-color: #222222;
+    background-color: #000000;
     color: white;
 }
 
@@ -746,4 +749,135 @@ body.dark select:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px rgb(62, 62, 62) inset !important; 
     box-shadow: 0 0 0px 1000px rgb(62, 62, 62) inset !important; 
     -webkit-text-fill-color: white !important; 
+}
+
+body.dark #TopSection h2 {
+    color:white;
+
+}
+body.dark #TopSection p {
+    color:white;
+
+}
+body.dark #add-ons {
+    background-color: black;
+}
+body.dark #add-ons label {
+  color: white;
+}
+body.dark #add-ons span {
+    color: white;
+}
+body.dark #add-ons h2 {
+    color: white;
+}
+body.dark #DriverDetails {
+    background-color: black;
+}
+body.dark #DriverDetails label{
+    color: white;
+}
+body.dark #DriverDetails p{
+    color: white;
+}
+body.dark #DriverDetails a{
+    color: white;
+}
+body.dark #DriverDetails h2{
+    color: white;
+}
+
+body.dark #termsModal {
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background with slight opacity */
+}
+
+body.dark #termsModal .bg-white {
+    background-color: #1a1a1a; /* Darker background for modal content */
+}
+
+body.dark #termsModal h3 {
+    color: white; /* Title color */
+}
+
+body.dark #termsModal .text-gray-700 {
+    color: #d0d0d0; /* Paragraph text color */
+}
+
+body.dark #termsModal .text-gray-800 {
+    color: #e0e0e0; /* Subheading color */
+}
+
+body.dark #termsModal .text-gray-300 {
+    color: #d0d0d0; /* General text color for consistency */
+}
+
+body.dark #termsModal button {
+    background-color: #c62828; /* Dark red button background */
+    color: white; /* Button text color */
+}
+
+body.dark #termsModal button:hover {
+    background-color: #a12a2a; /* Darker red on hover */
+}
+body.dark .flatpickr-calendar {
+    background-color: #000000; 
+    color: white !important; 
+    border-color: #333; 
+}
+body.dark .flatpickr-month {
+    background-color: #2d2d2d; 
+    color: white !important; 
+}
+body.dark .flatpickr-day {
+    color: white; 
+}
+body.dark .flatpickr-day:hover, 
+body.dark .flatpickr-day:focus {
+    background-color: #444; 
+    color: white; 
+}
+body.dark .flatpickr-prev-month, 
+body.dark .flatpickr-next-month {
+    color: white; 
+}
+body.dark .flatpickr-weekday {
+    color: white; 
+}
+body.dark #DriverDetails input[type="text"]{
+    background-color: rgb(62, 62, 62);
+}
+body.dark #DriverDetails input[type="email"]{
+    background-color: rgb(62, 62, 62);
+}
+body.dark #DriverDetails select{
+    background-color: rgb(62, 62, 62);
+}
+body.dark #drivers-license {
+    background-color: rgb(62, 62, 62);
+}
+
+body.dark #payment-modal {
+    background-color: rgba(0, 0, 0, 0.8); 
+}
+
+body.dark #payment-modal .bg-white {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid white !important;
+}
+
+
+body.dark #payment-modal h2 {
+    color: #ffffff;
+}
+
+body.dark #payment-modal p,
+body.dark #payment-modal label {
+    color: #ffffff; 
+}
+
+body.dark #payment-modal input {
+    background-color: rgb(62, 62, 62) ; 
+    color: #ffffff;
+    border-color: #ffffff; 
 }

@@ -45,3 +45,29 @@
     }
 }
 @import "./CarSpecifications.scss";
+
+#DriverDetails input.touched:invalid,
+#DriverDetails select.touched:invalid {
+    border-color: #dc2626; 
+    background-color: #fef2f2; 
+}
+
+#DriverDetails input.touched:valid,
+#DriverDetails select.touched:valid {
+    border-color: #16a34a; 
+}
+
+
+.invalid {
+    border-color: #dc2626; 
+    background-color: #fef2f2;
+}
+
+
+.valid {
+    border-color: #16a34a; 
+    background-color: #f0fdf4; 
+}
+.flatpickr-calendar {
+    z-index: 1 !important;
+}
