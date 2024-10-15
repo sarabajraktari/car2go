@@ -710,3 +710,36 @@ body.dark #DriverDetails a{
 body.dark #DriverDetails h2{
     color: white;
 }
+
+body.dark #termsModal {
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background with slight opacity */
+}
+
+body.dark #termsModal .bg-white {
+    background-color: #1a1a1a; /* Darker background for modal content */
+}
+
+body.dark #termsModal h3 {
+    color: white; /* Title color */
+}
+
+body.dark #termsModal .text-gray-700 {
+    color: #d0d0d0; /* Paragraph text color */
+}
+
+body.dark #termsModal .text-gray-800 {
+    color: #e0e0e0; /* Subheading color */
+}
+
+body.dark #termsModal .text-gray-300 {
+    color: #d0d0d0; /* General text color for consistency */
+}
+
+body.dark #termsModal button {
+    background-color: #c62828; /* Dark red button background */
+    color: white; /* Button text color */
+}
+
+body.dark #termsModal button:hover {
+    background-color: #a12a2a; /* Darker red on hover */
+}
