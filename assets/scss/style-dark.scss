@@ -462,6 +462,23 @@ body.dark #last_name,
     border-color: white;
 }
 
+body.dark #username,
+body.dark #password,
+body.dark #first_name,
+body.dark #last_name,
+body.dark #email{
+    background-color: #323232;
+}
+body.dark #reg-button{
+    background-color: #323232;
+    color: white;
+}
+
+ body.dark #form-button{
+     background-color:#323232 ;
+     color: white;
+ }
+
 body.dark #loginout{
     margin-left: 7px;
     font-weight: 600;
@@ -489,7 +506,6 @@ body.dark .footer{
 
 
 
-
 body.dark .car-title {
     color: white;
 }
@@ -509,6 +525,11 @@ body.dark .car-specifications .specification-content h3 {
 body.dark .car-specifications .specification-description {
     color: black; /* Tailwind's text-gray-300 */
 }
+
+body.dark #comment{
+    background-color: #323232;
+}
+
 
 body.dark .comments-section {
     background-color: #1f2937; 
@@ -574,7 +595,7 @@ body.dark .green-message{
 }
 
 body.dark .comment-text-area-c{
-    color:black;
+    color:white;
 }
 
 
@@ -673,4 +694,39 @@ body.dark .submit-button-c:active {
 
 .specification{
     color: black;
+}
+
+body.dark #your-name{
+    background-color: #323232;
+    color: white;
+}
+
+body.dark #your-email{
+    background-color: #323232;
+    color: white;
+}
+
+body.dark #your-phone{
+    background-color: #323232;
+    color: white;
+}
+
+body.dark #your-message{
+    background-color: #323232;
+    color: white;
+}
+
+body.dark #submit-button{
+    background-color: #323232;
+    color: white;
+}
+
+body.dark input:-webkit-autofill,
+body.dark select:-webkit-autofill {
+    background-color: rgb(62, 62, 62) !important; 
+    color: white !important; 
+    border-color: rgb(62, 62, 62) !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgb(62, 62, 62) inset !important; 
+    box-shadow: 0 0 0px 1000px rgb(62, 62, 62) inset !important; 
+    -webkit-text-fill-color: white !important; 
 }
