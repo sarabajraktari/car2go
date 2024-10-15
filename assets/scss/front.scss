@@ -68,5 +68,6 @@
     background-color: #f0fdf4; 
 }
 
-
-
+.flatpickr-calendar {
+    z-index: 1 !important;
+}
