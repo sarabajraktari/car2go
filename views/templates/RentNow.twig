@@ -150,17 +150,28 @@
 
 				<div id="fee-calculator-container">
 					<form id="fee-calculator" class="flex flex-col space-y-4">
-						<div class="flex flex-col md:flex-row md:space-x-4">
-							<div class="w-full">
-								<label for="start-date" class="block text-sm font-medium text-gray-700">Start Date</label>
-								<input type="date" id="start-date" name="start-date" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
-							</div>
-
-							<div class="w-full">
-								<label for="end-date" class="block text-sm font-medium text-gray-700">End Date</label>
-								<input type="date" id="end-date" name="end-date" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
-							</div>
-						</div>
+							<div class="flex flex-col md:flex-row md:space-x-4">
+                      <div class="relative w-full">
+                         <label for="start-date" class="block text-sm font-medium">Start Date</label>
+                         <input id="start-date" name="start-date" 
+                          class="border border-gray-300  rounded-lg p-2 pr-10 w-full focus:outline-none focus:ring-2"
+                           placeholder="dd/mm/yyyy" >
+                              <!-- Calendar icon aligned to the right -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-2 top-9 text-black pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3M16 7V3M3 11h18M5 19h14a2 2 0 002-2v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7a2 2 0 002 2z"/>
+                             </svg>
+                      </div>
+                     <div class="relative w-full">
+                         <label for="end-date" class="block text-sm font-medium ">End Date</label>
+                             <input id="end-date" name="end-date" 
+                                class="border border-gray-300  rounded-lg p-2 pr-10 w-full focus:outline-none focus:ring-2" 
+                                 placeholder="dd/mm/yyyy">
+                                 <!-- Calendar icon aligned to the right -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute right-2 top-9 text-black pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3M16 7V3M3 11h18M5 19h14a2 2 0 002-2v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7a2 2z"/>
+                                </svg>
+                         </div>
+                    </div>
 					</form>
 				</div>
 			</section>
@@ -283,7 +294,7 @@
 								</div>
 								<h4 class="text-red-500 hidden" id="dob-error">You must be at least 21 years old.</h4>
 							</div>
-							<div class="grid grid-cols-2 gap-4">
+							<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 								<div>
 									<label for="drivers-license" class="block text-gray-700">Upload Driver's License Image</label>
 									<input type="file" id="drivers-license" name="drivers-license" accept="image/*" class="mt-1 block w-full h-12 p-2 border border-gray-300 rounded-md" required>
@@ -309,7 +320,7 @@
 							<div
 								class="mt-6">
 								<!-- Book Now Button -->
-								<button id="book-now-btn" type="button" class="text-black bg-gray-100 py-3 px-6 rounded-lg shadow-lg hover:bg-gray-400 transition" onclick="openPaymentModal()">
+								<button id="book-now-btn" type="button" class="text-black bg-gray-100 py-3 px-6 rounded-lg shadow-lg hover:bg-gray-400 transition">
 									Book Now
 								</button>
 							</div>
@@ -428,8 +439,8 @@
 			</div>
 
 
-			<script>
-				const carPrice = {{ car.rent_details.price }};
+<script>
+const carPrice = {{ car.rent_details.price }};
 const carLatitude = {{ latitude|default(0) }};
 const carLongitude = {{ longitude|default(0) }};
 const cartitle = "{{ car.title }}";
@@ -452,4 +463,4 @@ document.getElementById('termsModal').classList.remove('hidden');
 function closeTermsModal() {
 document.getElementById('termsModal').classList.add('hidden');
 }
-			</script>
+</script>

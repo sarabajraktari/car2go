@@ -8,12 +8,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
     function applyValidationStyle(inputElement, isValid) {
+        const errorElement = document.getElementById(`${inputElement.id}-error`);
+        if (!inputElement) return; 
+        
         if (isValid) {
             inputElement.classList.remove('invalid');
             inputElement.classList.add('valid');
+            if (errorElement) { 
+                errorElement.classList.add('hidden');
+            }
         } else {
             inputElement.classList.remove('valid');
             inputElement.classList.add('invalid');
+            if (errorElement) {
+                errorElement.classList.remove('hidden');
+            }
         }
     }
 
@@ -81,13 +90,15 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     }
 
-    
+    // Automatically format card number into blocks of 4
     cardNumberInput.addEventListener('input', function () {
         let cardNumber = cardNumberInput.value.replace(/\s+/g, ''); 
         if (cardNumber.length > 0) {
             cardNumber = cardNumber.match(/.{1,4}/g).join(' '); 
         }
         cardNumberInput.value = cardNumber;
+
+        validateCardNumber(); 
     });
 
     expirationInput.addEventListener('input', validateExpirationDate);
@@ -111,8 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-   
-        if (!(await validateCardNumber())) {
+       
+        if (!validateCardNumber()) {
             document.getElementById('card-number-error').classList.remove('hidden');
             isValid = false;
         }

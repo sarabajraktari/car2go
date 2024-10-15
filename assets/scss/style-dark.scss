@@ -405,9 +405,12 @@ body.dark #fee-calculator label {
 
 body.dark #start-date, 
 body.dark #end-date {
-    background-color: #2d2d2d; 
+    background-color: #000000; 
     color: white;              
     border: 1px solid #4a4a4a; 
+}
+body.dark #fee-calculator-container svg{
+    color: white;
 }
 
 body.dark #map-section{
@@ -415,7 +418,7 @@ body.dark #map-section{
 }
 
 body.dark #view-larger-map-btn {
-    background-color: #222222;
+    background-color: #000000;
     color: white;
 }
 
@@ -743,3 +746,78 @@ body.dark #termsModal button {
 body.dark #termsModal button:hover {
     background-color: #a12a2a; /* Darker red on hover */
 }
+body.dark .flatpickr-calendar {
+    background-color: #000000; 
+    color: white !important; 
+    border-color: #333; 
+}
+body.dark .flatpickr-months {
+    background-color: #6c6c6c; 
+    color: white !important; 
+}
+body.dark .flatpickr-day {
+    color: white; 
+}
+body.dark .flatpickr-day:hover, 
+body.dark .flatpickr-day:focus {
+    background-color: #444; 
+    color: white; 
+}
+body.dark .flatpickr-prev-month, 
+body.dark .flatpickr-next-month {
+    color: white; 
+}
+body.dark .flatpickr-weekday {
+    color: white; 
+}
+body.dark #DriverDetails input[type="text"]{
+    background-color: rgb(62, 62, 62);
+}
+body.dark #DriverDetails input[type="email"]{
+    background-color: rgb(62, 62, 62);
+}
+body.dark #DriverDetails select{
+    background-color: rgb(62, 62, 62);
+}
+body.dark #drivers-license {
+    background-color: rgb(62, 62, 62);
+}
+body.dark input:-webkit-autofill,
+body.dark select:-webkit-autofill {
+    background-color: rgb(62, 62, 62) !important; 
+    color: white !important; 
+    border-color: rgb(62, 62, 62) !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgb(62, 62, 62) inset !important; 
+    box-shadow: 0 0 0px 1000px rgb(62, 62, 62) inset !important; 
+    -webkit-text-fill-color: white !important; 
+}
+
+
+body.dark #payment-modal {
+    background-color: rgba(0, 0, 0, 0.8); 
+}
+
+body.dark #payment-modal .bg-white {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid white !important;
+}
+
+
+body.dark #payment-modal h2 {
+    color: #ffffff;
+}
+
+body.dark #payment-modal p,
+body.dark #payment-modal label {
+    color: #ffffff; 
+}
+
+
+body.dark #payment-modal input {
+    background-color: rgb(62, 62, 62) ; 
+    color: #ffffff;
+    border-color: #ffffff; 
+}
+
+

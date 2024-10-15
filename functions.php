@@ -1174,3 +1174,50 @@ function update_payment_status() {
     }
 }
 
+add_action('rest_api_init', function() {
+    register_rest_route('internship/v1', '/unavailable-dates', array(
+        'methods' => 'GET',
+        'callback' => 'get_unavailable_dates',
+        'permission_callback' => '__return_true',
+    ));
+});
+// http://internship.test/wp-json/internship/v1/unavailable-dates/
+
+function get_unavailable_dates(WP_REST_Request $request) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'car_rentals';
+
+    // Fetch all rental records
+    $results = $wpdb->get_results("SELECT car_title, start_date, end_date FROM $table_name");
+
+    $unavailable_dates = array();
+
+    // Loop through each rental and add its date range to the unavailable dates array
+    foreach ($results as $rental) {
+        $car_title = $rental->car_title;
+        $start_date = new DateTime($rental->start_date);
+        $end_date = new DateTime($rental->end_date);
+        $end_date->modify('+1 day'); // Make the day after unavailable as well
+
+        // Create an array to store the dates for this rental period
+        $dates = array();
+
+        while ($start_date <= $end_date) {
+            $dates[] = $start_date->format('Y-m-d');
+            $start_date->modify('+1 day');
+        }
+
+        if (!isset($unavailable_dates[$car_title])) {
+            $unavailable_dates[$car_title] = array();
+        }
+
+        $unavailable_dates[$car_title] = array_merge($unavailable_dates[$car_title], $dates);
+    }
+
+    // Remove any duplicate dates for each car and re-index
+    foreach ($unavailable_dates as $car_title => $dates) {
+        $unavailable_dates[$car_title] = array_values(array_unique($dates));
+    }
+
+    return new WP_REST_Response(array('status' => 'success', 'unavailable_dates' => $unavailable_dates), 200);
+}

@@ -1,63 +1,85 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  const startDateElement = document.getElementById('start-date');
-  const endDateElement = document.getElementById('end-date');
-  const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
-  const quantityButtons = document.querySelectorAll('.quantity-button');
+    const startDateElement = document.getElementById('start-date');
+    const endDateElement = document.getElementById('end-date');
+    const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
+    const quantityButtons = document.querySelectorAll('.quantity-button');
+    let unavailableDates = [];
 
-  // Disable all add-ons and quantity buttons initially
-  disableAddOns(true);
+    // Fetch unavailable dates from the API
+    fetchUnavailableDates();
 
-  if (startDateElement && endDateElement) {
-      let today = new Date().toISOString().split('T')[0];
-      
-      startDateElement.setAttribute('min', today);
-      endDateElement.setAttribute('min', today);
+    // Disable all add-ons and quantity buttons initially
+    disableAddOns(true);
 
-    
-      startDateElement.addEventListener('change', validateDates);
-      endDateElement.addEventListener('change', validateDates);
-  }
+    // Initialize Flatpickr once the dates are fetched
+    function initializeDatePickers() {
+        flatpickr(startDateElement, {
+            minDate: 'today',
+            disable: unavailableDates.map(date => new Date(date)), // Disable unavailable dates
+            onChange: validateDates
+        });
 
-  // Function to validate dates and enable/disable add-ons accordingly
-  function validateDates() {
-      let startDate = startDateElement.value;
-      let endDate = endDateElement.value;
+        flatpickr(endDateElement, {
+            minDate: 'today',
+            disable: unavailableDates.map(date => new Date(date)), // Disable unavailable dates
+            onChange: validateDates
+        });
+    }
 
-      if (startDate && endDate) {
-          disableAddOns(false); // Enable add-ons if both dates are selected
-          calculateTotal(); 
-      } else {
-          disableAddOns(true); // Disable add-ons if dates are missing
-      }
-  }
+    // Fetch unavailable dates from the API
+    function fetchUnavailableDates() {
+        fetch('http://internship.test/wp-json/internship/v1/unavailable-dates')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const carTitle = `${cartitle}`; // Get the car title dynamically
+                    unavailableDates = data.unavailable_dates[carTitle] || []; // Extract dates for the specific car
+                    initializeDatePickers(); // Initialize Flatpickr after fetching dates
+                }
+            })
+            .catch(error => console.error('Error fetching unavailable dates:', error));
+    }
 
-  // Function to enable/disable add-ons
-  function disableAddOns(disable) {
-      addonCheckboxes.forEach(function (checkbox) {
-          checkbox.disabled = disable;
-          if (disable) {
-              // Add alert if user tries to select an add-on without picking dates
-              checkbox.addEventListener('click', preventInteraction);
-          } else {
-              // Remove the event listener once add-ons are enabled
-              checkbox.removeEventListener('click', preventInteraction);
-          }
-      });
+    // Function to validate dates and enable/disable add-ons accordingly
+    function validateDates(selectedDates, dateStr, instance) {
+        let startDate = startDateElement.value;
+        let endDate = endDateElement.value;
 
-      // Disable the quantity buttons and their containers (quantity spans)
-      document.querySelectorAll('[id$="-quantity"]').forEach(function(quantityElement) {
-          const parentContainer = quantityElement.closest('div');
-          parentContainer.querySelectorAll('button').forEach(function(button) {
-              button.disabled = disable;
-              if (disable) {
-                  button.addEventListener('click', preventInteraction);
-              } else {
-                  button.removeEventListener('click', preventInteraction);
-              }
-          });
-      });
-  }
+        if (startDate && endDate) {
+            disableAddOns(false); // Enable add-ons if both dates are selected
+            calculateTotal(); 
+        } else {
+            disableAddOns(true); // Disable add-ons if dates are missing
+        }
+    }
+
+    // Function to enable/disable add-ons
+    function disableAddOns(disable) {
+        addonCheckboxes.forEach(function (checkbox) {
+            checkbox.disabled = disable;
+            if (disable) {
+                // Add alert if user tries to select an add-on without picking dates
+                checkbox.addEventListener('click', preventInteraction);
+            } else {
+                // Remove the event listener once add-ons are enabled
+                checkbox.removeEventListener('click', preventInteraction);
+            }
+        });
+
+        // Disable the quantity buttons and their containers (quantity spans)
+        document.querySelectorAll('[id$="-quantity"]').forEach(function(quantityElement) {
+            const parentContainer = quantityElement.closest('div');
+            parentContainer.querySelectorAll('button').forEach(function(button) {
+                button.disabled = disable;
+                if (disable) {
+                    button.addEventListener('click', preventInteraction);
+                } else {
+                    button.removeEventListener('click', preventInteraction);
+                }
+            });
+        });
+    }
   // Function to show an alert if add-ons are clicked without picking dates
   function preventInteraction(e) {
     e.preventDefault(); // Prevent default checkbox/quantity button behavior
