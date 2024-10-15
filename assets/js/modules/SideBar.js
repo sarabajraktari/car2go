@@ -99,18 +99,25 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   });
 
-  if (typeof carLatitude !== 'undefined' && typeof carLongitude !== 'undefined' && carLatitude !== 0 && carLongitude !== 0) {
-    const map = L.map('map').setView([carLatitude, carLongitude], 13);
-    
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  const mapSection = document.getElementById('map-section');
+  const button = document.getElementById('view-larger-map-btn');
+
+  if (mapSection && button) {
+    if (typeof carLatitude !== 'undefined' && typeof carLongitude !== 'undefined' && carLatitude !== 0 && carLongitude !== 0) {
+      const map = L.map('map').setView([carLatitude, carLongitude], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-    
-    L.marker([carLatitude, carLongitude]).addTo(map)
+      }).addTo(map);
+
+      L.marker([carLatitude, carLongitude]).addTo(map)
         .bindPopup(`<b>Car Location</b><br>${cartitle}`)
         .openPopup();
-}
-
+    } else {
+      mapSection.style.display = 'none';  
+      button.style.display = 'none';     
+    }
+  }
 });
 
 function calculateTotal() {
