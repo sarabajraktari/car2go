@@ -1,103 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
+  const startDateElement = document.getElementById("start-date");
+  const endDateElement = document.getElementById("end-date");
 
-    const startDateElement = document.getElementById('start-date');
-    const endDateElement = document.getElementById('end-date');
-    const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
-    const quantityButtons = document.querySelectorAll('.quantity-button');
-    let unavailableDates = [];
+  if (startDateElement && endDateElement) {
+    let today = new Date().toISOString().split("T")[0];
 
-    // Fetch unavailable dates from the API
-    fetchUnavailableDates();
-
-    // Disable all add-ons and quantity buttons initially
-    disableAddOns(true);
-
-    // Initialize Flatpickr once the dates are fetched
-    function initializeDatePickers() {
-        flatpickr(startDateElement, {
-            minDate: 'today',
-            disable: unavailableDates.map(date => new Date(date)), // Disable unavailable dates
-            onChange: validateDates
-        });
-
-        flatpickr(endDateElement, {
-            minDate: 'today',
-            disable: unavailableDates.map(date => new Date(date)), // Disable unavailable dates
-            onChange: validateDates
-        });
-    }
-
-    // Fetch unavailable dates from the API
-    function fetchUnavailableDates() {
-        fetch('http://internship.test/wp-json/internship/v1/unavailable-dates')
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    const carTitle = `${cartitle}`; // Get the car title dynamically
-                    unavailableDates = data.unavailable_dates[carTitle] || []; // Extract dates for the specific car
-                    initializeDatePickers(); // Initialize Flatpickr after fetching dates
-                }
-            })
-            .catch(error => console.error('Error fetching unavailable dates:', error));
-    }
-
-    // Function to validate dates and enable/disable add-ons accordingly
-    function validateDates(selectedDates, dateStr, instance) {
-        let startDate = startDateElement.value;
-        let endDate = endDateElement.value;
-
-        if (startDate && endDate) {
-            disableAddOns(false); // Enable add-ons if both dates are selected
-            calculateTotal(); 
-        } else {
-            disableAddOns(true); // Disable add-ons if dates are missing
-        }
-    }
-
-    // Function to enable/disable add-ons
-    function disableAddOns(disable) {
-        addonCheckboxes.forEach(function (checkbox) {
-            checkbox.disabled = disable;
-            if (disable) {
-                // Add alert if user tries to select an add-on without picking dates
-                checkbox.addEventListener('click', preventInteraction);
-            } else {
-                // Remove the event listener once add-ons are enabled
-                checkbox.removeEventListener('click', preventInteraction);
-            }
-        });
-
-        // Disable the quantity buttons and their containers (quantity spans)
-        document.querySelectorAll('[id$="-quantity"]').forEach(function(quantityElement) {
-            const parentContainer = quantityElement.closest('div');
-            parentContainer.querySelectorAll('button').forEach(function(button) {
-                button.disabled = disable;
-                if (disable) {
-                    button.addEventListener('click', preventInteraction);
-                } else {
-                    button.removeEventListener('click', preventInteraction);
-                }
-            });
-        });
-    }
-  // Function to show an alert if add-ons are clicked without picking dates
-  function preventInteraction(e) {
-    e.preventDefault(); // Prevent default checkbox/quantity button behavior
-}
-  // Event listeners for add-ons checkboxes (Calculate total on change)
-  addonCheckboxes.forEach(function (checkbox) {
-      checkbox.addEventListener('change', calculateTotal);
-  });
-
-  // Event listeners for quantity change buttons
-  document.querySelectorAll('[id$="-quantity"]').forEach(function(quantityElement) {
-      const parentContainer = quantityElement.closest('div');
-      parentContainer.querySelectorAll('button').forEach(function(button) {
-          button.addEventListener('click', function() {
-              calculateTotal();  
-          });
-      });
-  });
+    startDateElement.setAttribute("min", today);
+    endDateElement.setAttribute("min", today);
+  }
 
   const mapSection = document.getElementById('map-section');
   const button = document.getElementById('view-larger-map-btn');
@@ -121,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function calculateTotal() {
-  const startDateElement = document.getElementById('start-date');
-  const endDateElement = document.getElementById('end-date');
-  
+  const startDateElement = document.getElementById("start-date");
+  const endDateElement = document.getElementById("end-date");
+
   let deliveryFee = 60;
   let protectionFee = 25;
   let convenienceFee = 2;
@@ -134,7 +44,8 @@ function calculateTotal() {
   let endDate = endDateElement.value;
 
   if (!startDate || !endDate) {
-      return;
+    alert("Please select both start and end dates.");
+    return;
   }
 
   let start = new Date(startDate);
@@ -142,57 +53,16 @@ function calculateTotal() {
   let diffTime = Math.abs(end - start);
   let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-  let baseTotal = (carPrice * diffDays) + deliveryFee + protectionFee + convenienceFee + tax;
+  let baseTotal =
+    (carPrice + deliveryFee + protectionFee + convenienceFee + tax) * diffDays;
   let refundableDeposit = baseTotal * (refundablePercent / 100);
+  let total = baseTotal + refundableDeposit;
 
-
-  const addOnsTotal = calculateAddOnTotal();
-
- 
-  document.getElementById('refundable-deposit').textContent = '+ $' + refundableDeposit.toFixed(2);
-  document.getElementById('subtotal').textContent = '+ $' + (baseTotal + addOnsTotal).toFixed(2);
-}
-
-// Function to calculate add-ons total
-function calculateAddOnTotal() {
-
-  const gps = document.getElementById('gps').checked ? 60 : 0;
-  const babySeat = document.getElementById('baby-seat').checked ? 30 : 0;
-  const extraInsurance = document.getElementById('extra-insurance').checked ? 100 : 0;
-  const wifi = document.getElementById('wifi').checked ? 50 : 0;
-  const additionalDriver = document.getElementById('additional-driver').checked ? 20 : 0;
-
-
-  const infantSeatQuantity = parseInt(document.getElementById('infant-seat-quantity').textContent) || 0;
-  const toddlerSeatQuantity = parseInt(document.getElementById('toddler-seat-quantity').textContent) || 0;
-  const snowChainsQuantity = parseInt(document.getElementById('snow-chains-quantity').textContent) || 0;
-  const winterTiresQuantity = parseInt(document.getElementById('winter-tires-quantity').textContent) || 0;
-
- 
-  const infantSeatTotal = infantSeatQuantity * 50;
-  const toddlerSeatTotal = toddlerSeatQuantity * 50;
-  const snowChainsTotal = snowChainsQuantity * 100;
-  const winterTiresTotal = winterTiresQuantity * 100;
-
-  // Calculate the total add-ons cost
-  const addOnsTotal = gps + babySeat + extraInsurance + wifi + additionalDriver +
-                      infantSeatTotal + toddlerSeatTotal + snowChainsTotal + winterTiresTotal;
-
-  return addOnsTotal;
-}
-
-function increaseQuantity(id) {
-  let element = document.getElementById(id);
-  let currentQuantity = parseInt(element.textContent) || 0;
-  element.textContent = currentQuantity + 1;
-}
-
-function decreaseQuantity(id) {
-  let element = document.getElementById(id);
-  let currentQuantity = parseInt(element.textContent) || 0;
-  if (currentQuantity > 0) {
-      element.textContent = currentQuantity - 1;
-  }
+  document.getElementById("total-price").textContent = "+ $" + total.toFixed(2);
+  document.getElementById("refundable-deposit").textContent =
+    "+ $" + refundableDeposit.toFixed(2);
+  document.getElementById("subtotal").textContent =
+    "+ $" + baseTotal.toFixed(2);
 }
 
 function viewLargerMap() {
