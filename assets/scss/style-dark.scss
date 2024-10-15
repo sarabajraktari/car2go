@@ -696,6 +696,23 @@ body.dark .submit-button-c:active {
     color: black;
 }
 
+
+body.dark .trp-language-switcher > div > a:nth-child(2) {
+    @apply transition duration-200 rounded-lg;
+    background-color: black;
+}
+
+body.dark .trp-language-switcher > div {
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 xmlns:xlink=%22http://www.w3.org/1999/xlink%22 version=%221.1%22 width=%22256%22 height=%22256%22 viewBox=%220 0 256 256%22 xml:space=%22preserve%22%3E%3Cdefs%3E%3C/defs%3E%3Cg style=%22stroke:none;stroke-width:0;fill-rule:nonzero;opacity:1;%22 transform=%22translate(1.41,1.41) scale(2.81,2.81)%22%3E%3Cpath d=%22M90,24.25c0-0.896-0.342-1.792-1.025-2.475c-1.366-1.367-3.583-1.367-4.949,0L45,60.8L5.975,21.775c-1.367-1.367-3.583-1.367-4.95,0c-1.366,1.367-1.366,3.583,0,4.95l41.5,41.5c1.366,1.367,3.583,1.367,4.949,0l41.5-41.5C89.658,26.042,90,25.146,90,24.25z%22 style=%22fill:rgb(255,255,255);%22/%3E%3C/g%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 3px) calc(1em + 0px);
+    background-size:
+        8px 8px,
+        8px 8px;
+}
+
 body.dark #your-name{
     background-color: #323232;
     color: white;

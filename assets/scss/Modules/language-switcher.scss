@@ -5,3 +5,13 @@
 .trp-language-switcher{
     width:80px;
 }
+
+.trp-language-switcher > div{
+    border: none !important;
+    background-color: transparent !important;
+}
+
+
+.trp-language-switcher > div:hover {
+    background-image: inherit; /* Keeps the SVG visible on hover */
+}

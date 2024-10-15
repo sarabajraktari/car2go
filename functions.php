@@ -5,6 +5,13 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php'; 
 
+
+add_action('wp_logout', function() {
+    wp_redirect(home_url());  // Redirect to homepage after logging out
+    exit();
+});
+
+
 function send_email($to, $subject, $body)
 {
     $mail = new PHPMailer(true); 
@@ -12,14 +19,14 @@ function send_email($to, $subject, $body)
     try {
     
         $mail->isSMTP();                                            
-        $mail->Host       = 'email';                      
+        $mail->Host       = 'smtp.gmail.com';                      
         $mail->SMTPAuth   = true;                                   
-        $mail->Username   = 'email';                   
-        $mail->Password   = 'password';                     
+        $mail->Username   = 'car2goks@gmail.com';                   
+        $mail->Password   = 'kdrpfecfwayninzo';                     
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;        
-        $mail->Port       = //port;                                    
+        $mail->Port       = 587;                                    
 
-        $mail->setFrom('email', 'Car2Go');            
+        $mail->setFrom('car2goks@gmail.com', 'Car2Go');            
         $mail->addAddress($to);                                     
 
        

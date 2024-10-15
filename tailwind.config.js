@@ -32,6 +32,9 @@ module.exports = {
       maxWidth: {
         '5.5xl': '67rem',
       },
+      spacing: {
+        '56': '14rem', // 14rem equals 56 in Tailwind's arbitrary scale
+      },
     },
   },
   plugins: [],
