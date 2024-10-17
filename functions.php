@@ -718,7 +718,7 @@ function handle_submit_comment()
 
     // reCAPTCHA validation
     $recaptcha_response = sanitize_text_field($_POST['g-recaptcha-response']);
-    $recaptcha_secret = 'YOUR_RECAPTCHA_SECRET_KEY_HERE_V2'; // Add your secret key here
+    $recaptcha_secret = '6LeB-lYqAAAAAALupC-DduEKg75NZT68o7IGuQ7J'; // Add your secret key here
     $recaptcha_verify = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', array(
         'body' => array(
             'secret' => $recaptcha_secret,

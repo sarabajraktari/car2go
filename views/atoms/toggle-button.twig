@@ -30,12 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeLogo = document.getElementById('theme-logo');
     const contactImage = document.getElementById('contact-image'); // Add contact image
 
-    const lightLogo = 'http://localhost/internship/wp-content/themes/car2go/assets/media/logo.png'; 
-    const darkLogo = 'http://localhost/internship/wp-content/themes/car2go/assets/media/logo.jpg'; 
-    const lightBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/light-car.jpg'; 
-    const darkBannerImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/black_car_bg.png';
-    const lightContactImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/contactus.png'; // Light mode contact image
-    const darkContactImage = 'http://localhost/internship/wp-content/themes/car2go/assets/media/contactus.png'; // Dark mode contact image
+    const currentUrl = window.location.href;
+
+    const isSqLanguage = currentUrl.includes('/sq/');
+
+    const basePath = '/wp-content/themes/car2go/assets/media/';
+
+    const lightLogo = `${basePath}light-logo.png`;  
+    const darkLogo = `${basePath}dark-logo.jpg`; 
+    const lightBannerImage = `${basePath}light-car.jpg`; 
+    const darkBannerImage = `${basePath}dark-car.jpg`;
+    const lightContactImage = `${basePath}contactus.png`; 
+    const darkContactImage = `${basePath}contactus.png`;
 
     const theme = localStorage.getItem('theme') || 'light';
     document.body.classList.add(theme);
