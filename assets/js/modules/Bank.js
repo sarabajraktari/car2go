@@ -114,6 +114,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
 
             if (selectedPaymentMethod === 'cash') {
+                generatePDF();
+                resetForm();
+                resetBookingForm(); 
                 resetFormFields(); 
                 closePaymentModal(); 
                 return;
@@ -126,6 +129,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!validatePostalCode()) isValid = false;
 
             if (isValid) {
+                generatePDF();
+                resetForm();
+                resetBookingForm(); 
                 resetFormFields(); 
                 closePaymentModal(); 
             }
@@ -158,4 +164,154 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
     }
+
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+    
+        const firstName = document.getElementById('first-name').value;
+        const lastName = document.getElementById('last-name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const country = document.getElementById('country').value;
+        const month = document.getElementById('month').value;
+        const day = document.getElementById('day').value;
+        const year = document.getElementById('year').value;
+        const paymentType = document.querySelector('input[name="payment-method"]:checked').value;
+        
+       
+        const subtotalElement = document.getElementById('subtotal');
+        const subtotalText = subtotalElement ? subtotalElement.textContent : '';
+        const subtotal = parseFloat(subtotalText.replace(/[^0-9.-]+/g, "")) || 0;
+    
+       
+        doc.setFontSize(22);
+        doc.text("Car2Go", 105, 20, null, null, 'center');
+        doc.setFontSize(12);
+        doc.text("Agreement: By signing this document, you agree to pay the following amount according to the law.", 105, 30, null, null, 'center');
+    
+       
+        const startX = 20;
+        let startY = 50;
+    
+   
+        doc.setFontSize(14);
+        doc.text("Field", startX, startY);
+        doc.text("Details", startX + 60, startY);
+        doc.line(startX, startY + 2, startX + 160, startY + 2); 
+    
+       
+        doc.setFontSize(12);
+        startY += 10;
+        const lineHeight = 8;
+    
+        const rows = [
+            ["First Name", firstName],
+            ["Last Name", lastName],
+            ["Email", email],
+            ["Phone", phone],
+            ["Country", country],
+            ["Date of Birth", `${month}/${day}/${year}`],
+            ["Payment Type", paymentType],
+            ["Cost", `$${subtotal.toFixed(2)}`]
+        ];
+    
+        rows.forEach(([field, value]) => {
+            doc.text(field, startX, startY);
+            doc.text(value, startX + 60, startY);
+            doc.line(startX, startY + 2, startX + 160, startY + 2); 
+            startY += lineHeight;
+        });
+    
+        // Capture driver's license image
+        const fileInput = document.getElementById('drivers-license');
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgData = e.target.result;
+                
+                // Add driver's license image larger and centered
+                doc.addImage(imgData, 'JPEG', 65, startY + 10, 80, 80);
+                startY += 100;
+    
+                // Signature line
+                doc.setFontSize(14);
+                doc.text("Signature:", 105, startY + 20, null, null, 'center');
+                doc.line(85, startY + 25, 125, startY + 25); 
+                doc.setFontSize(10);
+                doc.text("Car2Go", 105, startY + 35, null, null, 'center');
+    
+                doc.save("BookingDetails.pdf");
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Signature line
+            doc.setFontSize(14);
+            doc.text("Signature:", 105, startY + 10, null, null, 'center');
+            doc.line(85, startY + 15, 125, startY + 15);
+            doc.text("Car2Go", 105, startY + 25, null, null, 'center');
+    
+          
+            doc.save("BookingDetails.pdf");
+        }
+    }
+    
+
+    function resetBookingForm() {
+   
+    const firstNameInput = document.getElementById('first-name');
+    const lastNameInput = document.getElementById('last-name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const countryInput = document.getElementById('country');
+    const termsAgreementInput = document.getElementById('terms-agreement');
+    const monthInput = document.getElementById('month');
+    const dayInput = document.getElementById('day');
+    const yearInput = document.getElementById('year');
+    const fileInput = document.getElementById('drivers-license');
+
+    if (firstNameInput) firstNameInput.value = '';
+    if (lastNameInput) lastNameInput.value = '';
+    if (emailInput) emailInput.value = '';
+    if (phoneInput) phoneInput.value = '';
+    if (countryInput) countryInput.value = '';
+    if (termsAgreementInput) termsAgreementInput.checked = false;
+    if (monthInput) monthInput.value = '';
+    if (dayInput) dayInput.value = '';
+    if (yearInput) yearInput.value = '';
+    if (fileInput) fileInput.value = '';
+
+    // Remove validation error messages
+    document.querySelectorAll('.text-red-500').forEach(el => el.classList.add('hidden'));
+
+    // Reset touched classes
+    document.querySelectorAll('.touched').forEach(el => el.classList.remove('touched'));
+}
+
+
+ function resetForm() {
+
+    const startDateElement = document.getElementById('start-date');
+    const endDateElement = document.getElementById('end-date');
+    if (startDateElement) startDateElement.value = '';
+    if (endDateElement) endDateElement.value = '';
+
+ 
+    const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
+    addonCheckboxes.forEach(function (checkbox) {
+        checkbox.checked = false;
+    });
+
+  
+    document.querySelectorAll('[id$="-quantity"]').forEach(function (quantityElement) {
+        quantityElement.textContent = '0'; 
+    });
+
+   
+    document.getElementById('subtotal').textContent = '+ $0.00';
+    document.getElementById('refundable-deposit').textContent = '+ $0.00';
+}
+
+
 });
