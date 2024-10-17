@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
   const quantityButtons = document.querySelectorAll('.quantity-button');
   let unavailableDates = [];
-
+  if (typeof cartitle === 'undefined' || cartitle.trim() === '') {
+    return;
+}
  
   fetchUnavailableDates();
 
